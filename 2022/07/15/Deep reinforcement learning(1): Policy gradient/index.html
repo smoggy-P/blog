@@ -16,16 +16,16 @@
   <meta name="author" content="Moji Shi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 问题描述1.1 概率模型忽略观测误差，深度强化学习解决的问题可以写成如下形式：整个概率模型主要由两个部分组成，首先由当前状态$s$通过当前的策略$\pi_\theta$得到动作的概率分布，在动作的状态分布中采样得到下一步真正需要采取的动作$a$，将$a$作用于实际系统中得到下一个状态的概率分布$p(s’|s,a)$，实际系统生成反馈状态并形成闭环。 假设我们想研究未来$T$时刻内策略参数设定">
+    <meta name="description" content="此系列主要为 UCB CS285 深度强化学习系列课程学习笔记。 1. 问题描述1.1 概率模型忽略观测误差，深度强化学习解决的问题可以写成如下形式：整个概率模型主要由两个部分组成，首先由当前状态$s$通过当前的策略$\pi_\theta$得到动作的概率分布，在动作的状态分布中采样得到下一步真正需要采取的动作$a$，将$a$作用于实际系统中得到下一个状态的概率分布$p(s’|s,a)$，实际系统生">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Deep reinforcement learning(1): Policy gradient">
 <meta property="og:url" content="https://smoggy-p.github.io/2022/07/15/Deep%20reinforcement%20learning(1):%20Policy%20gradient/index.html">
 <meta property="og:site_name" content="Moji Shi&#39;s Homepage">
-<meta property="og:description" content="1. 问题描述1.1 概率模型忽略观测误差，深度强化学习解决的问题可以写成如下形式：整个概率模型主要由两个部分组成，首先由当前状态$s$通过当前的策略$\pi_\theta$得到动作的概率分布，在动作的状态分布中采样得到下一步真正需要采取的动作$a$，将$a$作用于实际系统中得到下一个状态的概率分布$p(s’|s,a)$，实际系统生成反馈状态并形成闭环。 假设我们想研究未来$T$时刻内策略参数设定">
+<meta property="og:description" content="此系列主要为 UCB CS285 深度强化学习系列课程学习笔记。 1. 问题描述1.1 概率模型忽略观测误差，深度强化学习解决的问题可以写成如下形式：整个概率模型主要由两个部分组成，首先由当前状态$s$通过当前的策略$\pi_\theta$得到动作的概率分布，在动作的状态分布中采样得到下一步真正需要采取的动作$a$，将$a$作用于实际系统中得到下一个状态的概率分布$p(s’|s,a)$，实际系统生">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://smoggy-p.github.io/img/drl_1/model.png">
 <meta property="article:published_time" content="2022-07-15T06:48:46.948Z">
-<meta property="article:modified_time" content="2022-08-20T06:05:40.849Z">
+<meta property="article:modified_time" content="2022-08-20T06:34:43.147Z">
 <meta property="article:author" content="Moji Shi">
 <meta property="article:tag" content="Learning">
 <meta name="twitter:card" content="summary_large_image">
@@ -238,7 +238,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.5k words
+          3.4k words
         
       </span>
     
@@ -249,7 +249,7 @@
         
         
         
-          29 mins
+          28 mins
         
       </span>
     
@@ -292,30 +292,94 @@
             
               <div class="markdown-body">
                 
-                <h1 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h1><h2 id="1-1-概率模型"><a href="#1-1-概率模型" class="headerlink" title="1.1 概率模型"></a>1.1 概率模型</h2><p>忽略观测误差，深度强化学习解决的问题可以写成如下形式：<br><img src="/../img/drl_1/model.png" srcset="/img/loading.gif" lazyload><br>整个概率模型主要由两个部分组成，首先由当前状态$s$通过当前的策略$\pi_\theta$得到动作的概率分布，在动作的状态分布中采样得到下一步真正需要采取的动作$a$，将$a$作用于实际系统中得到下一个状态的概率分布$p(s’|s,a)$，实际系统生成反馈状态并形成闭环。</p>
-<p>假设我们想研究未来$T$时刻内策略参数设定为$\theta$的模型，这整个概率分布模型可以写成：<br>$$<br>p_\theta(s_1,a_1,s_2,a_2\dots s_T,a_T)&#x3D;p(s_1)\prod_{i&#x3D;1}^T\pi_\theta(a_i|s_i)p(s_{i+1}|s_i,a_i)<br>$$</p>
-<p>之后的表述会将整条状态轨迹写成$\tau$，即$p_\theta(\tau)&#x3D;p_\theta(s_1,a_1,s_2,a_2\dots s_T,a_T)$</p>
-<h2 id="1-2-目标函数"><a href="#1-2-目标函数" class="headerlink" title="1.2 目标函数"></a>1.2 目标函数</h2><p>在得到上述概率模型后，我们需要明确需要优化的是什么。一般优化目标是关于动作和状态的函数，仍然假设我们要研究未来$T$时刻内的策略，目标函数可以被写成：<br>$$<br>J(\theta)&#x3D;\mathbb E_{\tau\sim p_\theta(\tau)}\left[\sum_{i&#x3D;1}^Tr(s_i,a_i)\right]<br>$$<br>深度强化学习的目标即通过调整$\theta$使得目标函数的期望最大化。</p>
-<h1 id="2-策略梯度"><a href="#2-策略梯度" class="headerlink" title="2. 策略梯度"></a>2. 策略梯度</h1><h2 id="2-1-REINFORCE法"><a href="#2-1-REINFORCE法" class="headerlink" title="2.1 REINFORCE法"></a>2.1 REINFORCE法</h2><p>在得到上述的问题描述后，最简单直接的方法就是直接求目标函数对$\theta$的梯度，之后用梯度上升法（因为需要最大化目标函数）逐步优化参数。这就是策略梯度的基本思想。</p>
-<p>$$\nabla_\theta J(\theta)&#x3D;\int\nabla_\theta p_\theta(\tau)r(\tau)d\tau$$</p>
-<p>上面这个式子中，$r(\tau)$ 表示对特定轨迹 $\tau$ 的累计误差，积分的含义则表示在给定指定参数 $\theta$ 的情况下，由于对应每个状态的动作并不是确定的，所以最后生成的轨迹会存在多种可能性，积分就是对这些轨迹的概率分布积分。下一步为了求解这一项，我们会引入一个 $\log$ 函数的trick：<br>$$p_\theta(\tau)\nabla_\theta\log p_\theta(\tau)&#x3D;p_\theta(\tau)  \frac{\nabla_\theta p_\theta(\tau)}{p_\theta(\tau)}&#x3D;\nabla_\theta p_\theta(\tau)$$</p>
-<p>根据这个trick我们对之前的积分进行变换：</p>
-<p>$$<br>\begin{align*}<br>  \nabla_\theta J(\theta)&amp;&#x3D;\int\nabla_\theta p_\theta(\tau)r(\tau)d\tau\<br>  &amp;&#x3D;\int p_\theta(\tau)\nabla_\theta\log p_\theta(\tau) r(\tau)d\tau\<br>  &amp;&#x3D;\mathbb{E}\left[\nabla_\theta\log p_\theta(\tau) r(\tau)\right]<br>\end{align*}<br>$$</p>
+                <p>此系列主要为 UCB CS285 深度强化学习系列课程学习笔记。</p>
+<h1 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h1><h2 id="1-1-概率模型"><a href="#1-1-概率模型" class="headerlink" title="1.1 概率模型"></a>1.1 概率模型</h2><p>忽略观测误差，深度强化学习解决的问题可以写成如下形式：<br><img src="/img/drl_1/model.png" srcset="/img/loading.gif" lazyload alt=""><br>整个概率模型主要由两个部分组成，首先由当前状态$s$通过当前的策略$\pi_\theta$得到动作的概率分布，在动作的状态分布中采样得到下一步真正需要采取的动作$a$，将$a$作用于实际系统中得到下一个状态的概率分布$p(s’|s,a)$，实际系统生成反馈状态并形成闭环。</p>
+<p>假设我们想研究未来$T$时刻内策略参数设定为$\theta$的模型，这整个概率分布模型可以写成：</p>
+<div>
+$$
+p_\theta(s_1,a_1,s_2,a_2\dots s_T,a_T)=p(s_1)\prod_{i=1}^T\pi_\theta(a_i|s_i)p(s_{i+1}|s_i,a_i)
+$$
+</div>
+
+<p>之后的表述会将整条状态轨迹写成$\tau$，即$p<em>\theta(\tau)=p</em>\theta(s_1,a_1,s_2,a_2\dots s_T,a_T)$</p>
+<h2 id="1-2-目标函数"><a href="#1-2-目标函数" class="headerlink" title="1.2 目标函数"></a>1.2 目标函数</h2><p>在得到上述概率模型后，我们需要明确需要优化的是什么。一般优化目标是关于动作和状态的函数，仍然假设我们要研究未来$T$时刻内的策略，目标函数可以被写成：</p>
+<div>
+$$
+J(\theta)=\mathbb E_{\tau\sim p_\theta(\tau)}\left[\sum_{i=1}^Tr(s_i,a_i)\right]
+$$
+</div>
+深度强化学习的目标即通过调整$\theta$使得目标函数的期望最大化。
+
+# 2. 策略梯度
+## 2.1 REINFORCE法
+在得到上述的问题描述后，最简单直接的方法就是直接求目标函数对$\theta$的梯度，之后用梯度上升法（因为需要最大化目标函数）逐步优化参数。这就是策略梯度的基本思想。
+<div>
+$$\nabla_\theta J(\theta)=\int\nabla_\theta p_\theta(\tau)r(\tau)d\tau$$
+</div>
+上面这个式子中，$r(\tau)$ 表示对特定轨迹 $\tau$ 的累计误差，积分的含义则表示在给定指定参数 $\theta$ 的情况下，由于对应每个状态的动作并不是确定的，所以最后生成的轨迹会存在多种可能性，积分就是对这些轨迹的概率分布积分。下一步为了求解这一项，我们会引入一个 $\log$ 函数的trick：
+
+<div>
+$$
+p_\theta(\tau)\nabla_\theta\log p_\theta(\tau)=p_\theta(\tau)  \frac{\nabla_\theta p_\theta(\tau)}{p_\theta(\tau)}=\nabla_\theta p_\theta(\tau)
+$$
+<\div>
+
+根据这个trick我们对之前的积分进行变换：
+
+<div>
+$$
+\begin{align*}
+  \nabla_\theta J(\theta)&=\int\nabla_\theta p_\theta(\tau)r(\tau)d\tau\\
+  &=\int p_\theta(\tau)\nabla_\theta\log p_\theta(\tau) r(\tau)d\tau\\
+  &=\mathbb{E}\left[\nabla_\theta\log p_\theta(\tau) r(\tau)\right]
+\end{align*}
+$$
+</div>
+
 <p>把之前的概率分布代入这个式子中，由于是对 $\theta$ 求梯度，初始状态概率分布以及状态转移分布都可以被忽略（与 $\theta$ 无关），最后梯度可以被写成：</p>
-<p>$$<br>\nabla_\theta J(\theta)&#x3D;\mathbb{E}<em>{\tau\sim p_\theta(\tau)}\left[\left(\sum</em>{i&#x3D;1}^T\nabla_\theta\log\pi_\theta(a_i|s_i)\right) r(\tau)\right]<br>$$</p>
+<div>
+$$
+\nabla_\theta J(\theta)=\mathbb{E}_{\tau\sim p_\theta(\tau)}\left[\left(\sum_{i=1}^T\nabla_\theta\log\pi_\theta(a_i|s_i)\right) r(\tau)\right]
+$$
+</div>
+
 <p>写成这个形式后我们就能通过采样的方法计算梯度，并采用梯度上升法来优化参数 $\theta$。这就是最基本的策略梯度REINFORCE方法：</p>
 <ol>
 <li>从 $\pi_\theta(a|s)$ 中采样得到一系列轨迹 $\tau_i$</li>
 <li>通过上述计算对当前策略进行评价，算出 $J_\theta(\theta)$ 和梯度</li>
 <li>对参数进行梯度下降</li>
 </ol>
-<p>为了更深入理解这个梯度计算的形式，我们可以将它和监督学习的情况做对比。假设对于同样一个任务，我们还是需要学习特定状态下应该采取的行动 $\pi_\theta(a|s)$， 不同的是这次我们有一系列已经标记过的数据 $(s_i,a_i)$，我们假设这些数据对应的策略就是最优策略，而我们就是要学习这个策略，这个问题就被变成一个监督学习问题。而此时目标函数的梯度可以写成如下形式：<br>$$<br>\nabla_{\theta} J_{\mathrm{ML}}(\theta) \approx \frac{1}{N} \sum_{i&#x3D;1}^{N}\left(\sum_{t&#x3D;1}^{T} \nabla_{\theta} \log \pi_{\theta}\left(\mathbf{a}<em>{i, t} \mid \mathbf{s}</em>{i, t}\right)\right)<br>$$<br>这里本质上就是最大似然估计，即通过训练使得标记的策略出现的可能性最大。不难发现这与我们推导出的梯度只相差一项 $r(\tau)$ 即整条轨迹上累计的回报。这里的直观理解就是最大似然估计会让给定的轨迹出现概率最大，而策略梯度法会让带有最大回报的轨迹出现概率最大。</p>
+<p>为了更深入理解这个梯度计算的形式，我们可以将它和监督学习的情况做对比。假设对于同样一个任务，我们还是需要学习特定状态下应该采取的行动 $\pi_\theta(a|s)$， 不同的是这次我们有一系列已经标记过的数据 $(s_i,a_i)$，我们假设这些数据对应的策略就是最优策略，而我们就是要学习这个策略，这个问题就被变成一个监督学习问题。而此时目标函数的梯度可以写成如下形式：</p>
+<div>
+$$
+\nabla_{\theta} J_{\mathrm{ML}}(\theta) \approx \frac{1}{N} \sum_{i=1}^{N}\left(\sum_{t=1}^{T} \nabla_{\theta} \log \pi_{\theta}\left(\mathbf{a}_{i, t} \mid \mathbf{s}_{i, t}\right)\right)
+$$
+</div>
+
+<p>这里本质上就是最大似然估计，即通过训练使得标记的策略出现的可能性最大。不难发现这与我们推导出的梯度只相差一项 $r(\tau)$ 即整条轨迹上累计的回报。这里的直观理解就是最大似然估计会让给定的轨迹出现概率最大，而策略梯度法会让带有最大回报的轨迹出现概率最大。</p>
 <h2 id="2-2-减小方差"><a href="#2-2-减小方差" class="headerlink" title="2.2 减小方差"></a>2.2 减小方差</h2><p>如果我们直接使用上述方法对系统进行控制，通常会有很大的问题。其中一个问题就是梯度的方差过大，假设我们在每一步 $r(a_i,s_i)$ 上都加一个相同的常数，理论上这个系统和之前的没有区别，但是计算梯度时会产生很大的差别。</p>
 <h3 id="2-2-1-通过因果关系简化梯度计算"><a href="#2-2-1-通过因果关系简化梯度计算" class="headerlink" title="2.2.1 通过因果关系简化梯度计算"></a>2.2.1 通过因果关系简化梯度计算</h3><p>为了减少上面提到的方差问题，我们首先想到的是减小 $\nabla_\theta J(\theta)$ 的值。这里可以通过因果关系得到小结论：<strong>假设我们有 $t&lt;t’$ ，那么 $t’$ 时刻的策略不会影响 $t$ 时刻的回报</strong>。根据这个结论，我们可以在计算梯度时 <strong>只将 $t$ 时刻后的回报和 $t$ 时刻的似然概率相乘</strong>，并且能够证明这样得到的结果仍然是梯度的无偏估计：</p>
-<p>$$<br>\begin{align*}<br>  \nabla_{\theta} J(\theta) &amp;\approx \frac{1}{N} \sum_{i&#x3D;1}^{N} \sum_{t&#x3D;1}^{T} \nabla_{\theta} \log \pi_{\theta}\left(\mathbf{a}<em>{i, t} \mid \mathbf{s}</em>{i, t}\right)\left(\sum_{t^{\prime}&#x3D;1}^{T} r\left(\mathbf{s}<em>{i, t^{\prime}}, \mathbf{a}</em>{i, t^{\prime}}\right)\right)\<br>  &amp;&#x3D; \frac{1}{N} \sum_{i&#x3D;1}^{N} \sum_{t&#x3D;1}^{T} \nabla_{\theta} \log \pi_{\theta}\left(\mathbf{a}<em>{i, t} \mid \mathbf{s}</em>{i, t}\right)\left(\sum_{t^{\prime}&#x3D;t}^{T} r\left(\mathbf{s}<em>{i, t^{\prime}}, \mathbf{a}</em>{i, t^{\prime}}\right)\right)<br>\end{align*}<br>$$</p>
+<div>
+$$
+\begin{align*}
+  \nabla_{\theta} J(\theta) &\approx \frac{1}{N} \sum_{i=1}^{N} \sum_{t=1}^{T} \nabla_{\theta} \log \pi_{\theta}\left(\mathbf{a}_{i, t} \mid \mathbf{s}_{i, t}\right)\left(\sum_{t^{\prime}=1}^{T} r\left(\mathbf{s}_{i, t^{\prime}}, \mathbf{a}_{i, t^{\prime}}\right)\right)\\
+  &= \frac{1}{N} \sum_{i=1}^{N} \sum_{t=1}^{T} \nabla_{\theta} \log \pi_{\theta}\left(\mathbf{a}_{i, t} \mid \mathbf{s}_{i, t}\right)\left(\sum_{t^{\prime}=t}^{T} r\left(\mathbf{s}_{i, t^{\prime}}, \mathbf{a}_{i, t^{\prime}}\right)\right)
+\end{align*}
+$$
+</div>
+
 <h3 id="2-2-2-通过baseline方法减小方差"><a href="#2-2-2-通过baseline方法减小方差" class="headerlink" title="2.2.2 通过baseline方法减小方差"></a>2.2.2 通过baseline方法减小方差</h3><p>这里的指导思想是，当我们评价一条轨迹的好坏时，我们先得到一个回报的平均值，再比较新的轨迹的回报与这个平均值。数学表达如下：</p>
-<p>$$<br>\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i&#x3D;1}^{N} \sum_{t&#x3D;1}^{T} \nabla_{\theta} \log \pi_{\theta}\left(\mathbf{a}<em>{i, t} \mid \mathbf{s}</em>{i, t}\right)\left(\mathbb{r}(\tau)-b\right)<br>$$</p>
-<p>$$<br>b &#x3D; \frac{1}{N}\sum_{i&#x3D;1}^N r(\tau)<br>$$</p>
+<div>
+$$
+\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i=1}^{N} \sum_{t=1}^{T} \nabla_{\theta} \log \pi_{\theta}\left(\mathbf{a}_{i, t} \mid \mathbf{s}_{i, t}\right)\left(\mathbb{r}(\tau)-b\right)
+$$
+</div>
+<div>
+$$
+b = \frac{1}{N}\sum_{i=1}^N r(\tau)
+$$
+</div>
+
 <p>我们可以证明通过这种方法，策略梯度的期望不会被改变，而方差则会减少。</p>
 
                 
@@ -430,13 +494,6 @@
 
 
 
-
-
-  <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
-    mermaid.initialize({"theme":"default"});
-  });
-</script>
 
 
 

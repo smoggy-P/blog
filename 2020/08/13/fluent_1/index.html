@@ -24,7 +24,7 @@
 <meta property="og:description" content="1. 提要从零开始学习fluent流体仿真的一些记录，此次学习建立效果较为明显且不需要实验验证的卡门涡街现象的仿真以熟悉大致流程，主要采用solidworks进行模型设计，ICEM进行网格划分。其中一些概念仅为笔者自己的理解，如有谬误欢迎各位提出讨论！ 2. 基本流程solidworks进行流场建模，spaceclaim进行几何处理，ICEM进行结构网格划分，最后在fluent中设定材料与边界条件">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://smoggy-p.github.io/img/fluent_1/index.png">
-<meta property="article:published_time" content="2020-08-13T10:33:10.000Z">
+<meta property="article:published_time" content="2020-08-13T04:33:10.000Z">
 <meta property="article:modified_time" content="2022-07-06T18:35:12.314Z">
 <meta property="article:author" content="Moji Shi">
 <meta property="article:tag" content="CFD">
@@ -226,7 +226,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2020-08-13 18:33" pubdate>
+        <time datetime="2020-08-13 12:33" pubdate>
           August 13, 2020 pm
         </time>
       </span>
@@ -238,7 +238,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k words
+          1.5k words
         
       </span>
     
@@ -317,7 +317,7 @@
 
 <p>创建完成后对块进行划分。<br><img src="https://img-blog.csdnimg.cn/20200819163808356.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>删去中间圆柱部分的块，建立圆柱周长和两组四条边的映射关系，设置全局网格大小后初步建立网格。<br><img src="https://img-blog.csdnimg.cn/20200819163945342.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>针对产生畸变严重部分进行顶点的调整后将网格质量提升到0.85以上。<br><img src="https://img-blog.csdnimg.cn/20200819164123857.png#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>针对较稀疏的边使用edge params进行设置，增加节点个数：（1.同样能设定增长率，实现边界层效果的设计 2.进行参数复制可以将参数复制到平行的edge上）<br><img src="https://img-blog.csdnimg.cn/20200819164150295.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200819164200151.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>针对圆柱周边可能出现的边界层进行加密。（网格在五位数数量级时计算速度+精度较为合理）</p>
-<h1 id="5-fluent求解器设置"><a href="#5-fluent求解器设置" class="headerlink" title="5. fluent求解器设置"></a>5. fluent求解器设置</h1><p>general中能够进行网格质量的检查，以及是求解瞬态还是稳态情况。<br><img src="https://img-blog.csdnimg.cn/20200819164927594.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>之后需要在models中开启需要模拟的物理方程，默认只有流体粘度模型，本例中也只需要开启这个。<br><img src="https://img-blog.csdnimg.cn/20200819165110520.png#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>之后进行材料设置和进出口条件设置，将流体域的材料改为液态水，进口速度根据卡门涡街产生的雷诺数范围粗略计算为20m&#x2F;s，其余皆为默认。<br>method中选择迭代方法，这里介绍常用算法SIMPLE算法，其主要根据不可压缩流体的连续性方程以及N-S方程进行迭代，在上述两个方程中速度场与压强场相互耦合，通过初始化压强场，由NS方程得出对应速度场，再由连续性方程进行修正之后反复迭代。<br>迭代算法完成后在residual中设置残差要求后进行初始化，由于这个例子中为瞬态求解因此还需要在计算页中设定求解时间步长、步数、每个时间步长的迭代次数，最后进行计算。<br><img src="https://img-blog.csdnimg.cn/20200819165904277.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>后处理可以使用fluent自带或者ansys中的cfd-post，如果需要展示动画需要在计算之前提前在calculation activities中添加需要观测的云图，这里得到的结果如下：</p>
+<h1 id="5-fluent求解器设置"><a href="#5-fluent求解器设置" class="headerlink" title="5. fluent求解器设置"></a>5. fluent求解器设置</h1><p>general中能够进行网格质量的检查，以及是求解瞬态还是稳态情况。<br><img src="https://img-blog.csdnimg.cn/20200819164927594.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>之后需要在models中开启需要模拟的物理方程，默认只有流体粘度模型，本例中也只需要开启这个。<br><img src="https://img-blog.csdnimg.cn/20200819165110520.png#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>之后进行材料设置和进出口条件设置，将流体域的材料改为液态水，进口速度根据卡门涡街产生的雷诺数范围粗略计算为20m/s，其余皆为默认。<br>method中选择迭代方法，这里介绍常用算法SIMPLE算法，其主要根据不可压缩流体的连续性方程以及N-S方程进行迭代，在上述两个方程中速度场与压强场相互耦合，通过初始化压强场，由NS方程得出对应速度场，再由连续性方程进行修正之后反复迭代。<br>迭代算法完成后在residual中设置残差要求后进行初始化，由于这个例子中为瞬态求解因此还需要在计算页中设定求解时间步长、步数、每个时间步长的迭代次数，最后进行计算。<br><img src="https://img-blog.csdnimg.cn/20200819165904277.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>后处理可以使用fluent自带或者ansys中的cfd-post，如果需要展示动画需要在计算之前提前在calculation activities中添加需要观测的云图，这里得到的结果如下：</p>
 <p style="text-align: center;">
     <img src="https://img-blog.csdnimg.cn/20200819170156853.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload width=600>
 </p>
