@@ -11,9 +11,18 @@
   </url>
   
   <url>
+    <loc>https://smoggy-p.github.io/2022/05/15/ros_docker/</loc>
+    
+    <lastmod>2022-08-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://smoggy-p.github.io/2020/08/13/fluent_1/</loc>
     
-    <lastmod>2022-07-06</lastmod>
+    <lastmod>2022-08-20</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -30,15 +39,6 @@
   
   <url>
     <loc>https://smoggy-p.github.io/2020/09/24/fluent_2/</loc>
-    
-    <lastmod>2022-07-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://smoggy-p.github.io/2022/05/15/ros_docker/</loc>
     
     <lastmod>2022-07-06</lastmod>
     
@@ -103,6 +103,13 @@
   
   <url>
     <loc>https://smoggy-p.github.io/categories/Academic-notes/</loc>
+    <lastmod>2022-08-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://smoggy-p.github.io/categories/Engineering/</loc>
     <lastmod>2022-08-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
