@@ -58,7 +58,7 @@
 
   <url>
     <loc>https://smoggy-p.github.io/</loc>
-    <lastmod>2022-08-20</lastmod>
+    <lastmod>2022-08-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -66,35 +66,35 @@
   
   <url>
     <loc>https://smoggy-p.github.io/tags/Learning/</loc>
-    <lastmod>2022-08-20</lastmod>
+    <lastmod>2022-08-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://smoggy-p.github.io/tags/CFD/</loc>
-    <lastmod>2022-08-20</lastmod>
+    <lastmod>2022-08-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://smoggy-p.github.io/tags/ROS/</loc>
-    <lastmod>2022-08-20</lastmod>
+    <lastmod>2022-08-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://smoggy-p.github.io/tags/Love/</loc>
-    <lastmod>2022-08-20</lastmod>
+    <lastmod>2022-08-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://smoggy-p.github.io/tags/Reading/</loc>
-    <lastmod>2022-08-20</lastmod>
+    <lastmod>2022-08-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -103,21 +103,21 @@
   
   <url>
     <loc>https://smoggy-p.github.io/categories/Academic-notes/</loc>
-    <lastmod>2022-08-20</lastmod>
+    <lastmod>2022-08-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://smoggy-p.github.io/categories/Engineering/</loc>
-    <lastmod>2022-08-20</lastmod>
+    <lastmod>2022-08-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://smoggy-p.github.io/categories/Reading-notes/</loc>
-    <lastmod>2022-08-20</lastmod>
+    <lastmod>2022-08-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
