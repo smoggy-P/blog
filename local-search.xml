@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>用Solidworks对无人机进行拓扑优化</title>
+    <link href="/2022/08/26/%E7%94%A8Solidworks%E8%BF%9B%E8%A1%8C%E6%8B%93%E6%89%91%E4%BC%98%E5%8C%96/"/>
+    <url>/2022/08/26/%E7%94%A8Solidworks%E8%BF%9B%E8%A1%8C%E6%8B%93%E6%89%91%E4%BC%98%E5%8C%96/</url>
+    
+    <content type="html"><![CDATA[<p>暑研期间帮师兄出了一版无人机的图，在画完基本框架后想通过拓扑优化的方法对机身进行减重。之前进行拓扑优化都是在ansysworkbench里，在我尝试把模型导入ansys的过程中出现了很多问题，最后我决定还是直接在solidworks里完成拓扑优化，这里记录一下流程。</p><h1 id="概述">1. 概述</h1><p>SolidworksSimulation中直接提供了拓扑优化的算例。目前只能针对<strong>单个零部件</strong>进行拓扑优化，无法考虑零部件之间的相对作用（如果有需要可以在ansys里完成）。整体拓扑优化的思路是首先用夹具对零件进行限位，对零件施加载荷，之后定义目标函数，在给定约束的情况下求解优化问题。</p><h1 id="具体流程">2. 具体流程</h1><h2 id="选择实体">2.1 选择实体</h2><p>首先在装配体文件中切换到simulation界面，点击新算例，选择拓扑算例：<img src="/img/drone/新建算例.png" /></p><p>之后在模型中选取需要进行拓扑优化的零部件： <imgsrc="/img/drone/选择实体.png" /></p><p>选中创建算例后可以看到如下界面： <imgsrc="/img/drone/选择界面.png" /></p><h2 id="添加夹具">2.2 添加夹具</h2><p>之后我们在零部件上添加夹具。（连结部分暂时还不清楚作用，但是似乎不影响计算）添加夹具的意义在于对零件进行限位，常见的有固定夹具、弹簧夹具等。固定夹具的效果如下图：<img src="/img/drone/Fixed-solid.gif" /></p><p>对于无人机碳板，我们固定其最外围一圈进行优化。</p><h2 id="添加外部载荷">2.3 添加外部载荷</h2><p>之后我们需要给零件添加外部载荷。可以选择添加力或者扭矩，修改力的方向。<img src="/img/drone/外部载荷.png" /></p><p>这里需要注意的是我们可以选择分割操作，这样可以在零件的部分位置添加载荷。用于分割的草图需要我们在<strong>零部件</strong>文件里单独添加（装配体里的草图没有用）。另外可以选择按条目或者按总数进行分配，即选择多个面之后是每个面分配这么多载荷还是总共分配。</p><h2 id="目标和约束">2.4 目标和约束</h2><p>这里我们可以选择优化目标以及约束条件。常用的是最佳强度重量比，即选定需要减轻的重量，算出减轻重量后保留最大强度的方案。<img src="/img/drone/目标和约束.png" /></p><h2 id="保留区域">2.5 保留区域</h2><p>可以看到无人机碳板上有许多孔洞，如果我们直接进行优化，这些孔洞很有可能会被扩充成更大的区域。为了保留这些孔洞特征，我们需要在制造控制选项中添加他们为保留的区域。<img src="/img/drone/保留区域.png" /></p><p>此外在制造控制中我们还可以选择对称操作，这样拓扑优化出来的结果会更规则一些。</p><h2 id="网格划分">2.6 网格划分</h2><p>在网格划分中我直接选用了默认自动生成的网格，也可以根据需求在某些部分添加细化的网格。<img src="/img/drone/网格划分.png" /></p><h1 id="优化结果">3. 优化结果</h1><p>最后优化的结果如图： <img src="/img/drone/优化结果.png" /></p><p>我们可以手动在原本零件上按照优化结果所示进行切除操作。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Engineering</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>CAD</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Deep reinforcement learning(1): Policy gradient</title>
     <link href="/2022/07/15/Deep%20reinforcement%20learning(1):%20Policy%20gradient/"/>
     <url>/2022/07/15/Deep%20reinforcement%20learning(1):%20Policy%20gradient/</url>
