@@ -29,6 +29,31 @@
   
   
   <entry>
+    <title>Deep reinforcement learning(2): Actor-Critic</title>
+    <link href="/2022/08/23/Deep%20reinforcement%20learning(2):%20Actor-Critic/"/>
+    <url>/2022/08/23/Deep%20reinforcement%20learning(2):%20Actor-Critic/</url>
+    
+    <content type="html"><![CDATA[<h1 id="从策略梯度到actor-critic">1. 从策略梯度到Actor-Critic</h1><p>上一章介绍了策略梯度的基本思想，最后得到的更新梯度的步骤可以写成如下形式：<span class="math display">\[\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i=1}^{N}\sum_{t=1}^{T} \nabla_{\theta} \log \pi_{\theta}\left(\mathbf{a}_{i, t}\mid \mathbf{s}_{i, t}\right)\left(\mathbb{r}(\tau)-b\right)\]</span> 这里的问题是 <span class="math inline">\(r(\tau)\)</span>这一项是通过蒙特卡罗方法从 <spanclass="math inline">\(\pi_\theta(a|s)\)</span>中采样得到的，如果我们希望agent在与环境交互一次后就进行一次参数的优化，这里得到的梯度则只能根据单个样本计算，即得到一条轨迹后就代入上面的式子计算梯度，这样得到的结果很显然会有很大的方差。</p><p>为了解决这个问题，在Actor-Critic算法中，我们用Q函数来代替 <spanclass="math inline">\(r(\tau)\)</span>，并且创建Critic网络来拟合Q函数。这样我们将梯度重新写成：<span class="math display">\[\nabla_{\theta} J(\theta) = \frac{1}{N} \sum_{i=1}^{N} \sum_{t=1}^{T}\nabla_{\theta} \log \pi_{\theta}\left(\mathbf{a}_{i, t} \mid\mathbf{s}_{i, t}\right)\left(Q_{\theta}(\mathbf{a}_{i, t},\mathbf{s}_{i, t})\right)\]</span> Critic函数最后训练的目标是让 <spanclass="math inline">\(Q_{\theta}(\mathbf{a}, \mathbf{s})\)</span> 接近<spanclass="math inline">\(\mathbb{E}_{\theta}\left[r(\tau)\right]\)</span>，直观上理解就是我们通过已经收集到的reward拟合出一个函数来评估当前状态的好坏。和之前直接用每条轨迹的reward相比，这种方法保留了历史reward的信息，因此更加可靠。</p><p>这里我们还没有讨论训练Critic的目标函数如何定义，在下一章中我们统一讨论。</p><h1 id="从ac到a2c">2. 从AC到A2C</h1><p>基本的AC算法中我们在Critic网络中需要以state和action作为输入，输出Q函数。这样会带来两个问题：1.方差仍然很大；2.输入维度大（包括状态输入<span class="math inline">\(s\)</span> 和动作输入 <spanclass="math inline">\(a\)</span>），训练困难。为了解决这些问题我们对AC算法进行一些改进。</p><h2 id="引入基线">2.1 引入基线</h2><p>首先和Policygradient里一样，我们同样可以通过引入基线的办法来减小方差。这里的基线可以直接定义为给定状态情况下的价值函数<span class="math inline">\(V_\theta(s)\)</span>。与 <spanclass="math inline">\(Q_\theta(a,s)\)</span>相比，价值函数还没有对当前状态做出动作的选择，因此可以被当做是<strong>平均之后的<span class="math inline">\(Q(a,s)\)</span>函数</strong>。引入价值函数作为基线后，梯度可以重新被写成：</p><p><span class="math display">\[\nabla_{\theta} J(\theta) = \frac{1}{N} \sum_{i=1}^{N} \sum_{t=1}^{T}\nabla_{\theta} \log \pi_{\theta}\left(\mathbf{a}_{i, t} \mid\mathbf{s}_{i, t}\right)\left(A_{\theta}(\mathbf{a}_{i, t},\mathbf{s}_{i, t})\right)\]</span></p><p>其中 <span class="math inline">\(A_{\theta}(a_t,s_t)\)</span>函数我们定义为优势函数： <span class="math display">\[\begin{aligned}  A_{\theta}(a_t,s_t)&amp;=Q_{\theta}(a_t,s_t)-V_{\theta}(s_t)\end{aligned}\]</span></p><blockquote><p>事实上，这里的基线我们只需要选择一个与当前动作无关的函数，我们就能证明这里的梯度仍然是无偏估计。证明之后有空补上！</p></blockquote><h2 id="一步采样">2.2 一步采样</h2><p>这里改进的基本思想是：如果我们需要采样一条轨迹来拟合优势函数，那采样的方差会特别大。然而如果我们只采样下一步的状态，方差相比采样整条轨迹就会大幅减小。</p><p><span class="math display">\[\begin{aligned}  A_{\theta}(a_t,s_t)&amp;=Q_{\theta}(a_t,s_t)-V_{\theta}(s_t)\\  &amp;\approx r(a_t,s_t)+V_{\theta}(s_{t+1})-V_{\theta}(s_t)\end{aligned}\]</span></p><p>在这样近似之后，由于reward函数已知，我们只需要对价值函数进行拟合就能推算出优势函数。这样输入维度就只有状态变量了，大大节省了训练难度。</p><h1 id="从a2c到a3c">3. 从A2C到A3C</h1><p>原理很简单：同时让多个actor与环境分别单独进行交互，总结reward后统一对参数进行更新。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Deep reinforcement learning</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>RL</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Deep reinforcement learning(1): Policy gradient</title>
     <link href="/2022/07/15/Deep%20reinforcement%20learning(1):%20Policy%20gradient/"/>
     <url>/2022/07/15/Deep%20reinforcement%20learning(1):%20Policy%20gradient/</url>
@@ -45,7 +70,7 @@
     
     <tags>
       
-      <tag>Learning</tag>
+      <tag>RL</tag>
       
     </tags>
     
