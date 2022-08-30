@@ -13,7 +13,7 @@
     
     <categories>
       
-      <category>Engineering</category>
+      <category>CAD学习</category>
       
     </categories>
     
@@ -38,7 +38,7 @@
     
     <categories>
       
-      <category>Academic notes</category>
+      <category>Deep reinforcement learning</category>
       
     </categories>
     
@@ -54,7 +54,7 @@
   
   
   <entry>
-    <title>2022阅读计划(一)：霍乱时期的爱情</title>
+    <title>2022阅读计划(1)：霍乱时期的爱情</title>
     <link href="/2022/05/26/%E9%9C%8D%E4%B9%B1/"/>
     <url>/2022/05/26/%E9%9C%8D%E4%B9%B1/</url>
     
@@ -63,7 +63,7 @@
     
     <categories>
       
-      <category>Reading notes</category>
+      <category>2022阅读计划</category>
       
     </categories>
     
@@ -90,7 +90,7 @@
     
     <categories>
       
-      <category>Engineering</category>
+      <category>ROS学习</category>
       
     </categories>
     
@@ -106,7 +106,7 @@
   
   
   <entry>
-    <title>fluent入门学习（二）：热电单向耦合分析</title>
+    <title>fluent入门学习（2）：热电单向耦合分析</title>
     <link href="/2020/09/24/fluent_2/"/>
     <url>/2020/09/24/fluent_2/</url>
     
@@ -115,7 +115,7 @@
     
     <categories>
       
-      <category>Academic notes</category>
+      <category>fluent入门学习</category>
       
     </categories>
     
@@ -131,7 +131,7 @@
   
   
   <entry>
-    <title>fluent入门学习（一）：三维卡门涡街算例</title>
+    <title>fluent入门学习（1）：三维卡门涡街算例</title>
     <link href="/2020/08/13/fluent_1/"/>
     <url>/2020/08/13/fluent_1/</url>
     
@@ -140,7 +140,7 @@
     
     <categories>
       
-      <category>Engineering</category>
+      <category>fluent入门学习</category>
       
     </categories>
     

@@ -4,16 +4,7 @@
   <url>
     <loc>https://smoggy-p.github.io/2022/08/26/%E7%94%A8Solidworks%E8%BF%9B%E8%A1%8C%E6%8B%93%E6%89%91%E4%BC%98%E5%8C%96/</loc>
     
-    <lastmod>2022-08-26</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://smoggy-p.github.io/2022/07/15/Deep%20reinforcement%20learning(1):%20Policy%20gradient/</loc>
-    
-    <lastmod>2022-08-20</lastmod>
+    <lastmod>2022-08-30</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -22,7 +13,7 @@
   <url>
     <loc>https://smoggy-p.github.io/2022/05/15/ros_docker/</loc>
     
-    <lastmod>2022-08-20</lastmod>
+    <lastmod>2022-08-30</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -31,16 +22,16 @@
   <url>
     <loc>https://smoggy-p.github.io/2020/08/13/fluent_1/</loc>
     
-    <lastmod>2022-08-20</lastmod>
+    <lastmod>2022-08-30</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://smoggy-p.github.io/2022/05/26/%E9%9C%8D%E4%B9%B1/</loc>
+    <loc>https://smoggy-p.github.io/2022/07/15/Deep%20reinforcement%20learning(1):%20Policy%20gradient/</loc>
     
-    <lastmod>2022-07-06</lastmod>
+    <lastmod>2022-08-30</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -49,7 +40,16 @@
   <url>
     <loc>https://smoggy-p.github.io/2020/09/24/fluent_2/</loc>
     
-    <lastmod>2022-07-06</lastmod>
+    <lastmod>2022-08-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://smoggy-p.github.io/2022/05/26/%E9%9C%8D%E4%B9%B1/</loc>
+    
+    <lastmod>2022-08-30</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -67,7 +67,7 @@
 
   <url>
     <loc>https://smoggy-p.github.io/</loc>
-    <lastmod>2022-08-26</lastmod>
+    <lastmod>2022-08-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -75,42 +75,42 @@
   
   <url>
     <loc>https://smoggy-p.github.io/tags/Learning/</loc>
-    <lastmod>2022-08-26</lastmod>
+    <lastmod>2022-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://smoggy-p.github.io/tags/CFD/</loc>
-    <lastmod>2022-08-26</lastmod>
+    <lastmod>2022-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://smoggy-p.github.io/tags/ROS/</loc>
-    <lastmod>2022-08-26</lastmod>
+    <lastmod>2022-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://smoggy-p.github.io/tags/Love/</loc>
-    <lastmod>2022-08-26</lastmod>
+    <lastmod>2022-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://smoggy-p.github.io/tags/Reading/</loc>
-    <lastmod>2022-08-26</lastmod>
+    <lastmod>2022-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://smoggy-p.github.io/tags/CAD/</loc>
-    <lastmod>2022-08-26</lastmod>
+    <lastmod>2022-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -118,22 +118,36 @@
 
   
   <url>
-    <loc>https://smoggy-p.github.io/categories/Academic-notes/</loc>
-    <lastmod>2022-08-26</lastmod>
+    <loc>https://smoggy-p.github.io/categories/Deep-reinforcement-learning/</loc>
+    <lastmod>2022-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://smoggy-p.github.io/categories/Engineering/</loc>
-    <lastmod>2022-08-26</lastmod>
+    <loc>https://smoggy-p.github.io/categories/fluent%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2022-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://smoggy-p.github.io/categories/Reading-notes/</loc>
-    <lastmod>2022-08-26</lastmod>
+    <loc>https://smoggy-p.github.io/categories/ROS%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2022-08-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://smoggy-p.github.io/categories/CAD%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2022-08-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://smoggy-p.github.io/categories/2022%E9%98%85%E8%AF%BB%E8%AE%A1%E5%88%92/</loc>
+    <lastmod>2022-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
