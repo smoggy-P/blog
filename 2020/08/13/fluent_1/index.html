@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/web.png">
-  <link rel="icon" href="/img/web.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/web.png">
+  <link rel="icon" href="/blog/img/web.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,23 +19,23 @@
     <meta name="description" content="1. 提要 从零开始学习fluent流体仿真的一些记录，此次学习建立效果较为明显且不需要实验验证的卡门涡街现象的仿真以熟悉大致流程，主要采用solidworks进行模型设计，ICEM进行网格划分。其中一些概念仅为笔者自己的理解，如有谬误欢迎各位提出讨论！ 2. 基本流程 solidworks进行流场建模，spaceclaim进行几何处理，ICEM进行结构网格划分，最后在fluent中设定材料与边界">
 <meta property="og:type" content="article">
 <meta property="og:title" content="fluent入门学习（1）：三维卡门涡街算例">
-<meta property="og:url" content="https://smoggy-p.github.io/2020/08/13/fluent_1/index.html">
-<meta property="og:site_name" content="Moji Shi&#39;s Homepage">
+<meta property="og:url" content="https://smoggy-p.github.io/blog/2020/08/13/fluent_1/index.html">
+<meta property="og:site_name" content="Moji Shi&#39;s Blog">
 <meta property="og:description" content="1. 提要 从零开始学习fluent流体仿真的一些记录，此次学习建立效果较为明显且不需要实验验证的卡门涡街现象的仿真以熟悉大致流程，主要采用solidworks进行模型设计，ICEM进行网格划分。其中一些概念仅为笔者自己的理解，如有谬误欢迎各位提出讨论！ 2. 基本流程 solidworks进行流场建模，spaceclaim进行几何处理，ICEM进行结构网格划分，最后在fluent中设定材料与边界">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://smoggy-p.github.io/img/fluent_1/index.png">
+<meta property="og:image" content="https://smoggy-p.github.io/blog/img/fluent_1/index.png">
 <meta property="article:published_time" content="2020-08-13T04:33:10.000Z">
 <meta property="article:modified_time" content="2022-08-30T13:02:37.023Z">
 <meta property="article:author" content="Moji Shi">
 <meta property="article:tag" content="CFD">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://smoggy-p.github.io/img/fluent_1/index.png">
+<meta name="twitter:image" content="https://smoggy-p.github.io/blog/img/fluent_1/index.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>fluent入门学习（1）：三维卡门涡街算例 - Moji Shi&#39;s Homepage</title>
+  <title>fluent入门学习（1）：三维卡门涡街算例 - Moji Shi&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -59,12 +59,12 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
 
-<link  rel="stylesheet" href="/css/main.css" />
+<link  rel="stylesheet" href="/blog/css/main.css" />
 
 
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
   
 
 
@@ -73,15 +73,15 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"smoggy-p.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"smoggy-p.github.io","root":"/blog/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/blog/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
       Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
   </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
   
 
   
@@ -113,7 +113,7 @@
 <div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="/blog/">
       <strong>Smoggy</strong>
     </a>
 
@@ -132,7 +132,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/">
+              <a class="nav-link" href="/blog/">
                 <i class="iconfont icon-home-fill"></i>
                 Home
               </a>
@@ -144,7 +144,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/">
+              <a class="nav-link" href="/blog/archives/">
                 <i class="iconfont icon-archive-fill"></i>
                 Archives
               </a>
@@ -156,7 +156,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/">
+              <a class="nav-link" href="/blog/categories/">
                 <i class="iconfont icon-category-fill"></i>
                 Categories
               </a>
@@ -168,7 +168,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/">
+              <a class="nav-link" href="/blog/tags/">
                 <i class="iconfont icon-tags-fill"></i>
                 Tags
               </a>
@@ -180,7 +180,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/about/">
+              <a class="nav-link" href="/blog/about/">
                 <i class="iconfont icon-user-fill"></i>
                 About
               </a>
@@ -209,7 +209,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/blog/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -226,8 +226,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2020-08-13 12:33" pubdate>
-          August 13, 2020 pm
+        <time datetime="2020-08-13 06:33" pubdate>
+          August 13, 2020 am
         </time>
       </span>
     
@@ -299,7 +299,7 @@
 <h1 id="spaceclaim的几何预处理">3. SpaceClaim的几何预处理</h1>
 在solidworks中我们主要对固体部分的几何进行了建模，实际分析过程中则主要考察流体的特性，因此需要提取出流体域。这里几何比较简单，只需要使用体积抽取功能，选中能够和几何图形形成封闭空间的面，再选中空间内的任意一个面。（注意：几何图形目前来看需要是一个体而不是多个体合成的，因此本例中如果在solidworks中创建几何时使用了多次拉伸，需要在体积抽取前将多个体合并为一个part）
 <p style="text-align: center;">
-<img src="https://img-blog.csdnimg.cn/20200819162016951.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload width=200>
+<img src="https://img-blog.csdnimg.cn/20200819162016951.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/blog/img/loading.gif" lazyload width=200>
 </p>
 <p>本例中几何处理只需要进行这一步。另外由于这里是流固单向耦合，仅考虑固体对流体的单向作用，因此不需要对固体部分进行网格划分，可以选择在这一步就将固体部分的块抑制（supress）。</p>
 <h1 id="icem结构网格划分">4. ICEM结构网格划分</h1>
@@ -307,55 +307,55 @@ ansys提供了独立的网格划分模块ICEM，我们可以利用它进行非�
 1）非结构网格：由提前设定的参数（网格大小、网格类型四面体或六面体等）自动生成的网格。
 2）结构网格：首先对几何进行抽象，绘制出反应几何特征的块（block），由块到几何建立一一映射。由于块一般为较为规整的几何形状，因此由块生成的网格一般较为整齐，多为六面体网格
 <p style="text-align: center;">
-<img src="https://img-blog.csdnimg.cn/20200819162944643.png#pic_center" srcset="/img/loading.gif" lazyload width=500>
+<img src="https://img-blog.csdnimg.cn/20200819162944643.png#pic_center" srcset="/blog/img/loading.gif" lazyload width=500>
 </p>
 <p>ICEM中的几何不存在体的概念，而只有点、曲线和面，最终形成的网格是在面围成的封闭空间内形成的。首先对所有面进行命名，右边栏part右键create
 part功能，选中需要的面进行命名。</p>
 <p style="text-align: center;">
-<img src="https://img-blog.csdnimg.cn/20200819163307528.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload width=300>
+<img src="https://img-blog.csdnimg.cn/20200819163307528.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/blog/img/loading.gif" lazyload width=300>
 </p>
 命名完成后建立整体的块，这个块是基于已有几何的外部框架搭建的，本例中为一个长方体，其边界与顶点已经一一和几何对应了，之后不用再重复定义。
 <p style="text-align: center;">
-<img src="https://img-blog.csdnimg.cn/20200819163717805.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload width=600>
+<img src="https://img-blog.csdnimg.cn/20200819163717805.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/blog/img/loading.gif" lazyload width=600>
 </p>
 <p>创建完成后对块进行划分。 <img
-src="https://img-blog.csdnimg.cn/20200819163808356.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload
+src="https://img-blog.csdnimg.cn/20200819163808356.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/blog/img/loading.gif" lazyload
 alt="在这里插入图片描述" />
 删去中间圆柱部分的块，建立圆柱周长和两组四条边的映射关系，设置全局网格大小后初步建立网格。
 <img
-src="https://img-blog.csdnimg.cn/20200819163945342.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload
+src="https://img-blog.csdnimg.cn/20200819163945342.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/blog/img/loading.gif" lazyload
 alt="在这里插入图片描述" />
 针对产生畸变严重部分进行顶点的调整后将网格质量提升到0.85以上。 <img
-src="https://img-blog.csdnimg.cn/20200819164123857.png#pic_center" srcset="/img/loading.gif" lazyload
+src="https://img-blog.csdnimg.cn/20200819164123857.png#pic_center" srcset="/blog/img/loading.gif" lazyload
 alt="在这里插入图片描述" /></p>
 <p>针对较稀疏的边使用edge
 params进行设置，增加节点个数：（1.同样能设定增长率，实现边界层效果的设计
 2.进行参数复制可以将参数复制到平行的edge上） <img
-src="https://img-blog.csdnimg.cn/20200819164150295.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload
+src="https://img-blog.csdnimg.cn/20200819164150295.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/blog/img/loading.gif" lazyload
 alt="在这里插入图片描述" /> <img
-src="https://img-blog.csdnimg.cn/20200819164200151.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload
+src="https://img-blog.csdnimg.cn/20200819164200151.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/blog/img/loading.gif" lazyload
 alt="在这里插入图片描述" />
 针对圆柱周边可能出现的边界层进行加密。（网格在五位数数量级时计算速度+精度较为合理）</p>
 <h1 id="fluent求解器设置">5. fluent求解器设置</h1>
 <p>general中能够进行网格质量的检查，以及是求解瞬态还是稳态情况。 <img
-src="https://img-blog.csdnimg.cn/20200819164927594.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload
+src="https://img-blog.csdnimg.cn/20200819164927594.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/blog/img/loading.gif" lazyload
 alt="在这里插入图片描述" />
 之后需要在models中开启需要模拟的物理方程，默认只有流体粘度模型，本例中也只需要开启这个。
-<img src="https://img-blog.csdnimg.cn/20200819165110520.png#pic_center" srcset="/img/loading.gif" lazyload
+<img src="https://img-blog.csdnimg.cn/20200819165110520.png#pic_center" srcset="/blog/img/loading.gif" lazyload
 alt="在这里插入图片描述" />
 之后进行材料设置和进出口条件设置，将流体域的材料改为液态水，进口速度根据卡门涡街产生的雷诺数范围粗略计算为20m/s，其余皆为默认。
 method中选择迭代方法，这里介绍常用算法SIMPLE算法，其主要根据不可压缩流体的连续性方程以及N-S方程进行迭代，在上述两个方程中速度场与压强场相互耦合，通过初始化压强场，由NS方程得出对应速度场，再由连续性方程进行修正之后反复迭代。
 迭代算法完成后在residual中设置残差要求后进行初始化，由于这个例子中为瞬态求解因此还需要在计算页中设定求解时间步长、步数、每个时间步长的迭代次数，最后进行计算。
 <img
-src="https://img-blog.csdnimg.cn/20200819165904277.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload
+src="https://img-blog.csdnimg.cn/20200819165904277.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/blog/img/loading.gif" lazyload
 alt="在这里插入图片描述" />
 后处理可以使用fluent自带或者ansys中的cfd-post，如果需要展示动画需要在计算之前提前在calculation
 activities中添加需要观测的云图，这里得到的结果如下：</p>
 <p style="text-align: center;">
-<img src="https://img-blog.csdnimg.cn/20200819170156853.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload width=600>
+<img src="https://img-blog.csdnimg.cn/20200819170156853.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/blog/img/loading.gif" lazyload width=600>
 </p>
 <p style="text-align: center;">
-<img src="https://img-blog.csdnimg.cn/20200819170239399.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/img/loading.gif" lazyload width=630>
+<img src="https://img-blog.csdnimg.cn/20200819170239399.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/blog/img/loading.gif" lazyload width=630>
 </p>
 <p>可以观测到涡旋的脱落。</p>
 
@@ -376,7 +376,7 @@ activities中添加需要观测的云图，这里得到的结果如下：</p>
     
       <span class="category-chain">
         
-  <a href="/categories/fluent%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/" class="category-chain-item">fluent入门学习</a>
+  <a href="/blog/categories/fluent%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/" class="category-chain-item">fluent入门学习</a>
   
   
 
@@ -391,7 +391,7 @@ activities中添加需要观测的云图，这里得到的结果如下：</p>
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/CFD/">#CFD</a>
+        <a href="/blog/tags/CFD/">#CFD</a>
       
     </div>
   
@@ -405,7 +405,7 @@ activities中添加需要观测的云图，这里得到的结果如下：</p>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2020/09/24/fluent_2/" title="fluent入门学习（2）：热电单向耦合分析">
+                      <a href="/blog/2020/09/24/fluent_2/" title="fluent入门学习（2）：热电单向耦合分析">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">fluent入门学习（2）：热电单向耦合分析</span>
                         <span class="visible-mobile">Previous</span>
@@ -560,8 +560,8 @@ activities中添加需要观测的云图，这里得到的结果如下：</p>
 
 <script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
 
 
   <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
@@ -583,7 +583,7 @@ activities中添加需要观测的云图，这里得到的结果如下：</p>
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
+    <script  src="/blog/js/img-lazyload.js" ></script>
   
 
 
@@ -655,7 +655,7 @@ activities中添加需要观测的云图，这里得到的结果如下：</p>
 
   <script>Fluid.plugins.imageCaption();</script>
 
-  <script  src="/js/local-search.js" ></script>
+  <script  src="/blog/js/local-search.js" ></script>
 
   <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
@@ -665,7 +665,7 @@ activities中添加需要观测的云图，这里得到的结果如下：</p>
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
+<script  src="/blog/js/boot.js" ></script>
 
 
   

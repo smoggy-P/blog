@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/web.png">
-  <link rel="icon" href="/img/web.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/web.png">
+  <link rel="icon" href="/blog/img/web.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,23 +19,23 @@
     <meta name="description" content="1. 从策略梯度到Actor-Critic 上一章介绍了策略梯度的基本思想，最后得到的更新梯度的步骤可以写成如下形式： \[ \nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i&#x3D;1}^{N} \sum_{t&#x3D;1}^{T} \nabla_{\theta} \log \pi_{\theta}\left(\mathbf{a}_{i, t} \mid">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Deep reinforcement learning(2): Actor-Critic">
-<meta property="og:url" content="https://smoggy-p.github.io/2022/08/23/Deep%20reinforcement%20learning(2):%20Actor-Critic/index.html">
-<meta property="og:site_name" content="Moji Shi&#39;s Homepage">
+<meta property="og:url" content="https://smoggy-p.github.io/blog/2022/08/23/Deep%20reinforcement%20learning(2):%20Actor-Critic/index.html">
+<meta property="og:site_name" content="Moji Shi&#39;s Blog">
 <meta property="og:description" content="1. 从策略梯度到Actor-Critic 上一章介绍了策略梯度的基本思想，最后得到的更新梯度的步骤可以写成如下形式： \[ \nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i&#x3D;1}^{N} \sum_{t&#x3D;1}^{T} \nabla_{\theta} \log \pi_{\theta}\left(\mathbf{a}_{i, t} \mid">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://smoggy-p.github.io/img/drl_1/drl.png">
+<meta property="og:image" content="https://smoggy-p.github.io/blog/img/drl_1/drl.png">
 <meta property="article:published_time" content="2022-08-23T04:45:54.268Z">
 <meta property="article:modified_time" content="2022-08-31T10:23:33.429Z">
 <meta property="article:author" content="Moji Shi">
 <meta property="article:tag" content="RL">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://smoggy-p.github.io/img/drl_1/drl.png">
+<meta name="twitter:image" content="https://smoggy-p.github.io/blog/img/drl_1/drl.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Deep reinforcement learning(2): Actor-Critic - Moji Shi&#39;s Homepage</title>
+  <title>Deep reinforcement learning(2): Actor-Critic - Moji Shi&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -59,12 +59,12 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
 
-<link  rel="stylesheet" href="/css/main.css" />
+<link  rel="stylesheet" href="/blog/css/main.css" />
 
 
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
   
 
 
@@ -73,15 +73,15 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"smoggy-p.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"smoggy-p.github.io","root":"/blog/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/blog/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
       Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
   </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
   
 
   
@@ -113,7 +113,7 @@
 <div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="/blog/">
       <strong>Smoggy</strong>
     </a>
 
@@ -132,7 +132,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/">
+              <a class="nav-link" href="/blog/">
                 <i class="iconfont icon-home-fill"></i>
                 Home
               </a>
@@ -144,7 +144,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/">
+              <a class="nav-link" href="/blog/archives/">
                 <i class="iconfont icon-archive-fill"></i>
                 Archives
               </a>
@@ -156,7 +156,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/">
+              <a class="nav-link" href="/blog/categories/">
                 <i class="iconfont icon-category-fill"></i>
                 Categories
               </a>
@@ -168,7 +168,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/">
+              <a class="nav-link" href="/blog/tags/">
                 <i class="iconfont icon-tags-fill"></i>
                 Tags
               </a>
@@ -180,7 +180,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/about/">
+              <a class="nav-link" href="/blog/about/">
                 <i class="iconfont icon-user-fill"></i>
                 About
               </a>
@@ -209,7 +209,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/blog/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -226,8 +226,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-23 12:45" pubdate>
-          August 23, 2022 pm
+        <time datetime="2022-08-23 06:45" pubdate>
+          August 23, 2022 am
         </time>
       </span>
     
@@ -400,7 +400,7 @@ y_{i,t}\approx r(s_{i,t},a_{i,t})+\gamma V_\theta(s_{i,t+1})
 \]</span> 至此我们就得到了完成的A2C算法流程。</p>
 <h1 id="从a2c到a3c">3. 从A2C到A3C</h1>
 <p>原理很简单：同时让多个actor与环境分别单独进行交互，将交互的结果存入缓冲区中总结reward后统一对参数进行更新。
-<img src="/img/drl_1/A3C.png" srcset="/img/loading.gif" lazyload /></p>
+<img src="/img/drl_1/A3C.png" srcset="/blog/img/loading.gif" lazyload /></p>
 
                 
               </div>
@@ -419,7 +419,7 @@ y_{i,t}\approx r(s_{i,t},a_{i,t})+\gamma V_\theta(s_{i,t+1})
     
       <span class="category-chain">
         
-  <a href="/categories/Deep-reinforcement-learning/" class="category-chain-item">Deep reinforcement learning</a>
+  <a href="/blog/categories/Deep-reinforcement-learning/" class="category-chain-item">Deep reinforcement learning</a>
   
   
 
@@ -434,7 +434,7 @@ y_{i,t}\approx r(s_{i,t},a_{i,t})+\gamma V_\theta(s_{i,t+1})
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/RL/">#RL</a>
+        <a href="/blog/tags/RL/">#RL</a>
       
     </div>
   
@@ -448,7 +448,7 @@ y_{i,t}\approx r(s_{i,t},a_{i,t})+\gamma V_\theta(s_{i,t+1})
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/08/26/%E7%94%A8Solidworks%E8%BF%9B%E8%A1%8C%E6%8B%93%E6%89%91%E4%BC%98%E5%8C%96/" title="用Solidworks对无人机进行拓扑优化">
+                      <a href="/blog/2022/08/26/%E7%94%A8Solidworks%E8%BF%9B%E8%A1%8C%E6%8B%93%E6%89%91%E4%BC%98%E5%8C%96/" title="用Solidworks对无人机进行拓扑优化">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">用Solidworks对无人机进行拓扑优化</span>
                         <span class="visible-mobile">Previous</span>
@@ -458,7 +458,7 @@ y_{i,t}\approx r(s_{i,t},a_{i,t})+\gamma V_\theta(s_{i,t+1})
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/07/15/Deep%20reinforcement%20learning(1):%20Policy%20gradient/" title="Deep reinforcement learning(1): Policy gradient">
+                      <a href="/blog/2022/07/15/Deep%20reinforcement%20learning(1):%20Policy%20gradient/" title="Deep reinforcement learning(1): Policy gradient">
                         <span class="hidden-mobile">Deep reinforcement learning(1): Policy gradient</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -615,8 +615,8 @@ y_{i,t}\approx r(s_{i,t},a_{i,t})+\gamma V_\theta(s_{i,t+1})
 
 <script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
 
 
   <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
@@ -638,7 +638,7 @@ y_{i,t}\approx r(s_{i,t},a_{i,t})+\gamma V_\theta(s_{i,t+1})
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
+    <script  src="/blog/js/img-lazyload.js" ></script>
   
 
 
@@ -744,7 +744,7 @@ y_{i,t}\approx r(s_{i,t},a_{i,t})+\gamma V_\theta(s_{i,t+1})
 
   <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
-  <script  src="/js/local-search.js" ></script>
+  <script  src="/blog/js/local-search.js" ></script>
 
   <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
@@ -754,7 +754,7 @@ y_{i,t}\approx r(s_{i,t},a_{i,t})+\gamma V_\theta(s_{i,t+1})
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
+<script  src="/blog/js/boot.js" ></script>
 
 
   
