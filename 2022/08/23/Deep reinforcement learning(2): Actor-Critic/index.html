@@ -25,7 +25,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://smoggy-p.github.io/blog/img/drl_1/drl.png">
 <meta property="article:published_time" content="2022-08-23T04:45:54.268Z">
-<meta property="article:modified_time" content="2022-08-31T10:23:33.429Z">
+<meta property="article:modified_time" content="2023-01-21T13:04:29.733Z">
 <meta property="article:author" content="Moji Shi">
 <meta property="article:tag" content="RL">
 <meta name="twitter:card" content="summary_large_image">
@@ -400,7 +400,7 @@ y_{i,t}\approx r(s_{i,t},a_{i,t})+\gamma V_\theta(s_{i,t+1})
 \]</span> 至此我们就得到了完成的A2C算法流程。</p>
 <h1 id="从a2c到a3c">3. 从A2C到A3C</h1>
 <p>原理很简单：同时让多个actor与环境分别单独进行交互，将交互的结果存入缓冲区中总结reward后统一对参数进行更新。
-<img src="/img/drl_1/A3C.png" srcset="/blog/img/loading.gif" lazyload /></p>
+<img src="/blog/img/drl_1/A3C.png" srcset="/blog/img/loading.gif" lazyload /></p>
 
                 
               </div>
