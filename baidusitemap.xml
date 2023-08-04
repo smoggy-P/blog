@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://smoggy-p.github.io/blog/blog/2023/08/04/Ubuntu%20Lagging%20Solutions/</loc>
+    <lastmod>2023-08-04</lastmod>
+  </url>
+  <url>
     <loc>https://smoggy-p.github.io/blog/blog/2022/05/15/ros_docker/</loc>
     <lastmod>2023-01-21</lastmod>
   </url>

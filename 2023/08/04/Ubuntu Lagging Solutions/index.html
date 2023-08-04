@@ -16,26 +16,25 @@
   <meta name="author" content="Moji Shi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="暑研期间帮师兄出了一版无人机的图，在画完基本框架后想通过拓扑优化的方法对机身进行减重。之前进行拓扑优化都是在ansys workbench里，在我尝试把模型导入ansys的过程中出现了很多问题，最后我决定还是直接在solidworks里完成拓扑优化，这里记录一下流程。 1. 概述 Solidworks Simulation中直接提供了拓扑优化的算例。目前只能针对单个零部件进行拓扑优化，无法考虑零部">
+    <meta name="description" content="最近解决了一下ubuntu卡顿的情况，梳理了一下造成卡顿的一些原因，便于之后排查。 1. 显卡驱动问题 ubuntu本身默认没有nvidia显卡驱动，需要手动安装，这里的过程不再赘述。判断显卡驱动有没有出问题可以通过以下几种渠道：  设置-&gt;关于 选项下查看显卡是否为独立显卡，如果驱动没有起作用，这里会显示核显。  在命令行输入 nvidia-smi 观察是否有输出 123456789101">
 <meta property="og:type" content="article">
-<meta property="og:title" content="用Solidworks对无人机进行拓扑优化">
-<meta property="og:url" content="https://smoggy-p.github.io/blog/2022/08/26/%E7%94%A8Solidworks%E8%BF%9B%E8%A1%8C%E6%8B%93%E6%89%91%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:title" content="Ubuntu Lagging Solutions">
+<meta property="og:url" content="https://smoggy-p.github.io/blog/2023/08/04/Ubuntu%20Lagging%20Solutions/index.html">
 <meta property="og:site_name" content="Moji Shi&#39;s Blog">
-<meta property="og:description" content="暑研期间帮师兄出了一版无人机的图，在画完基本框架后想通过拓扑优化的方法对机身进行减重。之前进行拓扑优化都是在ansys workbench里，在我尝试把模型导入ansys的过程中出现了很多问题，最后我决定还是直接在solidworks里完成拓扑优化，这里记录一下流程。 1. 概述 Solidworks Simulation中直接提供了拓扑优化的算例。目前只能针对单个零部件进行拓扑优化，无法考虑零部">
+<meta property="og:description" content="最近解决了一下ubuntu卡顿的情况，梳理了一下造成卡顿的一些原因，便于之后排查。 1. 显卡驱动问题 ubuntu本身默认没有nvidia显卡驱动，需要手动安装，这里的过程不再赘述。判断显卡驱动有没有出问题可以通过以下几种渠道：  设置-&gt;关于 选项下查看显卡是否为独立显卡，如果驱动没有起作用，这里会显示核显。  在命令行输入 nvidia-smi 观察是否有输出 123456789101">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://smoggy-p.github.io/blog/img/drone/index.png">
-<meta property="article:published_time" content="2022-08-26T07:37:09.441Z">
-<meta property="article:modified_time" content="2023-01-21T13:03:59.985Z">
+<meta property="og:image" content="https://smoggy-p.github.io/blog/2023/08/04/img/ubuntu/gpu_set.png">
+<meta property="article:published_time" content="2023-08-04T15:34:57.950Z">
+<meta property="article:modified_time" content="2023-08-04T16:04:32.813Z">
 <meta property="article:author" content="Moji Shi">
-<meta property="article:tag" content="CAD">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://smoggy-p.github.io/blog/img/drone/index.png">
+<meta name="twitter:image" content="https://smoggy-p.github.io/blog/2023/08/04/img/ubuntu/gpu_set.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>用Solidworks对无人机进行拓扑优化 - Moji Shi&#39;s Blog</title>
+  <title>Ubuntu Lagging Solutions - Moji Shi&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -215,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="用Solidworks对无人机进行拓扑优化"></span>
+            <span id="subtitle" data-typed-text="Ubuntu Lagging Solutions"></span>
           
         </div>
 
@@ -226,8 +225,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-26 09:37" pubdate>
-          August 26, 2022 am
+        <time datetime="2023-08-04 17:34" pubdate>
+          August 4, 2023 pm
         </time>
       </span>
     
@@ -238,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          921 words
+          1.8k words
         
       </span>
     
@@ -249,7 +248,7 @@
         
         
         
-          8 mins
+          16 mins
         
       </span>
     
@@ -287,45 +286,34 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">用Solidworks对无人机进行拓扑优化</h1>
+            <h1 style="display: none">Ubuntu Lagging Solutions</h1>
             
             
               <div class="markdown-body">
                 
-                <p>暑研期间帮师兄出了一版无人机的图，在画完基本框架后想通过拓扑优化的方法对机身进行减重。之前进行拓扑优化都是在ansys
-workbench里，在我尝试把模型导入ansys的过程中出现了很多问题，最后我决定还是直接在solidworks里完成拓扑优化，这里记录一下流程。</p>
-<h1 id="概述">1. 概述</h1>
-<p>Solidworks
-Simulation中直接提供了拓扑优化的算例。目前只能针对<strong>单个零部件</strong>进行拓扑优化，无法考虑零部件之间的相对作用（如果有需要可以在ansys里完成）。整体拓扑优化的思路是首先用夹具对零件进行限位，对零件施加载荷，之后定义目标函数，在给定约束的情况下求解优化问题。</p>
-<h1 id="具体流程">2. 具体流程</h1>
-<h2 id="选择实体">2.1 选择实体</h2>
-<p>首先在装配体文件中切换到simulation界面，点击新算例，选择拓扑算例：
-<img src="/blog/img/drone/新建算例.png" srcset="/blog/img/loading.gif" lazyload /></p>
-<p>之后在模型中选取需要进行拓扑优化的零部件： <img
-src="/blog/img/drone/选择实体.png" srcset="/blog/img/loading.gif" lazyload /></p>
-<p>选中创建算例后可以看到如下界面： <img
-src="/blog/img/drone/选择界面.png" srcset="/blog/img/loading.gif" lazyload /></p>
-<h2 id="添加夹具">2.2 添加夹具</h2>
-<p>之后我们在零部件上添加夹具。（连结部分暂时还不清楚作用，但是似乎不影响计算）添加夹具的意义在于对零件进行限位，常见的有固定夹具、弹簧夹具等。固定夹具的效果如下图：
-<img src="/blog/img/drone/Fixed-solid.gif" srcset="/blog/img/loading.gif" lazyload /></p>
-<p>对于无人机碳板，我们固定其最外围一圈进行优化。</p>
-<h2 id="添加外部载荷">2.3 添加外部载荷</h2>
-<p>之后我们需要给零件添加外部载荷。可以选择添加力或者扭矩，修改力的方向。
-<img src="/blog/img/drone/外部载荷.png" srcset="/blog/img/loading.gif" lazyload /></p>
-<p>这里需要注意的是我们可以选择分割操作，这样可以在零件的部分位置添加载荷。用于分割的草图需要我们在<strong>零部件</strong>文件里单独添加（装配体里的草图没有用）。另外可以选择按条目或者按总数进行分配，即选择多个面之后是每个面分配这么多载荷还是总共分配。</p>
-<h2 id="目标和约束">2.4 目标和约束</h2>
-<p>这里我们可以选择优化目标以及约束条件。常用的是最佳强度重量比，即选定需要减轻的重量，算出减轻重量后保留最大强度的方案。
-<img src="/blog/img/drone/目标和约束.png" srcset="/blog/img/loading.gif" lazyload /></p>
-<h2 id="保留区域">2.5 保留区域</h2>
-<p>可以看到无人机碳板上有许多孔洞，如果我们直接进行优化，这些孔洞很有可能会被扩充成更大的区域。为了保留这些孔洞特征，我们需要在制造控制选项中添加他们为保留的区域。
-<img src="/blog/img/drone/保留区域.png" srcset="/blog/img/loading.gif" lazyload /></p>
-<p>此外在制造控制中我们还可以选择对称操作，这样拓扑优化出来的结果会更规则一些。</p>
-<h2 id="网格划分">2.6 网格划分</h2>
-<p>在网格划分中我直接选用了默认自动生成的网格，也可以根据需求在某些部分添加细化的网格。
-<img src="/blog/img/drone/网格划分.png" srcset="/blog/img/loading.gif" lazyload /></p>
-<h1 id="优化结果">3. 优化结果</h1>
-<p>最后优化的结果如图： <img src="/blog/img/drone/优化结果.png" srcset="/blog/img/loading.gif" lazyload /></p>
-<p>我们可以手动在原本零件上按照优化结果所示进行切除操作。</p>
+                <p>最近解决了一下ubuntu卡顿的情况，梳理了一下造成卡顿的一些原因，便于之后排查。</p>
+<h1 id="显卡驱动问题">1. 显卡驱动问题</h1>
+<p>ubuntu本身默认没有nvidia显卡驱动，需要手动安装，这里的过程不再赘述。判断显卡驱动有没有出问题可以通过以下几种渠道：</p>
+<ul>
+<li><p>设置-&gt;关于
+选项下查看显卡是否为独立显卡，如果驱动没有起作用，这里会显示核显。 <img
+src="../img/ubuntu/gpu.png" srcset="/blog/img/loading.gif" lazyload /></p></li>
+<li><p>在命令行输入 <code>nvidia-smi</code> 观察是否有输出 <figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">+-----------------------------------------------------------------------------+<br>|<span class="hljs-string"> NVIDIA-SMI 470.199.02   Driver Version: 470.199.02   CUDA Version: 11.4     </span>|<br>|<span class="hljs-string">-------------------------------+----------------------+----------------------+</span><br><span class="hljs-string"></span>|<span class="hljs-string"> GPU  Name        Persistence-M</span>|<span class="hljs-string"> Bus-Id        Disp.A </span>|<span class="hljs-string"> Volatile Uncorr. ECC </span>|<br>|<span class="hljs-string"> Fan  Temp  Perf  Pwr:Usage/Cap</span>|<span class="hljs-string">         Memory-Usage </span>|<span class="hljs-string"> GPU-Util  Compute M. </span>|<br>|<span class="hljs-string">                               </span>|<span class="hljs-string">                      </span>|<span class="hljs-string">               MIG M. </span>|<br>|<span class="hljs-string">===============================+======================+======================</span>|<br>|<span class="hljs-string">   0  NVIDIA GeForce ...  Off  </span>|<span class="hljs-string"> 00000000:01:00.0  On </span>|<span class="hljs-string">                  N/A </span>|<br>|<span class="hljs-string"> N/A   59C    P8     3W /  N/A </span>|<span class="hljs-string">    597MiB /  3911MiB </span>|<span class="hljs-string">      6%      Default </span>|<br>|<span class="hljs-string">                               </span>|<span class="hljs-string">                      </span>|<span class="hljs-string">                  N/A </span>|<br>+-------------------------------+----------------------+----------------------+<br>                                                                               <br>+-----------------------------------------------------------------------------+<br>|<span class="hljs-string"> Processes:                                                                  </span>|<br>|<span class="hljs-string">  GPU   GI   CI        PID   Type   Process name                  GPU Memory </span>|<br>|<span class="hljs-string">        ID   ID                                                   Usage      </span>|<br>|<span class="hljs-string">=============================================================================</span>|<br>|<span class="hljs-string">    0   N/A  N/A      1584      G   /usr/lib/xorg/Xorg                 70MiB </span>|<br>|<span class="hljs-string">    0   N/A  N/A      2420      G   /usr/lib/xorg/Xorg                222MiB </span>|<br>|<span class="hljs-string">    0   N/A  N/A      2616      G   /usr/bin/gnome-shell               62MiB </span>|<br>|<span class="hljs-string">    0   N/A  N/A      6695      G   ...RendererForSitePerProcess      206MiB </span>|<br>|<span class="hljs-string">    0   N/A  N/A     13625      G   ...824728346665869974,262144       25MiB </span>|<br>+-----------------------------------------------------------------------------+<br><br></code></pre></td></tr></table></figure>
+---</p></li>
+</ul>
+<h1 id="显卡使用模式">2. 显卡使用模式</h1>
+<p>在确认显卡驱动成功起作用之后，我们仍然不能确认显卡在工作，这也是我这次遇到的情况。在通过
+<code>apt upgrade</code>
+自动升级显卡驱动后，我发现新安装的显卡驱动默认采用"on-demand"模式。一般情况下显卡都处于闲置状态。我们可以通过以下简单测试看看显卡是否正在工作。
+- 在终端内输入
+<code>watch nvidia-smi</code>，注意持续观察下半部分"Process" -
+打开firefox浏览器，观察Process部分有没有新增firefox的进程，如果没有就证明GPU处于on-demand模式
+- 在终端输入<code>nvidia-settings</code>，将模式调整为Performance
+Mode，之后reboot <img src="../img/ubuntu/gpu_set.png" srcset="/blog/img/loading.gif" lazyload /></p>
+<h1 id="cpu使用模式">3. CPU使用模式</h1>
+<p>部分情况下CPU也会处于on
+demand模式，可以通过<code>cpufrequtils</code>进行调整： <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># 安装cpufreq工具</span><br>sudo apt install cpufrequtils<br><span class="hljs-comment"># 检查CPU频率是否是最大状态</span><br>cpufreq-<span class="hljs-built_in">info</span><br><span class="hljs-comment"># 调整CPU模式</span><br>cpufreq-<span class="hljs-built_in">set</span> -g performance<br></code></pre></td></tr></table></figure>
+值得一提的是这个设置重启会被重置，之后再看看有没有保留设定的方法。</p>
 
                 
               </div>
@@ -334,34 +322,6 @@ src="/blog/img/drone/选择界面.png" srcset="/blog/img/loading.gif" lazyload /
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/blog/categories/CAD%E5%AD%A6%E4%B9%A0/" class="category-chain-item">CAD学习</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/blog/tags/CAD/">#CAD</a>
-      
-    </div>
   
 </div>
 
@@ -373,18 +333,12 @@ src="/blog/img/drone/选择界面.png" srcset="/blog/img/loading.gif" lazyload /
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/blog/2023/08/04/Ubuntu%20Lagging%20Solutions/" title="Ubuntu Lagging Solutions">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Ubuntu Lagging Solutions</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/blog/2022/08/23/Deep%20reinforcement%20learning(2):%20Actor-Critic/" title="Deep reinforcement learning(2): Actor-Critic">
-                        <span class="hidden-mobile">Deep reinforcement learning(2): Actor-Critic</span>
+                      <a href="/blog/2022/08/26/%E7%94%A8Solidworks%E8%BF%9B%E8%A1%8C%E6%8B%93%E6%89%91%E4%BC%98%E5%8C%96/" title="用Solidworks对无人机进行拓扑优化">
+                        <span class="hidden-mobile">用Solidworks对无人机进行拓扑优化</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
