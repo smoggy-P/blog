@@ -16,26 +16,24 @@
   <meta name="author" content="Moji Shi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="最近解决了一下ubuntu卡顿的情况，梳理了一下造成卡顿的一些原因，便于之后排查。 1. 显卡驱动问题 ubuntu本身默认没有nvidia显卡驱动，需要手动安装，这里的过程不再赘述。判断显卡驱动有没有出问题可以通过以下几种渠道：  设置-&gt;关于 选项下查看显卡是否为独立显卡，如果驱动没有起作用，这里会显示核显。    在命令行输入 nvidia-smi 观察是否有输出 1234567891">
+    <meta name="description" content="1. Convex Sets 1.1 Affine Set \(C\) Definition: \(\forall x_1,x_2\in C, \theta x_1+(1-\theta) x_2 \in C\) Property: - Solution Set of Linear Equation \(\iff\) Affine Set(线性方程的解集是affine set，同时affine se">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Ubuntu Lagging Solutions">
-<meta property="og:url" content="https://smoggy-p.github.io/blog/2023/08/04/Ubuntu%20Lagging%20Solutions/index.html">
+<meta property="og:title" content="Convex Optimization Note(1): Affine Set and Convex Set">
+<meta property="og:url" content="https://smoggy-p.github.io/blog/2023/10/28/Optimal%20Control(1)/index.html">
 <meta property="og:site_name" content="Moji Shi&#39;s Blog">
-<meta property="og:description" content="最近解决了一下ubuntu卡顿的情况，梳理了一下造成卡顿的一些原因，便于之后排查。 1. 显卡驱动问题 ubuntu本身默认没有nvidia显卡驱动，需要手动安装，这里的过程不再赘述。判断显卡驱动有没有出问题可以通过以下几种渠道：  设置-&gt;关于 选项下查看显卡是否为独立显卡，如果驱动没有起作用，这里会显示核显。    在命令行输入 nvidia-smi 观察是否有输出 1234567891">
+<meta property="og:description" content="1. Convex Sets 1.1 Affine Set \(C\) Definition: \(\forall x_1,x_2\in C, \theta x_1+(1-\theta) x_2 \in C\) Property: - Solution Set of Linear Equation \(\iff\) Affine Set(线性方程的解集是affine set，同时affine se">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://smoggy-p.github.io/blog/img/ubuntu/gpu.png">
-<meta property="og:image" content="https://smoggy-p.github.io/blog/img/ubuntu/gpu_set.png">
-<meta property="article:published_time" content="2023-08-04T15:34:57.950Z">
-<meta property="article:modified_time" content="2023-08-04T16:16:47.125Z">
+<meta property="article:published_time" content="2023-10-28T04:11:01.872Z">
+<meta property="article:modified_time" content="2023-10-28T17:25:45.777Z">
 <meta property="article:author" content="Moji Shi">
+<meta property="article:tag" content="Math">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://smoggy-p.github.io/blog/img/ubuntu/gpu.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Ubuntu Lagging Solutions - Moji Shi&#39;s Blog</title>
+  <title>Convex Optimization Note(1): Affine Set and Convex Set - Moji Shi&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -215,7 +213,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Ubuntu Lagging Solutions"></span>
+            <span id="subtitle" data-typed-text="Convex Optimization Note(1): Affine Set and Convex Set"></span>
           
         </div>
 
@@ -226,8 +224,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-08-04 17:34" pubdate>
-          August 4, 2023 pm
+        <time datetime="2023-10-28 06:11" pubdate>
+          October 28, 2023 am
         </time>
       </span>
     
@@ -238,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k words
+          2.3k words
         
       </span>
     
@@ -249,7 +247,7 @@
         
         
         
-          16 mins
+          20 mins
         
       </span>
     
@@ -287,39 +285,106 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Ubuntu Lagging Solutions</h1>
+            <h1 style="display: none">Convex Optimization Note(1): Affine Set and Convex Set</h1>
             
             
               <div class="markdown-body">
                 
-                <p>最近解决了一下ubuntu卡顿的情况，梳理了一下造成卡顿的一些原因，便于之后排查。</p>
-<h1 id="显卡驱动问题">1. 显卡驱动问题</h1>
-<p>ubuntu本身默认没有nvidia显卡驱动，需要手动安装，这里的过程不再赘述。判断显卡驱动有没有出问题可以通过以下几种渠道：</p>
+                <h1 id="convex-sets">1. Convex Sets</h1>
+<h2 id="affine-set-c">1.1 Affine Set <span
+class="math inline">\(C\)</span></h2>
+<p><strong>Definition</strong>: <span class="math inline">\(\forall
+x_1,x_2\in C, \theta x_1+(1-\theta) x_2 \in C\)</span></p>
+<p><strong>Property</strong>: - Solution Set of Linear Equation <span
+class="math inline">\(\iff\)</span> Affine Set(线性方程的解集是affine
+set，同时affine set都能写成线性方程的解) - Subspace: <span
+class="math inline">\(V=C-x_0\)</span> where <span
+class="math inline">\(x_0\in C\)</span>(无论选择哪个<span
+class="math inline">\(x_0\)</span>，subspace <span
+class="math inline">\(V\)</span>始终能穿过原点)</p>
+<h2 id="affine-hull-textbfaff-c">1.2 Affine Hull <span
+class="math inline">\(\textbf{aff }C\)</span></h2>
+<p><strong>Definition</strong>: All affine combinations of points in set
+<span class="math inline">\(C\)</span></p>
+<p><strong>Property</strong>: Smallest affine set that contains <span
+class="math inline">\(C\)</span></p>
+<p><strong>Example</strong>: Affine set of a circle <span
+class="math inline">\(\left\{(x_1,x_2)\in\mathbb{R}^2|x_1^2+x_2^2=1\right\}\)</span>
+is <span class="math inline">\(\mathbb{R^2}\)</span>, the <em>affine
+dimesion</em> is 2.</p>
+<h2 id="convex-set">1.3 Convex Set</h2>
+<p><strong>Definition:</strong> Affine set with <span
+class="math inline">\(\theta \in [0,1]\)</span>, we have similarly
+<em>Convex Hull</em></p>
+<p><strong>Property:</strong> - works for infinite sums and integral -
+pass through expectation</p>
+<h2 id="conenon-negative-homogeneous">1.4 Cone(non-negative
+homogeneous)</h2>
+<p><strong>Definition:</strong> <span class="math inline">\(\forall x\in
+C\text{ and } \theta &gt; 0, \theta x\in C\)</span></p>
+<h2 id="simplex">1.5 Simplex</h2>
+<p><strong>Definition:</strong> Convex hull of <span
+class="math inline">\(k+1\)</span> affine independent vector</p>
+<blockquote>
+<p>affine independent: 直观理解与线性相关定义类似，数学表达上对于<span
+class="math inline">\(v_0,v_1\dots v_{k}\)</span>，如果<span
+class="math inline">\((v_1-v_0,v_2-v_0\dots
+v_k-v_0)\)</span>线性无关，则这k+1个向量仿射无关。值得一提的是对于二维平面，要证明四个及以上向量仿射无关就需要证明三个及以上二维向量线性无关，而三个二维向量必定线性相关，因此不存在四个及以上仿射相关的二维向量，因此
+<span class="math inline">\(\mathbb{R}^2\)</span>
+中的simplex只可能是三角形（而不会是四边形或更多边形）。</p>
+</blockquote>
+<h2 id="positive-semi-definite-cone">1.6 Positive Semi-definite
+Cone</h2>
+<p><strong>Definition:</strong> Set of Semi-definite matrix <span
+class="math inline">\(S_+^n=\left\{X\in\mathbb{R}^{n\times
+n}|X^T=X,X\succeq0\right\}\)</span></p>
+<p><strong>Property:</strong> This set is a convex cone.
+(任意两个半正定矩阵线性组合，系数为正的情况下，结果仍为半正定矩阵)</p>
+<h1 id="operation-that-preserves-convexity">2. Operation that preserves
+convexity</h1>
 <ul>
-<li>设置-&gt;关于
-选项下查看显卡是否为独立显卡，如果驱动没有起作用，这里会显示核显。
-<p style="text-align: center;">
-<img src="/blog/img/ubuntu/gpu.png" srcset="/blog/img/loading.gif" lazyload width=400>
-</p></li>
-<li>在命令行输入 <code>nvidia-smi</code> 观察是否有输出 <figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">+-----------------------------------------------------------------------------+<br>|<span class="hljs-string"> NVIDIA-SMI 470.199.02   Driver Version: 470.199.02   CUDA Version: 11.4     </span>|<br>|<span class="hljs-string">-------------------------------+----------------------+----------------------+</span><br><span class="hljs-string"></span>|<span class="hljs-string"> GPU  Name        Persistence-M</span>|<span class="hljs-string"> Bus-Id        Disp.A </span>|<span class="hljs-string"> Volatile Uncorr. ECC </span>|<br>|<span class="hljs-string"> Fan  Temp  Perf  Pwr:Usage/Cap</span>|<span class="hljs-string">         Memory-Usage </span>|<span class="hljs-string"> GPU-Util  Compute M. </span>|<br>|<span class="hljs-string">                               </span>|<span class="hljs-string">                      </span>|<span class="hljs-string">               MIG M. </span>|<br>|<span class="hljs-string">===============================+======================+======================</span>|<br>|<span class="hljs-string">   0  NVIDIA GeForce ...  Off  </span>|<span class="hljs-string"> 00000000:01:00.0  On </span>|<span class="hljs-string">                  N/A </span>|<br>|<span class="hljs-string"> N/A   59C    P8     3W /  N/A </span>|<span class="hljs-string">    597MiB /  3911MiB </span>|<span class="hljs-string">      6%      Default </span>|<br>|<span class="hljs-string">                               </span>|<span class="hljs-string">                      </span>|<span class="hljs-string">                  N/A </span>|<br>+-------------------------------+----------------------+----------------------+<br>                                                                               <br>+-----------------------------------------------------------------------------+<br>|<span class="hljs-string"> Processes:                                                                  </span>|<br>|<span class="hljs-string">  GPU   GI   CI        PID   Type   Process name                  GPU Memory </span>|<br>|<span class="hljs-string">        ID   ID                                                   Usage      </span>|<br>|<span class="hljs-string">=============================================================================</span>|<br>|<span class="hljs-string">    0   N/A  N/A      1584      G   /usr/lib/xorg/Xorg                 70MiB </span>|<br>|<span class="hljs-string">    0   N/A  N/A      2420      G   /usr/lib/xorg/Xorg                222MiB </span>|<br>|<span class="hljs-string">    0   N/A  N/A      2616      G   /usr/bin/gnome-shell               62MiB </span>|<br>|<span class="hljs-string">    0   N/A  N/A      6695      G   ...RendererForSitePerProcess      206MiB </span>|<br>|<span class="hljs-string">    0   N/A  N/A     13625      G   ...824728346665869974,262144       25MiB </span>|<br>+-----------------------------------------------------------------------------+<br><br></code></pre></td></tr></table></figure>
----</li>
+<li><strong>Intersection</strong> of convex sets is still convex</li>
+<li><strong>Affine Function</strong> projects convex sets to convex sets
+&gt; Affine Function: 等同于线性变换</li>
+<li><strong>Perspective Function</strong> -&gt;
+<strong>Linear-Fractional Function</strong> &gt; <span
+class="math inline">\((x_1,x_2,x_3)\)</span> to <span
+class="math inline">\((\frac{x_1}{x_3}, \frac{x_2}{x_3},
+1)\)</span></li>
 </ul>
-<h1 id="显卡使用模式">2. 显卡使用模式</h1>
-在确认显卡驱动成功起作用之后，我们仍然不能确认显卡在工作，这也是我这次遇到的情况。在通过
-<code>apt upgrade</code>
-自动升级显卡驱动后，我发现新安装的显卡驱动默认采用"on-demand"模式。一般情况下显卡都处于闲置状态。我们可以通过以下简单测试看看显卡是否正在工作。
-- 在终端内输入
-<code>watch nvidia-smi</code>，注意持续观察下半部分"Process" -
-打开firefox浏览器，观察Process部分有没有新增firefox的进程，如果没有就证明GPU处于on-demand模式
-- 在终端输入<code>nvidia-settings</code>，将模式调整为Performance
-Mode，之后reboot
-<p style="text-align: center;">
-<img src="/blog/img/ubuntu/gpu_set.png" srcset="/blog/img/loading.gif" lazyload width=400>
-</p>
-<h1 id="cpu使用模式">3. CPU使用模式</h1>
-<p>部分情况下CPU也会处于on
-demand模式，可以通过<code>cpufrequtils</code>进行调整： <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># 安装cpufreq工具</span><br>sudo apt install cpufrequtils<br><span class="hljs-comment"># 检查CPU频率是否是最大状态</span><br>cpufreq-<span class="hljs-built_in">info</span><br><span class="hljs-comment"># 调整CPU模式</span><br>cpufreq-<span class="hljs-built_in">set</span> -g performance<br></code></pre></td></tr></table></figure>
-值得一提的是这个设置重启会被重置，之后再看看有没有保留设定的方法。</p>
+<h1 id="general-inequality">3. General Inequality</h1>
+<h2 id="proper-cone">3.1 Proper Cone</h2>
+<p>Convex; Closed; Solid(non-emplty interior); Pointed(不超过半平面) ##
+3.2 Inequality Let <span class="math inline">\(K\)</span> be a proper
+cone in vector space <span class="math inline">\(V\)</span>, we say
+vector <span class="math inline">\(x\)</span> is greater than <span
+class="math inline">\(y\)</span> with respect to <span
+class="math inline">\(K\)</span> when we have <span
+class="math inline">\(x-y\in K\)</span>. Denoted as: <span
+class="math display">\[x\succeq_Ky\]</span></p>
+<h1 id="seperating-and-supporting-hyperplane">4. Seperating and
+supporting hyperplane</h1>
+<!-- # 4.1 Seperating -->
+<p><em>Seperating hyperplane</em>: For two convex sets that are
+disjoint(no intersection), there exists a hyperplane that seperates
+these two sets.</p>
+<p><em>Converse theorm</em>: If at least one convex set is open,
+existing seperating hyperplane means disjoint sets.</p>
+<p><em>Supporting hyperplane:</em> Seperating hyperplane on a boundary
+point</p>
+<h1 id="dual-cone">5. Dual Cone</h1>
+<p><strong>Definition:</strong> For a cone <span
+class="math inline">\(K\)</span>, the dual cone is defined as: <span
+class="math display">\[K^*=\left\{y|x^Ty\geq0, \forall x\in
+K\right\}\]</span> &gt;
+几何上可以理解为与所有目标锥内的向量夹角都不超过90度的向量构成的锥</p>
+<p><strong>Property:</strong> - <span class="math inline">\(x\)</span>
+is the minimum element of set <span class="math inline">\(S\)</span>
+with respect to <span class="math inline">\(K\)</span>, it means that
+for <span class="math inline">\(\lambda\succeq_{K^*}0\)</span>, <span
+class="math inline">\(x\)</span> is the minimizer of <span
+class="math inline">\(\lambda^Tz\)</span> over <span
+class="math inline">\(z\in S\)</span></p>
 
                 
               </div>
@@ -328,6 +393,34 @@ demand模式，可以通过<code>cpufrequtils</code>进行调整： <figure clas
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/blog/tags/Math/">#Math</a>
+      
+    </div>
   
 </div>
 
@@ -339,18 +432,12 @@ demand模式，可以通过<code>cpufrequtils</code>进行调整： <figure clas
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/blog/2023/10/28/Optimal%20Control(1)/" title="Convex Optimization Note(1): Affine Set and Convex Set">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Convex Optimization Note(1): Affine Set and Convex Set</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/blog/2022/08/26/%E7%94%A8Solidworks%E8%BF%9B%E8%A1%8C%E6%8B%93%E6%89%91%E4%BC%98%E5%8C%96/" title="用Solidworks对无人机进行拓扑优化">
-                        <span class="hidden-mobile">用Solidworks对无人机进行拓扑优化</span>
+                      <a href="/blog/2023/08/04/Ubuntu%20Lagging%20Solutions/" title="Ubuntu Lagging Solutions">
+                        <span class="hidden-mobile">Ubuntu Lagging Solutions</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -404,6 +491,12 @@ demand模式，可以通过<code>cpufrequtils</code>进行调整： <figure clas
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -594,6 +687,40 @@ demand模式，可以通过<code>cpufrequtils</code>进行调整： <figure clas
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/blog/js/local-search.js" ></script>
 
