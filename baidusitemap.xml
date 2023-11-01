@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://smoggy-p.github.io/blog/blog/2023/10/30/Optimal%20Control(2)/</loc>
+    <lastmod>2023-10-30</lastmod>
+  </url>
+  <url>
+    <loc>https://smoggy-p.github.io/blog/blog/2022/05/26/%E9%9C%8D%E4%B9%B1/</loc>
+    <lastmod>2023-10-30</lastmod>
+  </url>
+  <url>
     <loc>https://smoggy-p.github.io/blog/blog/2023/10/28/Optimal%20Control(1)/</loc>
     <lastmod>2023-10-28</lastmod>
   </url>
@@ -30,10 +38,6 @@
   </url>
   <url>
     <loc>https://smoggy-p.github.io/blog/blog/2020/09/24/fluent_2/</loc>
-    <lastmod>2022-08-30</lastmod>
-  </url>
-  <url>
-    <loc>https://smoggy-p.github.io/blog/blog/2022/05/25/%E9%9C%8D%E4%B9%B1/</loc>
     <lastmod>2022-08-30</lastmod>
   </url>
 </urlset> 
