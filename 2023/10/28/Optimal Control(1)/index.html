@@ -16,15 +16,15 @@
   <meta name="author" content="Moji Shi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. Convex Sets 1.1 Affine Set \(C\) Definition: \(\forall x_1,x_2\in C, \theta x_1+(1-\theta) x_2 \in C\) Property: - Solution Set of Linear Equation \(\iff\) Affine Set(线性方程的解集是affine set，同时affine se">
+    <meta name="description" content="1. Convex Sets 1.1 Affine Set \(C\) Definition: \(\forall x_1,x_2\in C, \theta x_1+(1-\theta) x_2 \in C\) Property:  Solution Set of Linear Equation \(\iff\) Affine Set(线性方程的解集是affine set，同时affine set">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Convex Optimization Note(1): Affine Set and Convex Set">
 <meta property="og:url" content="https://smoggy-p.github.io/blog/2023/10/28/Optimal%20Control(1)/index.html">
 <meta property="og:site_name" content="Moji Shi&#39;s Blog">
-<meta property="og:description" content="1. Convex Sets 1.1 Affine Set \(C\) Definition: \(\forall x_1,x_2\in C, \theta x_1+(1-\theta) x_2 \in C\) Property: - Solution Set of Linear Equation \(\iff\) Affine Set(线性方程的解集是affine set，同时affine se">
+<meta property="og:description" content="1. Convex Sets 1.1 Affine Set \(C\) Definition: \(\forall x_1,x_2\in C, \theta x_1+(1-\theta) x_2 \in C\) Property:  Solution Set of Linear Equation \(\iff\) Affine Set(线性方程的解集是affine set，同时affine set">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-10-28T04:11:01.872Z">
-<meta property="article:modified_time" content="2023-10-28T17:25:45.777Z">
+<meta property="article:modified_time" content="2023-11-01T04:29:04.851Z">
 <meta property="article:author" content="Moji Shi">
 <meta property="article:tag" content="Math">
 <meta name="twitter:card" content="summary_large_image">
@@ -295,13 +295,16 @@
 class="math inline">\(C\)</span></h2>
 <p><strong>Definition</strong>: <span class="math inline">\(\forall
 x_1,x_2\in C, \theta x_1+(1-\theta) x_2 \in C\)</span></p>
-<p><strong>Property</strong>: - Solution Set of Linear Equation <span
+<p><strong>Property</strong>:</p>
+<ul>
+<li><p>Solution Set of Linear Equation <span
 class="math inline">\(\iff\)</span> Affine Set(线性方程的解集是affine
-set，同时affine set都能写成线性方程的解) - Subspace: <span
-class="math inline">\(V=C-x_0\)</span> where <span
-class="math inline">\(x_0\in C\)</span>(无论选择哪个<span
+set，同时affine set都能写成线性方程的解)</p></li>
+<li><p>Subspace: <span class="math inline">\(V=C-x_0\)</span> where
+<span class="math inline">\(x_0\in C\)</span>(无论选择哪个<span
 class="math inline">\(x_0\)</span>，subspace <span
-class="math inline">\(V\)</span>始终能穿过原点)</p>
+class="math inline">\(V\)</span>始终能穿过原点)</p></li>
+</ul>
 <h2 id="affine-hull-textbfaff-c">1.2 Affine Hull <span
 class="math inline">\(\textbf{aff }C\)</span></h2>
 <p><strong>Definition</strong>: All affine combinations of points in set
@@ -316,8 +319,11 @@ dimesion</em> is 2.</p>
 <p><strong>Definition:</strong> Affine set with <span
 class="math inline">\(\theta \in [0,1]\)</span>, we have similarly
 <em>Convex Hull</em></p>
-<p><strong>Property:</strong> - works for infinite sums and integral -
-pass through expectation</p>
+<p><strong>Property:</strong></p>
+<ul>
+<li><p>works for infinite sums and integral</p></li>
+<li><p>pass through expectation</p></li>
+</ul>
 <h2 id="conenon-negative-homogeneous">1.4 Cone(non-negative
 homogeneous)</h2>
 <p><strong>Definition:</strong> <span class="math inline">\(\forall x\in
@@ -343,14 +349,19 @@ n}|X^T=X,X\succeq0\right\}\)</span></p>
 <h1 id="operation-that-preserves-convexity">2. Operation that preserves
 convexity</h1>
 <ul>
-<li><strong>Intersection</strong> of convex sets is still convex</li>
-<li><strong>Affine Function</strong> projects convex sets to convex sets
-&gt; Affine Function: 等同于线性变换</li>
-<li><strong>Perspective Function</strong> -&gt;
-<strong>Linear-Fractional Function</strong> &gt; <span
-class="math inline">\((x_1,x_2,x_3)\)</span> to <span
-class="math inline">\((\frac{x_1}{x_3}, \frac{x_2}{x_3},
-1)\)</span></li>
+<li><p><strong>Intersection</strong> of convex sets is still
+convex</p></li>
+<li><p><strong>Affine Function</strong> projects convex sets to convex
+sets</p>
+<blockquote>
+<p>Affine Function: 等同于线性变换</p>
+</blockquote></li>
+<li><p><strong>Perspective Function</strong> -&gt;
+<strong>Linear-Fractional Function</strong></p>
+<blockquote>
+<p><span class="math inline">\((x_1,x_2,x_3)\)</span> to <span
+class="math inline">\((\frac{x_1}{x_3}, \frac{x_2}{x_3}, 1)\)</span></p>
+</blockquote></li>
 </ul>
 <h1 id="general-inequality">3. General Inequality</h1>
 <h2 id="proper-cone">3.1 Proper Cone</h2>
@@ -376,15 +387,20 @@ point</p>
 <p><strong>Definition:</strong> For a cone <span
 class="math inline">\(K\)</span>, the dual cone is defined as: <span
 class="math display">\[K^*=\left\{y|x^Ty\geq0, \forall x\in
-K\right\}\]</span> &gt;
-几何上可以理解为与所有目标锥内的向量夹角都不超过90度的向量构成的锥</p>
-<p><strong>Property:</strong> - <span class="math inline">\(x\)</span>
-is the minimum element of set <span class="math inline">\(S\)</span>
-with respect to <span class="math inline">\(K\)</span>, it means that
-for <span class="math inline">\(\lambda\succeq_{K^*}0\)</span>, <span
+K\right\}\]</span></p>
+<blockquote>
+<p>几何上可以理解为与所有目标锥内的向量夹角都不超过90度的向量构成的锥</p>
+</blockquote>
+<p><strong>Property:</strong></p>
+<ul>
+<li><span class="math inline">\(x\)</span> is the minimum element of set
+<span class="math inline">\(S\)</span> with respect to <span
+class="math inline">\(K\)</span>, it means that for <span
+class="math inline">\(\lambda\succeq_{K^*}0\)</span>, <span
 class="math inline">\(x\)</span> is the minimizer of <span
 class="math inline">\(\lambda^Tz\)</span> over <span
-class="math inline">\(z\in S\)</span></p>
+class="math inline">\(z\in S\)</span></li>
+</ul>
 
                 
               </div>
