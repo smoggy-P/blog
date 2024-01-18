@@ -16,26 +16,24 @@
   <meta name="author" content="Moji Shi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 提要 最近需要将一段感知代码移植到实验室的pipeline上进行测试，然而之前一直在使用ROS_melodic，原始感知代码目前只在melodic上测试成功，为了实验室其他用noetic的老哥们能测试，就想搭建一个noetic的docker来尝试一下同样的代码能否在noetic上编译成功。（借机学习一下docker） 2. 安装过程 2.1 安装Docker 这一步基本参考Docker-从入">
+    <meta name="description" content="1. Convex Sets 1.1 Affine Set \(C\) Definition: \(\forall x_1,x_2\in C, \theta x_1+(1-\theta) x_2 \in C\) Property:  Solution Set of Linear Equation \(\iff\) Affine Set(线性方程的解集是affine set，同时affine set">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用Docker配置ROS noetic环境">
-<meta property="og:url" content="https://smoggy-p.github.io/blog/2022/05/15/ros_docker/index.html">
+<meta property="og:title" content="Convex Optimization Note(1): Affine Set and Convex Set">
+<meta property="og:url" content="https://smoggy-p.github.io/blog/2023/10/28/Convex%20Optimization(1)/index.html">
 <meta property="og:site_name" content="Moji Shi&#39;s Blog">
-<meta property="og:description" content="1. 提要 最近需要将一段感知代码移植到实验室的pipeline上进行测试，然而之前一直在使用ROS_melodic，原始感知代码目前只在melodic上测试成功，为了实验室其他用noetic的老哥们能测试，就想搭建一个noetic的docker来尝试一下同样的代码能否在noetic上编译成功。（借机学习一下docker） 2. 安装过程 2.1 安装Docker 这一步基本参考Docker-从入">
+<meta property="og:description" content="1. Convex Sets 1.1 Affine Set \(C\) Definition: \(\forall x_1,x_2\in C, \theta x_1+(1-\theta) x_2 \in C\) Property:  Solution Set of Linear Equation \(\iff\) Affine Set(线性方程的解集是affine set，同时affine set">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://smoggy-p.github.io/blog/img/ros_docker/index.png">
-<meta property="article:published_time" content="2022-05-15T21:08:35.000Z">
-<meta property="article:modified_time" content="2023-01-21T13:04:51.973Z">
+<meta property="article:published_time" content="2023-10-28T04:11:01.872Z">
+<meta property="article:modified_time" content="2024-01-10T03:46:26.271Z">
 <meta property="article:author" content="Moji Shi">
-<meta property="article:tag" content="ROS">
+<meta property="article:tag" content="Math">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://smoggy-p.github.io/blog/img/ros_docker/index.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>使用Docker配置ROS noetic环境 - Moji Shi&#39;s Blog</title>
+  <title>Convex Optimization Note(1): Affine Set and Convex Set - Moji Shi&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -215,7 +213,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="使用Docker配置ROS noetic环境"></span>
+            <span id="subtitle" data-typed-text="Convex Optimization Note(1): Affine Set and Convex Set"></span>
           
         </div>
 
@@ -226,8 +224,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-05-15 23:08" pubdate>
-          May 15, 2022 pm
+        <time datetime="2023-10-28 12:11" pubdate>
+          October 28, 2023 pm
         </time>
       </span>
     
@@ -238,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k words
+          2.3k words
         
       </span>
     
@@ -249,7 +247,7 @@
         
         
         
-          10 mins
+          20 mins
         
       </span>
     
@@ -287,59 +285,123 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">使用Docker配置ROS noetic环境</h1>
+            <h1 style="display: none">Convex Optimization Note(1): Affine Set and Convex Set</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="提要">1. 提要</h1>
-<p>最近需要将一段感知代码移植到实验室的pipeline上进行测试，然而之前一直在使用ROS_melodic，原始感知代码目前只在melodic上测试成功，为了实验室其他用noetic的老哥们能测试，就想搭建一个noetic的docker来尝试一下同样的代码能否在noetic上编译成功。（借机学习一下docker）</p>
-<h1 id="安装过程">2. 安装过程</h1>
-<h2 id="安装docker">2.1 安装Docker</h2>
-<p>这一步基本参考<a
-target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/install/ubuntu">Docker-从入门到实践</a><sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span
-class="hint--top hint--rounded"
-aria-label="“Docker-从入门到实践” https://yeasy.gitbook.io/docker_practice/ (accessed May 12, 2022).">[1]</span></a></sup>的教程，最后在测试安装是否成功时遇到了permission相关的问题，最终通过下面这行代码扩充权限解决：
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">sudo <span class="hljs-built_in">chmod</span> 666 /var/run/docker.sock<br></code></pre></td></tr></table></figure> ## 2.2 安装ROS镜像 这一步参考<a
-target="_blank" rel="noopener" href="http://wiki.ros.org/docker/Tutorials/Docker">ROS官方网站</a><sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span
-class="hint--top hint--rounded"
-aria-label="“docker/Tutorials/Docker - ROS Wiki.” http://wiki.ros.org/docker/Tutorials/Docker (accessed May 12, 2022).">[2]</span></a></sup>提出的教程，其中部分步骤有差异，因此这里完整记录一下。</p>
-<p>首先下载ROS container镜像： <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">docker pull ros<br></code></pre></td></tr></table></figure>
-之后下载noetic所需要的最基本的环境镜像： <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">docker pull ros:noetic<br><span class="hljs-comment">## 如果需要下载noetic全部功能:</span><br><span class="hljs-comment"># docker pull osrf/ros:noetic-desktop-full</span><br></code></pre></td></tr></table></figure>
-最后一步启动镜像（与官网描述有所不同）： <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">docker run -it ros:noetic<br></code></pre></td></tr></table></figure>
-在启动的bash中尝试启动<code>roscore</code>，如果成功就表示配置完成啦！</p>
-<h1 id="基本操作">3. 基本操作</h1>
-<p>首先引入一下docker的基本概念，主要是<strong>镜像(image)、容器(container)</strong>
-的概念。这里可以将镜像理解为c++中定义的类的概念，而容器是该类实例化之后的对象。在上一章中所提到的<code>docker run</code>的操作就可以理解为根据提供的镜像创建一个容器。运行选项<code>-it</code>的含义如下：</p>
+                <h1 id="convex-sets">1. Convex Sets</h1>
+<h2 id="affine-set-c">1.1 Affine Set <span
+class="math inline">\(C\)</span></h2>
+<p><strong>Definition</strong>: <span class="math inline">\(\forall
+x_1,x_2\in C, \theta x_1+(1-\theta) x_2 \in C\)</span></p>
+<p><strong>Property</strong>:</p>
+<ul>
+<li><p>Solution Set of Linear Equation <span
+class="math inline">\(\iff\)</span> Affine Set(线性方程的解集是affine
+set，同时affine set都能写成线性方程的解)</p></li>
+<li><p>Subspace: <span class="math inline">\(V=C-x_0\)</span> where
+<span class="math inline">\(x_0\in C\)</span>(无论选择哪个<span
+class="math inline">\(x_0\)</span>，subspace <span
+class="math inline">\(V\)</span>始终能穿过原点)</p></li>
+</ul>
+<h2 id="affine-hull-textbfaff-c">1.2 Affine Hull <span
+class="math inline">\(\textbf{aff }C\)</span></h2>
+<p><strong>Definition</strong>: All affine combinations of points in set
+<span class="math inline">\(C\)</span></p>
+<p><strong>Property</strong>: Smallest affine set that contains <span
+class="math inline">\(C\)</span></p>
+<p><strong>Example</strong>: Affine set of a circle <span
+class="math inline">\(\left\{(x_1,x_2)\in\mathbb{R}^2|x_1^2+x_2^2=1\right\}\)</span>
+is <span class="math inline">\(\mathbb{R^2}\)</span>, the <em>affine
+dimesion</em> is 2.</p>
+<h2 id="convex-set">1.3 Convex Set</h2>
+<p><strong>Definition:</strong> Affine set with <span
+class="math inline">\(\theta \in [0,1]\)</span>, we have similarly
+<em>Convex Hull</em></p>
+<p><strong>Property:</strong></p>
+<ul>
+<li><p>works for infinite sums and integral</p></li>
+<li><p>pass through expectation</p></li>
+</ul>
+<h2 id="conenon-negative-homogeneous">1.4 Cone(non-negative
+homogeneous)</h2>
+<p><strong>Definition:</strong> <span class="math inline">\(\forall x\in
+C\text{ and } \theta &gt; 0, \theta x\in C\)</span></p>
+<h2 id="simplex">1.5 Simplex</h2>
+<p><strong>Definition:</strong> Convex hull of <span
+class="math inline">\(k+1\)</span> affine independent vector</p>
 <blockquote>
-<p>-t 选项让Docker分配一个伪终端（pseudo-tty）并绑定到容器的标准输入上，
--i 则让容器的标准输入保持打开。</p>
+<p>affine independent: 直观理解与线性相关定义类似，数学表达上对于<span
+class="math inline">\(v_0,v_1\dots v_{k}\)</span>，如果<span
+class="math inline">\((v_1-v_0,v_2-v_0\dots
+v_k-v_0)\)</span>线性无关，则这k+1个向量仿射无关。值得一提的是对于二维平面，要证明四个及以上向量仿射无关就需要证明三个及以上二维向量线性无关，而三个二维向量必定线性相关，因此不存在四个及以上仿射相关的二维向量，因此
+<span class="math inline">\(\mathbb{R}^2\)</span>
+中的simplex只可能是三角形（而不会是四边形或更多边形）。</p>
 </blockquote>
-通过vscode插件，我们可以很方便地对镜像和容器进行管理。其操作界面如下图：
-<p style="text-align: center;">
-<img src="/blog/img/ros_docker/1.png" srcset="/blog/img/loading.gif" lazyload width=300>
-</p>
-<p>在container中可以很方便地进行运行和终止容器的操作，也可以删除不需要的容器。最右边的灰字为容器的名称（返回到之前提到c++中类的类比，这里的名字可以理解为变量名），通过下面的files可以对容器中的文件进行管理。</p>
-<p>后续有时间会更新一些dockerfile的使用，目前只手动在docker中安装了<code>git</code>以及<code>catkin tool</code>，似乎这些步骤都能直接写进dockerfile中。</p>
-<h1 id="参考">参考</h1>
-<section class="footnotes">
-<div class="footnote-list">
-<ol>
-<li>
-<span id="fn:1" class="footnote-text"><span>“Docker-从入门到实践”
-https://yeasy.gitbook.io/docker_practice/ (accessed May 12, 2022).
-<a href="#fnref:1" rev="footnote" class="footnote-backref">
-↩︎</a></span></span>
-</li>
-<li>
-<span id="fn:2" class="footnote-text"><span>“docker/Tutorials/Docker -
-ROS Wiki.” http://wiki.ros.org/docker/Tutorials/Docker (accessed May 12,
-2022). <a href="#fnref:2" rev="footnote" class="footnote-backref">
-↩︎</a></span></span>
-</li>
-</ol>
-</div>
-</section>
+<h2 id="positive-semi-definite-cone">1.6 Positive Semi-definite
+Cone</h2>
+<p><strong>Definition:</strong> Set of Semi-definite matrix <span
+class="math inline">\(S_+^n=\left\{X\in\mathbb{R}^{n\times
+n}|X^T=X,X\succeq0\right\}\)</span></p>
+<p><strong>Property:</strong> This set is a convex cone.
+(任意两个半正定矩阵线性组合，系数为正的情况下，结果仍为半正定矩阵)</p>
+<h1 id="operation-that-preserves-convexity">2. Operation that preserves
+convexity</h1>
+<ul>
+<li><p><strong>Intersection</strong> of convex sets is still
+convex</p></li>
+<li><p><strong>Affine Function</strong> projects convex sets to convex
+sets</p>
+<blockquote>
+<p>Affine Function: 等同于线性变换</p>
+</blockquote></li>
+<li><p><strong>Perspective Function</strong> -&gt;
+<strong>Linear-Fractional Function</strong></p>
+<blockquote>
+<p><span class="math inline">\((x_1,x_2,x_3)\)</span> to <span
+class="math inline">\((\frac{x_1}{x_3}, \frac{x_2}{x_3}, 1)\)</span></p>
+</blockquote></li>
+</ul>
+<h1 id="general-inequality">3. General Inequality</h1>
+<h2 id="proper-cone">3.1 Proper Cone</h2>
+<p>Convex; Closed; Solid(non-emplty interior); Pointed(不超过半平面)</p>
+<h2 id="inequality">3.2 Inequality</h2>
+<p>Let <span class="math inline">\(K\)</span> be a proper cone in vector
+space <span class="math inline">\(V\)</span>, we say vector <span
+class="math inline">\(x\)</span> is greater than <span
+class="math inline">\(y\)</span> with respect to <span
+class="math inline">\(K\)</span> when we have <span
+class="math inline">\(x-y\in K\)</span>. Denoted as: <span
+class="math display">\[x\succeq_Ky\]</span></p>
+<h1 id="seperating-and-supporting-hyperplane">4. Seperating and
+supporting hyperplane</h1>
+<!-- # 4.1 Seperating -->
+<p><em>Seperating hyperplane</em>: For two convex sets that are
+disjoint(no intersection), there exists a hyperplane that seperates
+these two sets.</p>
+<p><em>Converse theorm</em>: If at least one convex set is open,
+existing seperating hyperplane means disjoint sets.</p>
+<p><em>Supporting hyperplane:</em> Seperating hyperplane on a boundary
+point</p>
+<h1 id="dual-cone">5. Dual Cone</h1>
+<p><strong>Definition:</strong> For a cone <span
+class="math inline">\(K\)</span>, the dual cone is defined as: <span
+class="math display">\[K^*=\left\{y|x^Ty\geq0, \forall x\in
+K\right\}\]</span></p>
+<blockquote>
+<p>几何上可以理解为与所有目标锥内的向量夹角都不超过90度的向量构成的锥</p>
+</blockquote>
+<p><strong>Property:</strong></p>
+<ul>
+<li><span class="math inline">\(x\)</span> is the minimum element of set
+<span class="math inline">\(S\)</span> with respect to <span
+class="math inline">\(K\)</span>, it means that for <span
+class="math inline">\(\lambda\succeq_{K^*}0\)</span>, <span
+class="math inline">\(x\)</span> is the minimizer of <span
+class="math inline">\(\lambda^Tz\)</span> over <span
+class="math inline">\(z\in S\)</span></li>
+</ul>
 
                 
               </div>
@@ -358,7 +420,7 @@ ROS Wiki.” http://wiki.ros.org/docker/Tutorials/Docker (accessed May 12,
     
       <span class="category-chain">
         
-  <a href="/blog/categories/ROS%E5%AD%A6%E4%B9%A0/" class="category-chain-item">ROS学习</a>
+  <a href="/blog/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
   
   
 
@@ -373,7 +435,7 @@ ROS Wiki.” http://wiki.ros.org/docker/Tutorials/Docker (accessed May 12,
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/blog/tags/ROS/">#ROS</a>
+        <a href="/blog/tags/Math/">#Math</a>
       
     </div>
   
@@ -387,9 +449,9 @@ ROS Wiki.” http://wiki.ros.org/docker/Tutorials/Docker (accessed May 12,
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/blog/2022/05/26/%E9%9C%8D%E4%B9%B1/" title="2022阅读计划(1)：霍乱时期的爱情">
+                      <a href="/blog/2023/10/30/Convex%20Optimization(2)/" title="Convex Optimization Note(2): Convex Function">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">2022阅读计划(1)：霍乱时期的爱情</span>
+                        <span class="hidden-mobile">Convex Optimization Note(2): Convex Function</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -397,8 +459,8 @@ ROS Wiki.” http://wiki.ros.org/docker/Tutorials/Docker (accessed May 12,
                   <article class="post-next col-6">
                     
                     
-                      <a href="/blog/2020/09/24/fluent_2/" title="fluent入门学习（2）：热电单向耦合分析">
-                        <span class="hidden-mobile">fluent入门学习（2）：热电单向耦合分析</span>
+                      <a href="/blog/2023/08/04/Ubuntu%20Lagging%20Solutions/" title="Ubuntu Lagging Solutions">
+                        <span class="hidden-mobile">Ubuntu Lagging Solutions</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -452,6 +514,12 @@ ROS Wiki.” http://wiki.ros.org/docker/Tutorials/Docker (accessed May 12,
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -642,6 +710,40 @@ ROS Wiki.” http://wiki.ros.org/docker/Tutorials/Docker (accessed May 12,
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/blog/js/local-search.js" ></script>
 

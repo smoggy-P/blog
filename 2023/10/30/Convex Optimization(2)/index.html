@@ -16,24 +16,26 @@
   <meta name="author" content="Moji Shi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. Convex Sets 1.1 Affine Set \(C\) Definition: \(\forall x_1,x_2\in C, \theta x_1+(1-\theta) x_2 \in C\) Property:  Solution Set of Linear Equation \(\iff\) Affine Set(线性方程的解集是affine set，同时affine set">
+    <meta name="description" content="中文版笔记感觉这个博主总结的比较清楚 1. Convex Function Convex can also be used to describe the feature of a function. Definition: \[f(\theta x+(1-\theta) y)\leq\theta f(x) + (1-\theta)f(y)\] Conditions:  First Order:">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Convex Optimization Note(1): Affine Set and Convex Set">
-<meta property="og:url" content="https://smoggy-p.github.io/blog/2023/10/28/Optimal%20Control(1)/index.html">
+<meta property="og:title" content="Convex Optimization Note(2): Convex Function">
+<meta property="og:url" content="https://smoggy-p.github.io/blog/2023/10/30/Convex%20Optimization(2)/index.html">
 <meta property="og:site_name" content="Moji Shi&#39;s Blog">
-<meta property="og:description" content="1. Convex Sets 1.1 Affine Set \(C\) Definition: \(\forall x_1,x_2\in C, \theta x_1+(1-\theta) x_2 \in C\) Property:  Solution Set of Linear Equation \(\iff\) Affine Set(线性方程的解集是affine set，同时affine set">
+<meta property="og:description" content="中文版笔记感觉这个博主总结的比较清楚 1. Convex Function Convex can also be used to describe the feature of a function. Definition: \[f(\theta x+(1-\theta) y)\leq\theta f(x) + (1-\theta)f(y)\] Conditions:  First Order:">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-10-28T04:11:01.872Z">
-<meta property="article:modified_time" content="2023-11-01T04:29:04.851Z">
+<meta property="og:image" content="https://smoggy-p.github.io/blog/img/epigraph.png">
+<meta property="article:published_time" content="2023-10-30T07:37:41.319Z">
+<meta property="article:modified_time" content="2024-01-10T04:03:23.366Z">
 <meta property="article:author" content="Moji Shi">
 <meta property="article:tag" content="Math">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://smoggy-p.github.io/blog/img/epigraph.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Convex Optimization Note(1): Affine Set and Convex Set - Moji Shi&#39;s Blog</title>
+  <title>Convex Optimization Note(2): Convex Function - Moji Shi&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -213,7 +215,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Convex Optimization Note(1): Affine Set and Convex Set"></span>
+            <span id="subtitle" data-typed-text="Convex Optimization Note(2): Convex Function"></span>
           
         </div>
 
@@ -224,8 +226,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-10-28 06:11" pubdate>
-          October 28, 2023 am
+        <time datetime="2023-10-30 15:37" pubdate>
+          October 30, 2023 pm
         </time>
       </span>
     
@@ -236,7 +238,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k words
+          2.5k words
         
       </span>
     
@@ -247,7 +249,7 @@
         
         
         
-          20 mins
+          22 mins
         
       </span>
     
@@ -285,122 +287,132 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Convex Optimization Note(1): Affine Set and Convex Set</h1>
+            <h1 style="display: none">Convex Optimization Note(2): Convex Function</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="convex-sets">1. Convex Sets</h1>
-<h2 id="affine-set-c">1.1 Affine Set <span
-class="math inline">\(C\)</span></h2>
-<p><strong>Definition</strong>: <span class="math inline">\(\forall
-x_1,x_2\in C, \theta x_1+(1-\theta) x_2 \in C\)</span></p>
-<p><strong>Property</strong>:</p>
+                <p>中文版笔记感觉<a
+target="_blank" rel="noopener" href="https://chriszhangcx.github.io/%E5%87%B8%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0-2-%E5%87%B8%E5%87%BD%E6%95%B0/">这个博主</a>总结的比较清楚</p>
+<h1 id="convex-function">1. Convex Function</h1>
+<p>Convex can also be used to describe the feature of a function.</p>
+<p><strong>Definition:</strong> <span class="math display">\[f(\theta
+x+(1-\theta) y)\leq\theta f(x) + (1-\theta)f(y)\]</span></p>
+<p><strong>Conditions:</strong></p>
 <ul>
-<li><p>Solution Set of Linear Equation <span
-class="math inline">\(\iff\)</span> Affine Set(线性方程的解集是affine
-set，同时affine set都能写成线性方程的解)</p></li>
-<li><p>Subspace: <span class="math inline">\(V=C-x_0\)</span> where
-<span class="math inline">\(x_0\in C\)</span>(无论选择哪个<span
-class="math inline">\(x_0\)</span>，subspace <span
-class="math inline">\(V\)</span>始终能穿过原点)</p></li>
-</ul>
-<h2 id="affine-hull-textbfaff-c">1.2 Affine Hull <span
-class="math inline">\(\textbf{aff }C\)</span></h2>
-<p><strong>Definition</strong>: All affine combinations of points in set
-<span class="math inline">\(C\)</span></p>
-<p><strong>Property</strong>: Smallest affine set that contains <span
-class="math inline">\(C\)</span></p>
-<p><strong>Example</strong>: Affine set of a circle <span
-class="math inline">\(\left\{(x_1,x_2)\in\mathbb{R}^2|x_1^2+x_2^2=1\right\}\)</span>
-is <span class="math inline">\(\mathbb{R^2}\)</span>, the <em>affine
-dimesion</em> is 2.</p>
-<h2 id="convex-set">1.3 Convex Set</h2>
-<p><strong>Definition:</strong> Affine set with <span
-class="math inline">\(\theta \in [0,1]\)</span>, we have similarly
-<em>Convex Hull</em></p>
-<p><strong>Property:</strong></p>
-<ul>
-<li><p>works for infinite sums and integral</p></li>
-<li><p>pass through expectation</p></li>
-</ul>
-<h2 id="conenon-negative-homogeneous">1.4 Cone(non-negative
-homogeneous)</h2>
-<p><strong>Definition:</strong> <span class="math inline">\(\forall x\in
-C\text{ and } \theta &gt; 0, \theta x\in C\)</span></p>
-<h2 id="simplex">1.5 Simplex</h2>
-<p><strong>Definition:</strong> Convex hull of <span
-class="math inline">\(k+1\)</span> affine independent vector</p>
+<li><p>First Order: <span class="math inline">\(f(x) + \nabla
+f(x)^T(y-x)\leq f(y)\)</span></p></li>
+<li><p>Second Order: <span
+class="math inline">\(\nabla^2f\succeq0\)</span> (positive semi-definite
+Hessian Matrix)</p>
 <blockquote>
-<p>affine independent: 直观理解与线性相关定义类似，数学表达上对于<span
-class="math inline">\(v_0,v_1\dots v_{k}\)</span>，如果<span
-class="math inline">\((v_1-v_0,v_2-v_0\dots
-v_k-v_0)\)</span>线性无关，则这k+1个向量仿射无关。值得一提的是对于二维平面，要证明四个及以上向量仿射无关就需要证明三个及以上二维向量线性无关，而三个二维向量必定线性相关，因此不存在四个及以上仿射相关的二维向量，因此
-<span class="math inline">\(\mathbb{R}^2\)</span>
-中的simplex只可能是三角形（而不会是四边形或更多边形）。</p>
-</blockquote>
-<h2 id="positive-semi-definite-cone">1.6 Positive Semi-definite
-Cone</h2>
-<p><strong>Definition:</strong> Set of Semi-definite matrix <span
-class="math inline">\(S_+^n=\left\{X\in\mathbb{R}^{n\times
-n}|X^T=X,X\succeq0\right\}\)</span></p>
-<p><strong>Property:</strong> This set is a convex cone.
-(任意两个半正定矩阵线性组合，系数为正的情况下，结果仍为半正定矩阵)</p>
-<h1 id="operation-that-preserves-convexity">2. Operation that preserves
-convexity</h1>
-<ul>
-<li><p><strong>Intersection</strong> of convex sets is still
-convex</p></li>
-<li><p><strong>Affine Function</strong> projects convex sets to convex
-sets</p>
-<blockquote>
-<p>Affine Function: 等同于线性变换</p>
-</blockquote></li>
-<li><p><strong>Perspective Function</strong> -&gt;
-<strong>Linear-Fractional Function</strong></p>
-<blockquote>
-<p><span class="math inline">\((x_1,x_2,x_3)\)</span> to <span
-class="math inline">\((\frac{x_1}{x_3}, \frac{x_2}{x_3}, 1)\)</span></p>
+<p>Semi-definite: <span
+class="math inline">\(\nabla^2f(x)\succeq0\)</span> means that <span
+class="math inline">\(\forall y\in\mathbb{R}^n\)</span>, <span
+class="math inline">\(y^T\nabla^2f(x)y\geq0\)</span></p>
 </blockquote></li>
 </ul>
-<h1 id="general-inequality">3. General Inequality</h1>
-<h2 id="proper-cone">3.1 Proper Cone</h2>
-<p>Convex; Closed; Solid(non-emplty interior); Pointed(不超过半平面) ##
-3.2 Inequality Let <span class="math inline">\(K\)</span> be a proper
-cone in vector space <span class="math inline">\(V\)</span>, we say
-vector <span class="math inline">\(x\)</span> is greater than <span
-class="math inline">\(y\)</span> with respect to <span
-class="math inline">\(K\)</span> when we have <span
-class="math inline">\(x-y\in K\)</span>. Denoted as: <span
-class="math display">\[x\succeq_Ky\]</span></p>
-<h1 id="seperating-and-supporting-hyperplane">4. Seperating and
-supporting hyperplane</h1>
-<!-- # 4.1 Seperating -->
-<p><em>Seperating hyperplane</em>: For two convex sets that are
-disjoint(no intersection), there exists a hyperplane that seperates
-these two sets.</p>
-<p><em>Converse theorm</em>: If at least one convex set is open,
-existing seperating hyperplane means disjoint sets.</p>
-<p><em>Supporting hyperplane:</em> Seperating hyperplane on a boundary
-point</p>
-<h1 id="dual-cone">5. Dual Cone</h1>
-<p><strong>Definition:</strong> For a cone <span
-class="math inline">\(K\)</span>, the dual cone is defined as: <span
-class="math display">\[K^*=\left\{y|x^Ty\geq0, \forall x\in
-K\right\}\]</span></p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li><p><em>Norm</em>: Any norm <span
+class="math inline">\(f(x):\mathbb{R}^n\rightarrow\mathbb{R}\)</span> is
+covex</p></li>
+<li><p><em>Max</em>: max function is convex</p></li>
+<li><p><em>Geometric Mean</em>: <span
+class="math inline">\(f(x)=(\prod_{i=1}^nx_i)^{1/n}\)</span> concave,
+prove by second-order condition</p></li>
+</ul>
+<h2 id="sublevelsuperlevel-sets">Sublevel/Superlevel Sets</h2>
+<p><strong>Definition:</strong> <span
+class="math display">\[C_{\alpha}=\{x\in\textbf{dom
+}f|f(x)\leq\alpha\}\]</span> <strong>Property:</strong> All sublevel
+sets of convex function are convex sets(converse not).</p>
 <blockquote>
-<p>几何上可以理解为与所有目标锥内的向量夹角都不超过90度的向量构成的锥</p>
+<p>It is said to be a good way to construct convex sets.</p>
 </blockquote>
+<h2 id="epigraph">Epigraph</h2>
+<p>Epi means "above" so epigraph basically means area above the
+function. We should notice that the epigraph actually <strong>expands
+the dimension</strong> of the original function. That is, if <span
+class="math inline">\(f:\mathbb{R}^n\rightarrow\mathbb{R}\)</span>, then
+<span class="math inline">\(\textbf{epi
+}f\subset\mathbb{R}^{n+1}\)</span>.</p>
+<p><strong>Definition:</strong> <span class="math display">\[\textbf{epi
+}f=\{(x,t)|f(x)\leq t, x\in\textbf{dom }f\}\]</span></p>
+<p><img src="/blog/img/epigraph.png" srcset="/blog/img/loading.gif" lazyload /></p>
+<h2 id="jensens-inequality">Jensen's inequality</h2>
+<p>Convex Combination for more than 2 points: <span
+class="math display">\[f(\theta_1 x_1+\dots
+\theta_kx_k)\leq\theta_1f(x_1)+\dots \theta_kf(x_k)\]</span> It can be
+further proved about expectation: <span
+class="math display">\[f(\mathbb{E}(x))\leq\mathbb{E}(f(x))\]</span></p>
+<h1 id="operations-pereserve-convexity">2. Operations pereserve
+Convexity</h1>
+<ul>
+<li><p>Non-negative weighted sum</p></li>
+<li><p>Affine mapping <span
+class="math inline">\(g(x)=f(Ax+b)\)</span></p></li>
+<li><p>Maximum <span
+class="math inline">\(f(x)=\max\{f_1(x)+f_2(x)\}\)</span></p>
+<blockquote>
+<p>It can further be prove that <span
+class="math inline">\(f(x)=\sup_{y\in A}||x-y||\)</span> is
+convex.(furthest distance from a set)</p>
+</blockquote>
+<blockquote>
+<p>Almost every convex function can be represented as the supremum of a
+family of affine functions.</p>
+</blockquote></li>
+<li><p>Composition <span class="math inline">\(f(x)=g(h(x))\)</span>,
+not necessarily convex, look at the expression of <span
+class="math inline">\(f&#39;&#39;(x)\)</span></p></li>
+<li><p>Minimization: <span class="math inline">\(f(x)=\inf_{y\in
+A}f(x,y)\)</span> is convex if <span
+class="math inline">\(f(x,y)\)</span> is convex and <span
+class="math inline">\(A\)</span> is convex set(Additional requirement on
+convexity of <span class="math inline">\(A\)</span>).</p></li>
+<li><p>Perspective: <span class="math inline">\(f(x)=t\cdot
+f(x/t)\)</span> is convex if <span class="math inline">\(f(x)\)</span>
+is convex and <span class="math inline">\(t&gt;0\)</span>.</p></li>
+<li><p>Conjugate function: <span
+class="math inline">\(f^*(y)=\sup_{x\in\textbf{dom}}(y^
+Tx-f(x))\)</span> is convex regardless of the convexity of <span
+class="math inline">\(f(x)\)</span>.</p>
+<blockquote>
+<p>The maximum distance between <span
+class="math inline">\(f(x)\)</span> and line <span
+class="math inline">\(y=x\)</span>: <img
+src="/blog/img/conjugate.png" srcset="/blog/img/loading.gif" lazyload /></p>
+</blockquote></li>
+</ul>
+<h1 id="quasiconvex-function">3. Quasiconvex Function</h1>
+<p><strong>Definition:</strong> If all sublevel sets of <span
+class="math inline">\(f(x)\)</span> are convex, then <span
+class="math inline">\(f(x)\)</span> is quasiconvex. One example of a set
+that is quasi-convex but not convex: <img
+src="/blog/img/quasi_convex.png" srcset="/blog/img/loading.gif" lazyload /></p>
 <p><strong>Property:</strong></p>
 <ul>
-<li><span class="math inline">\(x\)</span> is the minimum element of set
-<span class="math inline">\(S\)</span> with respect to <span
-class="math inline">\(K\)</span>, it means that for <span
-class="math inline">\(\lambda\succeq_{K^*}0\)</span>, <span
-class="math inline">\(x\)</span> is the minimizer of <span
-class="math inline">\(\lambda^Tz\)</span> over <span
-class="math inline">\(z\in S\)</span></li>
+<li><span class="math inline">\(f(\theta x_1+(1-\theta)x_2)\leq
+\max\{f(x_1),f(x_2)\}\)</span></li>
 </ul>
+<p><strong>Conditions:</strong></p>
+<ul>
+<li><p>First Order: <span
+class="math inline">\(f(y)&lt;f(x)\implies\nabla f(x)^T(y-x)\leq
+0\)</span></p></li>
+<li><p>Second Order: <span class="math inline">\(\forall y\in
+R^n\)</span>, <span class="math inline">\(y^T\nabla
+f(x)\implies\)</span> <span
+class="math inline">\(y^T\nabla^2f(x)y\succeq 0\)</span></p></li>
+</ul>
+<h1 id="log-concave-function-and-log-convex-function">4. Log-Concave
+Function and Log-Convex Function</h1>
+<p><strong>Definition:</strong> Log-Concave: <span
+class="math inline">\(f(x)\)</span> is log-concave if <span
+class="math inline">\(\log f(x)\)</span> is concave. <span
+class="math display">\[f(\theta x_1+(1-\theta)x_2)\geq
+f(x_1)^{\theta}f(x_2)^{1-\theta}\]</span></p>
 
                 
               </div>
@@ -448,9 +460,9 @@ class="math inline">\(z\in S\)</span></li>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/blog/2023/10/30/Optimal%20Control(2)/" title="Convex Optimization Note(2): Convex Function">
+                      <a href="/blog/2023/11/01/Convex%20Optimization(3)/" title="Convex Optimization Note(3): Convex Optimization">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Convex Optimization Note(2): Convex Function</span>
+                        <span class="hidden-mobile">Convex Optimization Note(3): Convex Optimization</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -458,8 +470,8 @@ class="math inline">\(z\in S\)</span></li>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/blog/2023/08/04/Ubuntu%20Lagging%20Solutions/" title="Ubuntu Lagging Solutions">
-                        <span class="hidden-mobile">Ubuntu Lagging Solutions</span>
+                      <a href="/blog/2023/10/28/Convex%20Optimization(1)/" title="Convex Optimization Note(1): Affine Set and Convex Set">
+                        <span class="hidden-mobile">Convex Optimization Note(1): Affine Set and Convex Set</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

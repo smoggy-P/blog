@@ -16,26 +16,26 @@
   <meta name="author" content="Moji Shi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="中文版笔记感觉这个博主总结的比较清楚 1. Convex Function Definition: \[f(\theta x+(1-\theta) y)\leq\theta f(x) + (1-\theta)f(y)\] Conditions:  First Order: \(f(x) + \nabla f(x)^T(y-x)\leq f(y)\) Second Order: \(\nabla^2">
+    <meta name="description" content="1. 提要 最近需要将一段感知代码移植到实验室的pipeline上进行测试，然而之前一直在使用ROS_melodic，原始感知代码目前只在melodic上测试成功，为了实验室其他用noetic的老哥们能测试，就想搭建一个noetic的docker来尝试一下同样的代码能否在noetic上编译成功。（借机学习一下docker） 2. 安装过程 2.1 安装Docker 这一步基本参考Docker-从入">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Convex Optimization Note(2): Convex Function">
-<meta property="og:url" content="https://smoggy-p.github.io/blog/2023/10/30/Optimal%20Control(2)/index.html">
+<meta property="og:title" content="使用Docker配置ROS noetic环境">
+<meta property="og:url" content="https://smoggy-p.github.io/blog/2022/05/16/ros_docker/index.html">
 <meta property="og:site_name" content="Moji Shi&#39;s Blog">
-<meta property="og:description" content="中文版笔记感觉这个博主总结的比较清楚 1. Convex Function Definition: \[f(\theta x+(1-\theta) y)\leq\theta f(x) + (1-\theta)f(y)\] Conditions:  First Order: \(f(x) + \nabla f(x)^T(y-x)\leq f(y)\) Second Order: \(\nabla^2">
+<meta property="og:description" content="1. 提要 最近需要将一段感知代码移植到实验室的pipeline上进行测试，然而之前一直在使用ROS_melodic，原始感知代码目前只在melodic上测试成功，为了实验室其他用noetic的老哥们能测试，就想搭建一个noetic的docker来尝试一下同样的代码能否在noetic上编译成功。（借机学习一下docker） 2. 安装过程 2.1 安装Docker 这一步基本参考Docker-从入">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://smoggy-p.github.io/blog/img/epigraph.png">
-<meta property="article:published_time" content="2023-10-30T07:37:41.319Z">
-<meta property="article:modified_time" content="2023-11-01T04:30:31.499Z">
+<meta property="og:image" content="https://smoggy-p.github.io/blog/img/ros_docker/index.png">
+<meta property="article:published_time" content="2022-05-15T21:08:35.000Z">
+<meta property="article:modified_time" content="2023-01-21T13:04:51.973Z">
 <meta property="article:author" content="Moji Shi">
-<meta property="article:tag" content="Math">
+<meta property="article:tag" content="ROS">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://smoggy-p.github.io/blog/img/epigraph.png">
+<meta name="twitter:image" content="https://smoggy-p.github.io/blog/img/ros_docker/index.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Convex Optimization Note(2): Convex Function - Moji Shi&#39;s Blog</title>
+  <title>使用Docker配置ROS noetic环境 - Moji Shi&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -215,7 +215,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Convex Optimization Note(2): Convex Function"></span>
+            <span id="subtitle" data-typed-text="使用Docker配置ROS noetic环境"></span>
           
         </div>
 
@@ -226,8 +226,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-10-30 08:37" pubdate>
-          October 30, 2023 am
+        <time datetime="2022-05-16 05:08" pubdate>
+          May 16, 2022 am
         </time>
       </span>
     
@@ -238,7 +238,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.2k words
+          1.2k words
         
       </span>
     
@@ -249,7 +249,7 @@
         
         
         
-          19 mins
+          10 mins
         
       </span>
     
@@ -287,121 +287,59 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Convex Optimization Note(2): Convex Function</h1>
+            <h1 style="display: none">使用Docker配置ROS noetic环境</h1>
             
             
               <div class="markdown-body">
                 
-                <p>中文版笔记感觉<a
-target="_blank" rel="noopener" href="https://chriszhangcx.github.io/%E5%87%B8%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0-2-%E5%87%B8%E5%87%BD%E6%95%B0/">这个博主</a>总结的比较清楚</p>
-<h1 id="convex-function">1. Convex Function</h1>
-<p><strong>Definition:</strong> <span class="math display">\[f(\theta
-x+(1-\theta) y)\leq\theta f(x) + (1-\theta)f(y)\]</span></p>
-<p><strong>Conditions:</strong></p>
-<ul>
-<li><p>First Order: <span class="math inline">\(f(x) + \nabla
-f(x)^T(y-x)\leq f(y)\)</span></p></li>
-<li><p>Second Order: <span
-class="math inline">\(\nabla^2f\succeq0\)</span> (positive semi-definite
-Hessian Matrix)</p></li>
-</ul>
-<p><strong>Examples:</strong></p>
-<ul>
-<li><p><em>Norm</em>: Any norm <span
-class="math inline">\(f(x):\mathbb{R}^n\rightarrow\mathbb{R}\)</span> is
-covex</p></li>
-<li><p><em>Max</em>: max function is convex</p></li>
-<li><p><em>Geometric Mean</em>: <span
-class="math inline">\(f(x)=(\prod_{i=1}^nx_i)^{1/n}\)</span> concave,
-prove by second-order condition</p></li>
-</ul>
-<h2 id="sublevelsuperlevel-sets">Sublevel/Superlevel Sets</h2>
-<p><strong>Definition:</strong> <span
-class="math display">\[C_{\alpha}=\{x\in\textbf{dom
-}f|f(x)\leq\alpha\}\]</span> <strong>Property:</strong> All sublevel
-sets of convex function are convex sets(converse not).</p>
+                <h1 id="提要">1. 提要</h1>
+<p>最近需要将一段感知代码移植到实验室的pipeline上进行测试，然而之前一直在使用ROS_melodic，原始感知代码目前只在melodic上测试成功，为了实验室其他用noetic的老哥们能测试，就想搭建一个noetic的docker来尝试一下同样的代码能否在noetic上编译成功。（借机学习一下docker）</p>
+<h1 id="安装过程">2. 安装过程</h1>
+<h2 id="安装docker">2.1 安装Docker</h2>
+<p>这一步基本参考<a
+target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/install/ubuntu">Docker-从入门到实践</a><sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="“Docker-从入门到实践” https://yeasy.gitbook.io/docker_practice/ (accessed May 12, 2022).">[1]</span></a></sup>的教程，最后在测试安装是否成功时遇到了permission相关的问题，最终通过下面这行代码扩充权限解决：
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">sudo <span class="hljs-built_in">chmod</span> 666 /var/run/docker.sock<br></code></pre></td></tr></table></figure> ## 2.2 安装ROS镜像 这一步参考<a
+target="_blank" rel="noopener" href="http://wiki.ros.org/docker/Tutorials/Docker">ROS官方网站</a><sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="“docker/Tutorials/Docker - ROS Wiki.” http://wiki.ros.org/docker/Tutorials/Docker (accessed May 12, 2022).">[2]</span></a></sup>提出的教程，其中部分步骤有差异，因此这里完整记录一下。</p>
+<p>首先下载ROS container镜像： <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">docker pull ros<br></code></pre></td></tr></table></figure>
+之后下载noetic所需要的最基本的环境镜像： <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">docker pull ros:noetic<br><span class="hljs-comment">## 如果需要下载noetic全部功能:</span><br><span class="hljs-comment"># docker pull osrf/ros:noetic-desktop-full</span><br></code></pre></td></tr></table></figure>
+最后一步启动镜像（与官网描述有所不同）： <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">docker run -it ros:noetic<br></code></pre></td></tr></table></figure>
+在启动的bash中尝试启动<code>roscore</code>，如果成功就表示配置完成啦！</p>
+<h1 id="基本操作">3. 基本操作</h1>
+<p>首先引入一下docker的基本概念，主要是<strong>镜像(image)、容器(container)</strong>
+的概念。这里可以将镜像理解为c++中定义的类的概念，而容器是该类实例化之后的对象。在上一章中所提到的<code>docker run</code>的操作就可以理解为根据提供的镜像创建一个容器。运行选项<code>-it</code>的含义如下：</p>
 <blockquote>
-<p>It is said to be a good way to construct convex sets.</p>
+<p>-t 选项让Docker分配一个伪终端（pseudo-tty）并绑定到容器的标准输入上，
+-i 则让容器的标准输入保持打开。</p>
 </blockquote>
-<h2 id="epigraph">Epigraph</h2>
-<p>Epi means "above" so epigraph basically means area above the
-function.</p>
-<p><strong>Definition:</strong> <span class="math display">\[\textbf{epi
-}f=\{(x,t)|f(x)\leq t, x\in\textbf{dom }f\}\]</span></p>
-<p><img src="/blog/img/epigraph.png" srcset="/blog/img/loading.gif" lazyload /></p>
-<h2 id="jensens-inequality">Jensen's inequality</h2>
-<p>Convex Combination for more than 2 points: <span
-class="math display">\[f(\theta_1 x_1+\dots
-\theta_kx_k)\leq\theta_1f(x_1)+\dots \theta_kf(x_k)\]</span> It can be
-further proved about expectation: <span
-class="math display">\[f(\mathbb{E}(x))\leq\mathbb{E}(f(x))\]</span></p>
-<h1 id="operations-pereserve-convexity">2. Operations pereserve
-Convexity</h1>
-<ul>
-<li><p>Non-negative weighted sum</p></li>
-<li><p>Affine mapping <span
-class="math inline">\(g(x)=f(Ax+b)\)</span></p></li>
-<li><p>Maximum <span
-class="math inline">\(f(x)=\max\{f_1(x)+f_2(x)\}\)</span></p>
-<blockquote>
-<p>It can further be prove that <span
-class="math inline">\(f(x)=\sup_{y\in A}||x-y||\)</span> is
-convex.(furthest distance from a set)</p>
-</blockquote>
-<blockquote>
-<p>Almost every convex function can be represented as the supremum of a
-family of affine functions.</p>
-</blockquote></li>
-<li><p>Composition <span class="math inline">\(f(x)=g(h(x))\)</span>,
-not necessarily convex, look at the expression of <span
-class="math inline">\(f&#39;&#39;(x)\)</span></p></li>
-<li><p>Minimization: <span class="math inline">\(f(x)=\inf_{y\in
-A}f(x,y)\)</span> is convex if <span
-class="math inline">\(f(x,y)\)</span> is convex and <span
-class="math inline">\(A\)</span> is convex set(Additional requirement on
-convexity of <span class="math inline">\(A\)</span>).</p></li>
-<li><p>Perspective: <span class="math inline">\(f(x)=t\cdot
-f(x/t)\)</span> is convex if <span class="math inline">\(f(x)\)</span>
-is convex and <span class="math inline">\(t&gt;0\)</span>.</p></li>
-<li><p>Conjugate function: <span
-class="math inline">\(f^*(y)=\sup_{x\in\textbf{dom}}(y^
-Tx-f(x))\)</span> is convex regardless of the convexity of <span
-class="math inline">\(f(x)\)</span>.</p>
-<blockquote>
-<p>The maximum distance between <span
-class="math inline">\(f(x)\)</span> and line <span
-class="math inline">\(y=x\)</span>: <img
-src="/blog/img/conjugate.png" srcset="/blog/img/loading.gif" lazyload /></p>
-</blockquote></li>
-</ul>
-<h1 id="quasiconvex-function">3. Quasiconvex Function</h1>
-<p><strong>Definition:</strong> If all sublevel sets of <span
-class="math inline">\(f(x)\)</span> are convex, then <span
-class="math inline">\(f(x)\)</span> is quasiconvex. One example of a set
-that is quasi-convex but not convex: <img
-src="/blog/img/quasi_convex.png" srcset="/blog/img/loading.gif" lazyload /></p>
-<p><strong>Property:</strong></p>
-<ul>
-<li><span class="math inline">\(f(\theta x_1+(1-\theta)x_2)\leq
-\max\{f(x_1),f(x_2)\}\)</span></li>
-</ul>
-<p><strong>Conditions:</strong></p>
-<ul>
-<li><p>First Order: <span
-class="math inline">\(f(y)&lt;f(x)\implies\nabla f(x)^T(y-x)\leq
-0\)</span></p></li>
-<li><p>Second Order: <span class="math inline">\(\forall y\in
-R^n\)</span>, <span class="math inline">\(y^T\nabla
-f(x)\implies\)</span> <span
-class="math inline">\(y^T\nabla^2f(x)y\succeq 0\)</span></p></li>
-</ul>
-<h1 id="log-concave-function-and-log-convex-function">4. Log-Concave
-Function and Log-Convex Function</h1>
-<p><strong>Definition:</strong> Log-Concave: <span
-class="math inline">\(f(x)\)</span> is log-concave if <span
-class="math inline">\(\log f(x)\)</span> is concave. <span
-class="math display">\[f(\theta x_1+(1-\theta)x_2)\geq
-f(x_1)^{\theta}f(x_2)^{1-\theta}\]</span></p>
+通过vscode插件，我们可以很方便地对镜像和容器进行管理。其操作界面如下图：
+<p style="text-align: center;">
+<img src="/blog/img/ros_docker/1.png" srcset="/blog/img/loading.gif" lazyload width=300>
+</p>
+<p>在container中可以很方便地进行运行和终止容器的操作，也可以删除不需要的容器。最右边的灰字为容器的名称（返回到之前提到c++中类的类比，这里的名字可以理解为变量名），通过下面的files可以对容器中的文件进行管理。</p>
+<p>后续有时间会更新一些dockerfile的使用，目前只手动在docker中安装了<code>git</code>以及<code>catkin tool</code>，似乎这些步骤都能直接写进dockerfile中。</p>
+<h1 id="参考">参考</h1>
+<section class="footnotes">
+<div class="footnote-list">
+<ol>
+<li>
+<span id="fn:1" class="footnote-text"><span>“Docker-从入门到实践”
+https://yeasy.gitbook.io/docker_practice/ (accessed May 12, 2022).
+<a href="#fnref:1" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:2" class="footnote-text"><span>“docker/Tutorials/Docker -
+ROS Wiki.” http://wiki.ros.org/docker/Tutorials/Docker (accessed May 12,
+2022). <a href="#fnref:2" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+</ol>
+</div>
+</section>
 
                 
               </div>
@@ -420,7 +358,7 @@ f(x_1)^{\theta}f(x_2)^{1-\theta}\]</span></p>
     
       <span class="category-chain">
         
-  <a href="/blog/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  <a href="/blog/categories/ROS%E5%AD%A6%E4%B9%A0/" class="category-chain-item">ROS学习</a>
   
   
 
@@ -435,7 +373,7 @@ f(x_1)^{\theta}f(x_2)^{1-\theta}\]</span></p>
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/blog/tags/Math/">#Math</a>
+        <a href="/blog/tags/ROS/">#ROS</a>
       
     </div>
   
@@ -449,12 +387,18 @@ f(x_1)^{\theta}f(x_2)^{1-\theta}\]</span></p>
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/blog/2022/05/26/%E9%9C%8D%E4%B9%B1/" title="2022阅读计划(1)：霍乱时期的爱情">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">2022阅读计划(1)：霍乱时期的爱情</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/blog/2023/10/28/Optimal%20Control(1)/" title="Convex Optimization Note(1): Affine Set and Convex Set">
-                        <span class="hidden-mobile">Convex Optimization Note(1): Affine Set and Convex Set</span>
+                      <a href="/blog/2020/09/24/fluent_2/" title="fluent入门学习（2）：热电单向耦合分析">
+                        <span class="hidden-mobile">fluent入门学习（2）：热电单向耦合分析</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -508,12 +452,6 @@ f(x_1)^{\theta}f(x_2)^{1-\theta}\]</span></p>
 
 
   
-
-
-  
-  
-
-
 
 
 
@@ -704,40 +642,6 @@ f(x_1)^{\theta}f(x_2)^{1-\theta}\]</span></p>
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/blog/js/local-search.js" ></script>
 
