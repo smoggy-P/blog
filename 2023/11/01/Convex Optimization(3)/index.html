@@ -25,8 +25,9 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://smoggy-p.github.io/blog/img/optimal_condition.png">
 <meta property="og:image" content="https://smoggy-p.github.io/blog/img/qcqp_socp.png">
+<meta property="og:image" content="https://smoggy-p.github.io/blog/img/sdp.png">
 <meta property="article:published_time" content="2023-11-01T05:53:16.528Z">
-<meta property="article:modified_time" content="2024-01-18T07:31:10.604Z">
+<meta property="article:modified_time" content="2024-01-24T06:33:13.445Z">
 <meta property="article:author" content="Moji Shi">
 <meta property="article:tag" content="Math">
 <meta name="twitter:card" content="summary_large_image">
@@ -237,7 +238,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.6k words
+          4.9k words
         
       </span>
     
@@ -248,7 +249,7 @@
         
         
         
-          31 mins
+          41 mins
         
       </span>
     
@@ -447,6 +448,49 @@ convex function by its Monomials and Posynomials formed constraints.</p>
 <p>Monomials: <span class="math inline">\(f(x)=cx_1^{a_1}x_2^{a_2}\dots
 x_i^{a_i}\)</span></p>
 <p>Posynomials: Linear combinations of monomials</p>
+<h1
+id="convex-optimization-in-the-form-of-generalized-inequality">Convex
+Optimization in the form of Generalized Inequality</h1>
+<p>The standard form of convex optimization can also be expressed
+through generalized inequality. In the following chapters, we will see
+this can also be solved as easily as ordinary convex optimization
+problems. <span class="math display">\[
+\begin{array}{ll}
+\operatorname{minimize} &amp; f_0(x) \\
+\text { subject to } &amp; f_i(x) \preceq_{ \text { K }_i} 0, \quad i=1,
+\ldots, m \\
+&amp; A x=b,
+\end{array}
+\]</span></p>
+<h2 id="conic-form-problems">Conic Form Problems</h2>
+<p>The conic form problem is a special case of the generalized
+inequality problem. It has a <strong>linear objective</strong> and one
+affine inequality constraint: <span class="math display">\[
+\begin{array}{ll}
+\operatorname{minimize} &amp; c^Tx \\
+\text { subject to } &amp; Ax+b \preceq_{ \text { K }} 0
+\end{array}
+\]</span> If <span class="math inline">\(K\)</span> is the non-negative
+orthant, the problem is a linear programming problem.</p>
+<h2 id="semi-definite-programming">Semi-definite Programming</h2>
+<p>The semi-definite programming is a special case of the conic form
+problem when <span class="math inline">\(K \in S_+^k\)</span> is the
+cone of positive semi-definite matrices. <span class="math display">\[
+\begin{array}{ll}
+\operatorname{minimize} &amp; c^T x \\
+\text { subject to } &amp; x_1 F_1+\cdots+x_n F_n+G \preceq 0 \\
+&amp; A x=b,
+\end{array}
+\]</span></p>
+<blockquote>
+<p>The inequality constraint is a linear matrix inequality(LMI) if <span
+class="math inline">\(F_i,G\)</span> are diagonal.</p>
+</blockquote>
+<p>Here is an example of converting a non-convex problem into a
+semi-definite programming(thus convex) problem through "lifting". It is
+just a simple example to leave some impression of SDP. We will see more
+examples in the following chapters.</p>
+<p><img src="/blog/img/sdp.png" srcset="/blog/img/loading.gif" lazyload /></p>
 
                 
               </div>

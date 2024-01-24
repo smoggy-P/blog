@@ -2,16 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://smoggy-p.github.io/blog/about/index.html</loc>
+    <loc>https://smoggy-p.github.io/blog/2023/11/01/Convex%20Optimization(3)/</loc>
     
-    <lastmod>2024-01-18</lastmod>
+    <lastmod>2024-01-24</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://smoggy-p.github.io/blog/2023/11/01/Convex%20Optimization(3)/</loc>
+    <loc>https://smoggy-p.github.io/blog/about/index.html</loc>
     
     <lastmod>2024-01-18</lastmod>
     
@@ -112,7 +112,7 @@
 
   <url>
     <loc>https://smoggy-p.github.io/blog</loc>
-    <lastmod>2024-01-19</lastmod>
+    <lastmod>2024-01-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -120,42 +120,42 @@
   
   <url>
     <loc>https://smoggy-p.github.io/blog/tags/RL/</loc>
-    <lastmod>2024-01-19</lastmod>
+    <lastmod>2024-01-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://smoggy-p.github.io/blog/tags/CFD/</loc>
-    <lastmod>2024-01-19</lastmod>
+    <lastmod>2024-01-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://smoggy-p.github.io/blog/tags/ROS/</loc>
-    <lastmod>2024-01-19</lastmod>
+    <lastmod>2024-01-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://smoggy-p.github.io/blog/tags/CAD/</loc>
-    <lastmod>2024-01-19</lastmod>
+    <lastmod>2024-01-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://smoggy-p.github.io/blog/tags/Reading/</loc>
-    <lastmod>2024-01-19</lastmod>
+    <lastmod>2024-01-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://smoggy-p.github.io/blog/tags/Math/</loc>
-    <lastmod>2024-01-19</lastmod>
+    <lastmod>2024-01-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -164,42 +164,42 @@
   
   <url>
     <loc>https://smoggy-p.github.io/blog/categories/Deep-reinforcement-learning/</loc>
-    <lastmod>2024-01-19</lastmod>
+    <lastmod>2024-01-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://smoggy-p.github.io/blog/categories/fluent%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2024-01-19</lastmod>
+    <lastmod>2024-01-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://smoggy-p.github.io/blog/categories/ROS%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2024-01-19</lastmod>
+    <lastmod>2024-01-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://smoggy-p.github.io/blog/categories/CAD%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2024-01-19</lastmod>
+    <lastmod>2024-01-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://smoggy-p.github.io/blog/categories/2022%E9%98%85%E8%AF%BB%E8%AE%A1%E5%88%92/</loc>
-    <lastmod>2024-01-19</lastmod>
+    <lastmod>2024-01-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://smoggy-p.github.io/blog/categories/Convex-Optimization/</loc>
-    <lastmod>2024-01-19</lastmod>
+    <lastmod>2024-01-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
