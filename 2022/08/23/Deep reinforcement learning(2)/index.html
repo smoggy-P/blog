@@ -16,25 +16,25 @@
   <meta name="author" content="Moji Shi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 提要 使用fluent和thermoelectric模块进行热电模拟，其中热电部分为单向耦合，即仅通过塞贝克效应考虑温度对电的影响。其中一些概念仅为笔者自己的理解，如有谬误欢迎各位提出讨论！ 2. 基本概念 2.1 塞贝克效应 通过半导体材料两边稳定的温差能够形成电势差，又称为热电第一效应，基本公式为： \[ V_{ab} &#x3D; \int_{T_1}^{T_2} (S_B-S_A)">
+    <meta name="description" content="1. 从策略梯度到Actor-Critic 上一章介绍了策略梯度的基本思想，最后得到的更新梯度的步骤可以写成如下形式： \[ \nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i&#x3D;1}^{N} \sum_{t&#x3D;1}^{T} \nabla_{\theta} \log \pi_{\theta}\left(\mathbf{a}_{i, t}">
 <meta property="og:type" content="article">
-<meta property="og:title" content="fluent入门学习（2）：热电单向耦合分析">
-<meta property="og:url" content="https://smoggy-p.github.io/blog/2020/09/24/fluent_2/index.html">
+<meta property="og:title" content="Deep reinforcement learning(2): Actor-Critic">
+<meta property="og:url" content="https://smoggy-p.github.io/blog/2022/08/23/Deep%20reinforcement%20learning(2)/index.html">
 <meta property="og:site_name" content="Moji Shi&#39;s Blog">
-<meta property="og:description" content="1. 提要 使用fluent和thermoelectric模块进行热电模拟，其中热电部分为单向耦合，即仅通过塞贝克效应考虑温度对电的影响。其中一些概念仅为笔者自己的理解，如有谬误欢迎各位提出讨论！ 2. 基本概念 2.1 塞贝克效应 通过半导体材料两边稳定的温差能够形成电势差，又称为热电第一效应，基本公式为： \[ V_{ab} &#x3D; \int_{T_1}^{T_2} (S_B-S_A)">
+<meta property="og:description" content="1. 从策略梯度到Actor-Critic 上一章介绍了策略梯度的基本思想，最后得到的更新梯度的步骤可以写成如下形式： \[ \nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i&#x3D;1}^{N} \sum_{t&#x3D;1}^{T} \nabla_{\theta} \log \pi_{\theta}\left(\mathbf{a}_{i, t}">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://smoggy-p.github.io/blog/img/fluent_2/index.png">
-<meta property="article:published_time" content="2020-09-24T05:35:21.000Z">
-<meta property="article:modified_time" content="2024-04-02T03:09:03.527Z">
+<meta property="og:image" content="https://smoggy-p.github.io/blog/img/drl_1/drl.png">
+<meta property="article:published_time" content="2022-08-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-04-02T03:09:44.592Z">
 <meta property="article:author" content="Moji Shi">
-<meta property="article:tag" content="CFD">
+<meta property="article:tag" content="RL">
 <meta property="article:tag" content="Chinese">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://smoggy-p.github.io/blog/img/fluent_2/index.png">
+<meta name="twitter:image" content="https://smoggy-p.github.io/blog/img/drl_1/drl.png">
   
   
   
-  <title>fluent入门学习（2）：热电单向耦合分析 - Moji Shi&#39;s Blog</title>
+  <title>Deep reinforcement learning(2): Actor-Critic - Moji Shi&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="fluent入门学习（2）：热电单向耦合分析"></span>
+            <span id="subtitle" data-typed-text="Deep reinforcement learning(2): Actor-Critic"></span>
           
         </div>
 
@@ -225,8 +225,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2020-09-24 13:35" pubdate>
-          September 24, 2020 pm
+        <time datetime="2022-08-23 00:00" pubdate>
+          August 23, 2022 am
         </time>
       </span>
     
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          842 words
+          3.4k words
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          8 mins
+          29 mins
         
       </span>
     
@@ -286,60 +286,120 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">fluent入门学习（2）：热电单向耦合分析</h1>
+            <h1 style="display: none">Deep reinforcement learning(2): Actor-Critic</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="提要">1. 提要</h1>
-<p>使用fluent和thermoelectric模块进行热电模拟，其中热电部分为单向耦合，即仅通过塞贝克效应考虑温度对电的影响。其中一些概念仅为笔者自己的理解，如有谬误欢迎各位提出讨论！</p>
-<h1 id="基本概念">2. 基本概念</h1>
-<h2 id="塞贝克效应">2.1 塞贝克效应</h2>
-<p>通过半导体材料两边稳定的温差能够形成电势差，又称为热电第一效应，基本公式为：</p>
+                <h1 id="从策略梯度到actor-critic">1. 从策略梯度到Actor-Critic</h1>
+<p>上一章介绍了策略梯度的基本思想，最后得到的更新梯度的步骤可以写成如下形式：
+<span class="math display">\[
+\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i=1}^{N}
+\sum_{t=1}^{T} \nabla_{\theta} \log \pi_{\theta}\left(\mathbf{a}_{i, t}
+\mid \mathbf{s}_{i, t}\right)\left(\mathbb{r}(\tau)-b\right)
+\]</span> 这里的问题是 <span class="math inline">\(r(\tau)\)</span>
+这一项是通过蒙特卡罗方法从 <span
+class="math inline">\(\pi_\theta(a|s)\)</span>
+中采样得到的，如果我们希望agent在与环境交互一次后就进行一次参数的优化，这里得到的梯度则只能根据单个样本计算，即得到一条轨迹后就代入上面的式子计算梯度，这样得到的结果很显然会有很大的方差。</p>
+<p>为了解决这个问题，在Actor-Critic算法中，我们用Q函数来代替 <span
+class="math inline">\(r(\tau)\)</span>，并且创建Critic网络来拟合Q函数。这样我们将梯度重新写成：
+<span class="math display">\[
+\nabla_{\theta} J(\theta) = \frac{1}{N} \sum_{i=1}^{N} \sum_{t=1}^{T}
+\nabla_{\theta} \log \pi_{\theta}\left(\mathbf{a}_{i, t} \mid
+\mathbf{s}_{i, t}\right)\left(Q_{\theta}(\mathbf{a}_{i, t},
+\mathbf{s}_{i, t})\right)
+\]</span> Critic函数最后训练的目标是让 <span
+class="math inline">\(Q_{\theta}(\mathbf{a}, \mathbf{s})\)</span> 接近
+<span
+class="math inline">\(\mathbb{E}_{\theta}\left[r(\tau)\right]\)</span>，直观上理解就是我们通过已经收集到的reward拟合出一个函数来评估当前状态的好坏。和之前直接用每条轨迹的reward相比，这种方法保留了历史reward的信息，因此更加可靠。</p>
+<p>这里我们还没有讨论具体该如何训练Critic网络。事实上在之后的推导中我们将会用监督学习来训练Critic网络，具体如何实现以及监督学习的训练集如何生成会在下一节里提到。</p>
+<h1 id="从ac到a2c">2. 从AC到A2C</h1>
+<p>基本的AC算法中我们在Critic网络中需要以state和action作为输入，输出Q函数。这样会带来两个问题：1.方差仍然很大；2.输入维度大（包括状态输入
+<span class="math inline">\(s\)</span> 和动作输入 <span
+class="math inline">\(a\)</span>），训练困难。为了解决这些问题我们对AC算法进行一些改进。</p>
+<h2 id="引入基线">2.1 引入基线</h2>
+<p>首先和Policy
+gradient里一样，我们同样可以通过引入基线的办法来减小方差。这里的基线可以直接定义为给定状态情况下的价值函数
+<span class="math inline">\(V_\theta(s)\)</span>。与 <span
+class="math inline">\(Q_\theta(a,s)\)</span>
+相比，价值函数还没有对当前状态做出动作的选择，因此可以被当做是<strong>平均之后的
+<span class="math inline">\(Q(a,s)\)</span>
+函数</strong>。引入价值函数作为基线后，梯度可以重新被写成：</p>
 <p><span class="math display">\[
-V_{ab} = \int_{T_1}^{T_2} (S_B-S_A)(T_2-T_1)dT
+\nabla_{\theta} J(\theta) = \frac{1}{N} \sum_{i=1}^{N} \sum_{t=1}^{T}
+\nabla_{\theta} \log \pi_{\theta}\left(\mathbf{a}_{i, t} \mid
+\mathbf{s}_{i, t}\right)\left(A_{\theta}(\mathbf{a}_{i, t},
+\mathbf{s}_{i, t})\right)
 \]</span></p>
-<p>对单个材料定义绝对塞贝克系数：</p>
+<p>其中 <span class="math inline">\(A_{\theta}(a_t,s_t)\)</span>
+函数我们定义为优势函数： <span class="math display">\[
+\begin{aligned}
+  A_{\theta}(a_t,s_t)&amp;=Q_{\theta}(a_t,s_t)-V_{\theta}(s_t)
+\end{aligned}
+\]</span></p>
+<blockquote>
+<p>事实上，这里的基线我们只需要选择一个与当前动作无关的函数，我们就能证明这里的梯度仍然是无偏估计。证明之后有空补上！</p>
+</blockquote>
+<h2 id="自助法采样bootstrapping">2.2 自助法采样(Bootstrapping)</h2>
+<p>这里改进的基本思想是：如果我们需要采样一条轨迹来拟合优势函数，那采样的方差会特别大。然而如果我们只采样下一步的状态，方差相比采样整条轨迹就会大幅减小。</p>
 <p><span class="math display">\[
-S=\lim\limits_{\Delta T\to0}\frac{V}{\Delta T}
+\begin{aligned}
+  A_{\theta}(a_t,s_t)&amp;=Q_{\theta}(a_t,s_t)&amp;-V_{\theta}(s_t)\\
+  &amp;=r(a_t,s_t)+\mathbb{E}_{s_{t+1}\sim
+p(s_{t+1}|a_t,s_t)}\left[V_\theta(s_{t+1})\right]&amp;-V_\theta(s_t)\\
+  &amp;\approx r(a_t,s_t)+V_{\theta}(s_{t+1})&amp;-V_{\theta}(s_t)
+\end{aligned}
 \]</span></p>
-<h2 id="综合热电效应总结">2.2 综合热电效应总结</h2>
-<p><img
-src="https://img-blog.csdnimg.cn/20200924110431136.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/blog/img/loading.gif" lazyload />
-# 3. 几何建模和网格划分 # 3.1 几何建模 <img
-src="https://img-blog.csdnimg.cn/20200924110711650.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_10,color_FFFFFF,t_70#pic_center" srcset="/blog/img/loading.gif" lazyload />
-几何部分设计两组pn结，外电路部分设计为一个闭环。设定上方为冷源和散热片，下方为热源。</p>
-<h1 id="网格划分">3.2 网格划分</h1>
-<p><img
-src="https://img-blog.csdnimg.cn/20200924111122922.png#pic_center" srcset="/blog/img/loading.gif" lazyload />
-对于流场部分设定inflation边界层。 <img
-src="https://img-blog.csdnimg.cn/20200924111252313.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_10,color_FFFFFF,t_70#pic_center" srcset="/blog/img/loading.gif" lazyload />
-对于几何较为规整的pn结、电阻等部分使用扫略的网格生成方式，但是底部连接部分扫略网格出现畸变，目前还没有解决方法。
-<img
-src="https://img-blog.csdnimg.cn/20200924111411686.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/blog/img/loading.gif" lazyload />
-# 4.Fluent流场热部分求解
-打开能量方程-添加材料性质-设定边界条件-设置求解方法-初始化-计算求解
-接触面温度场： <img
-src="https://img-blog.csdnimg.cn/20200924114640608.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/blog/img/loading.gif" lazyload />
-# 5.热电耦合设置 ## 5.1材料设置 添加单独的热电模块之后在engineering
-data中添加所需材料，其中pn结与电阻材料需要自定义，添加新材料后增加所需要的性质。（电阻材料除了电导率外需要再添加其他性质，否则最后计算时会出现licsence权限问题，无法计算纯电学问题）
-<img
-src="https://img-blog.csdnimg.cn/20200924115153674.png#pic_center" srcset="/blog/img/loading.gif" lazyload /> ##
-5.2几何和网格处理
-在workbench中导入和之前模型一致的几何，在model中添加材料的对应并生成自动网格（这里网格不需要与之前的网格一致，并且不需要考虑流场，可以将流体域部分以及散热片部分的几何抑制）
-<img
-src="https://img-blog.csdnimg.cn/20200924115452469.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/blog/img/loading.gif" lazyload />
-## 5.3边界条件设置与结果查看 1）在imported
-load中新增temperature边界条件，选中与散热片的连接面。
-2）在总边界条件中增加下表面的温度条件。 3）选中一个交界面作为电势0点。
-<img
-src="https://img-blog.csdnimg.cn/20200924115736570.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/blog/img/loading.gif" lazyload />
-设置好边界条件后进行求解。 温度场： <img
-src="https://img-blog.csdnimg.cn/20200924115837928.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/blog/img/loading.gif" lazyload />
-电流密度： <img
-src="https://img-blog.csdnimg.cn/20200924115858693.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/blog/img/loading.gif" lazyload />
-电势场： <img
-src="https://img-blog.csdnimg.cn/20200924115914591.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5Mzk1MjU2,size_16,color_FFFFFF,t_70#pic_center" srcset="/blog/img/loading.gif" lazyload /></p>
+<p>在这样近似之后，由于reward函数已知，我们只需要对价值函数进行拟合就能推算出优势函数。这样输入维度就只有状态变量了，大大节省了训练难度。</p>
+<h2 id="生成训练集">2.3 生成训练集</h2>
+<p>到此为止我们确定了我们需要拟合的函数就是价值函数 <span
+class="math inline">\(V(s_t)\)</span>，前文中提到，我们将会用监督学习的方法来拟合价值函数。即定义损失函数：<span
+class="math inline">\(\mathcal{L}(\theta)=\frac{1}{2}\sum_i||V_\theta(s_i)-y_i||^2\)</span>
+，同时收集训练集：<span class="math inline">\(\left\{ s_i, y_i
+\right\}\)</span>
+来优化损失函数。如何生成训练集就是我们接下来要讨论的问题。</p>
+<h3 id="蒙特卡罗方法生成训练集">2.3.1 蒙特卡罗方法生成训练集</h3>
+<p>最直观的方法就是我们直接通过采样一整条轨迹作为训练集。这里假设我们是通过与实际环境进行交互得到的轨迹，在这种情况下我们通常无法“重置”一个状态，这就意味着我们将会只有单样本的训练集（对于一个状态
+<span class="math inline">\(s\)</span> 我们只能生成一次轨迹来预测状态
+<span class="math inline">\(s\)</span> 之后 <span
+class="math inline">\(N\)</span>
+步的回报,理想情况下由于策略具有不确定性，我们是希望能够多次从一个状态出发，得到之后
+<span class="math inline">\(N\)</span>
+步的回报之后取平均值来减小预测的方差）。</p>
+<p>利用蒙特卡罗方法得到的训练集可以写成：<span
+class="math inline">\(\left\{(s_{i,t}, \sum_{t&#39;=t}^T
+r(s_{i,t&#39;},a_{i,t&#39;}))\right\}\)</span></p>
+<h3 id="自助法估计训练集">2.3.2 自助法估计训练集</h3>
+<p>和之前一样，我们可以用自助法估计 <span
+class="math inline">\(t+1\)</span> 时刻的状态，从而将累计回报近似为
+<span class="math inline">\(R+V\)</span>
+的形式。（与之前不同的是这里我们是对 <span
+class="math inline">\(V\)</span> 进行估计，在只有 <span
+class="math inline">\(s_t\)</span> 的情况下我们事实上需要多估计一步
+<span
+class="math inline">\(p_\theta(a_t|s_t)\)</span>，我认为这里事实上进行了两步Bootstrapping）。</p>
+<p><span class="math display">\[
+y_{i,t}=\sum_{t&#39;=t}^T\mathbb{E}_\theta\left[r(s_{t&#39;},a_{t&#39;})\mid
+s_{i,t}\right]\approx r(s_{i,t},a_{i,t})+V_\theta(s_{i,t+1})
+\]</span></p>
+<p>这里的问题是即使我们拓展成这种形式，最根本的问题还是没有解决，我们不知道
+<span class="math inline">\(V_\theta(s)\)</span>
+的值。这里的解决办法就是假设上一次迭代得到的 <span
+class="math inline">\(V_{\hat{\theta}}(s)\)</span>
+与这次的差距很小，我们直接拿上一次的价值函数作为这次的估计。很显然这是个
+<strong>有偏估计</strong>，需要我们用其他实际的工程技巧来克服这个问题。</p>
+<p>目前为止我们讨论的都是有限时间序列的情况，并且我们认为时间 <span
+class="math inline">\(t\)</span>
+是被计算到状态变量中的。假设我们现在需要解决无限时间序列，并且不考虑把时间
+<span class="math inline">\(t\)</span>
+作为状态考虑。这种情况下由于我们不断在价值函数上加一步回报 <span
+class="math inline">\(r(s_{t},a_{t})\)</span>，如果单步回报的期望大于0，那拟合的价值函数就会随迭代次数增加而不断增加，无法收敛。为了解决这个问题我们引入类似贝尔曼方程里的折扣因子的概念：
+<span class="math display">\[
+y_{i,t}\approx r(s_{i,t},a_{i,t})+\gamma V_\theta(s_{i,t+1})
+\]</span> 至此我们就得到了完成的A2C算法流程。</p>
+<h1 id="从a2c到a3c">3. 从A2C到A3C</h1>
+<p>原理很简单：同时让多个actor与环境分别单独进行交互，将交互的结果存入缓冲区中总结reward后统一对参数进行更新。
+<img src="/blog/img/drl_1/A3C.png" srcset="/blog/img/loading.gif" lazyload /></p>
 
                 
               </div>
@@ -358,7 +418,7 @@ src="https://img-blog.csdnimg.cn/20200924115914591.png?x-oss-process=image/water
     
       <span class="category-chain">
         
-  <a href="/blog/categories/fluent%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/" class="category-chain-item">fluent入门学习</a>
+  <a href="/blog/categories/Deep-reinforcement-learning/" class="category-chain-item">Deep reinforcement learning</a>
   
   
 
@@ -373,7 +433,7 @@ src="https://img-blog.csdnimg.cn/20200924115914591.png?x-oss-process=image/water
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/blog/tags/CFD/">#CFD</a>
+        <a href="/blog/tags/RL/">#RL</a>
       
         <a href="/blog/tags/Chinese/">#Chinese</a>
       
@@ -389,9 +449,9 @@ src="https://img-blog.csdnimg.cn/20200924115914591.png?x-oss-process=image/water
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/blog/2022/05/15/ros_docker/" title="使用Docker配置ROS noetic环境">
+                      <a href="/blog/2022/08/26/%E7%94%A8Solidworks%E8%BF%9B%E8%A1%8C%E6%8B%93%E6%89%91%E4%BC%98%E5%8C%96/" title="用Solidworks对无人机进行拓扑优化">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">使用Docker配置ROS noetic环境</span>
+                        <span class="hidden-mobile">用Solidworks对无人机进行拓扑优化</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -399,8 +459,8 @@ src="https://img-blog.csdnimg.cn/20200924115914591.png?x-oss-process=image/water
                   <article class="post-next col-6">
                     
                     
-                      <a href="/blog/2020/08/13/fluent_1/" title="fluent入门学习（1）：三维卡门涡街算例">
-                        <span class="hidden-mobile">fluent入门学习（1）：三维卡门涡街算例</span>
+                      <a href="/blog/2022/07/15/Deep%20reinforcement%20learning(1)/" title="Deep reinforcement learning(1): Policy gradient">
+                        <span class="hidden-mobile">Deep reinforcement learning(1): Policy gradient</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

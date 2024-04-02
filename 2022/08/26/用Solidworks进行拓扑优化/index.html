@@ -16,26 +16,25 @@
   <meta name="author" content="Moji Shi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. Optimization Formulation Eliminating Linear Equality Constraints For a linear equation constraints \(Ax&#x3D;b\), supposing the corresponding feasible set is \(S&#x3D;\{x|Ax&#x3D;b\}\). The constraint can be">
+    <meta name="description" content="暑研期间帮师兄出了一版无人机的图，在画完基本框架后想通过拓扑优化的方法对机身进行减重。之前进行拓扑优化都是在ansys workbench里，在我尝试把模型导入ansys的过程中出现了很多问题，最后我决定还是直接在solidworks里完成拓扑优化，这里记录一下流程。 1. 概述 Solidworks Simulation中直接提供了拓扑优化的算例。目前只能针对单个零部件进行拓扑优化，无法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Convex Optimization Note(3): Convex Optimization">
-<meta property="og:url" content="https://smoggy-p.github.io/blog/2024/04/02/Convex%20Optimization(3)/index.html">
+<meta property="og:title" content="用Solidworks对无人机进行拓扑优化">
+<meta property="og:url" content="https://smoggy-p.github.io/blog/2022/08/26/%E7%94%A8Solidworks%E8%BF%9B%E8%A1%8C%E6%8B%93%E6%89%91%E4%BC%98%E5%8C%96/index.html">
 <meta property="og:site_name" content="Moji Shi&#39;s Blog">
-<meta property="og:description" content="1. Optimization Formulation Eliminating Linear Equality Constraints For a linear equation constraints \(Ax&#x3D;b\), supposing the corresponding feasible set is \(S&#x3D;\{x|Ax&#x3D;b\}\). The constraint can be">
+<meta property="og:description" content="暑研期间帮师兄出了一版无人机的图，在画完基本框架后想通过拓扑优化的方法对机身进行减重。之前进行拓扑优化都是在ansys workbench里，在我尝试把模型导入ansys的过程中出现了很多问题，最后我决定还是直接在solidworks里完成拓扑优化，这里记录一下流程。 1. 概述 Solidworks Simulation中直接提供了拓扑优化的算例。目前只能针对单个零部件进行拓扑优化，无法">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://smoggy-p.github.io/blog/img/optimal_condition.png">
-<meta property="og:image" content="https://smoggy-p.github.io/blog/img/qcqp_socp.png">
-<meta property="og:image" content="https://smoggy-p.github.io/blog/img/sdp.png">
-<meta property="article:published_time" content="2024-04-02T02:36:53.310Z">
-<meta property="article:modified_time" content="2024-04-02T02:36:53.311Z">
+<meta property="og:image" content="https://smoggy-p.github.io/blog/img/drone/index.png">
+<meta property="article:published_time" content="2022-08-26T07:00:00.000Z">
+<meta property="article:modified_time" content="2024-04-02T03:08:50.674Z">
 <meta property="article:author" content="Moji Shi">
-<meta property="article:tag" content="Math">
+<meta property="article:tag" content="CAD">
+<meta property="article:tag" content="Chinese">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://smoggy-p.github.io/blog/img/optimal_condition.png">
+<meta name="twitter:image" content="https://smoggy-p.github.io/blog/img/drone/index.png">
   
   
   
-  <title>Convex Optimization Note(3): Convex Optimization - Moji Shi&#39;s Blog</title>
+  <title>用Solidworks对无人机进行拓扑优化 - Moji Shi&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -215,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Convex Optimization Note(3): Convex Optimization"></span>
+            <span id="subtitle" data-typed-text="用Solidworks对无人机进行拓扑优化"></span>
           
         </div>
 
@@ -226,8 +225,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-04-02 10:36" pubdate>
-          April 2, 2024 am
+        <time datetime="2022-08-26 15:00" pubdate>
+          August 26, 2022 pm
         </time>
       </span>
     
@@ -238,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.9k words
+          921 words
         
       </span>
     
@@ -249,7 +248,7 @@
         
         
         
-          41 mins
+          8 mins
         
       </span>
     
@@ -287,211 +286,45 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Convex Optimization Note(3): Convex Optimization</h1>
+            <h1 style="display: none">用Solidworks对无人机进行拓扑优化</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="optimization-formulation">1. Optimization Formulation</h1>
-<h2 id="eliminating-linear-equality-constraints">Eliminating Linear
-Equality Constraints</h2>
-<p>For a linear equation constraints <span
-class="math inline">\(Ax=b\)</span>, supposing the corresponding
-feasible set is <span class="math inline">\(S=\{x|Ax=b\}\)</span>. The
-constraint can be eliminated by substituting <span
-class="math inline">\(x\)</span> with <span
-class="math inline">\(x_0+Fz\)</span> where <span
-class="math inline">\(x_0\)</span> is a particular solution of <span
-class="math inline">\(Ax=b\)</span> and <span
-class="math inline">\(F\)</span> is a basis of the null space of <span
-class="math inline">\(A\)</span>. Thus, we do not need constraints on
-variable <span class="math inline">\(z\)</span>.</p>
-<p>Conditions: <span class="math inline">\(RF=ker\ A\)</span>, <span
-class="math inline">\(x_0\in S\)</span></p>
-<p><span class="math display">\[x\in S \iff x-x_0\in ker\ A \iff
-x-x_0\in RF\iff x-x_0=Fz\]</span></p>
-<blockquote>
-<p>Null space of matrix <span class="math inline">\(A\)</span>: <span
-class="math inline">\(ker\ A=\{x|Ax=0\}\)</span></p>
-</blockquote>
-<blockquote>
-<p>Range of matrix <span class="math inline">\(F\)</span>: <span
-class="math inline">\(RF=\{Fx|x\in\mathbb{R}^n\}\)</span></p>
-</blockquote>
-<h1 id="convex-optimization">2. Convex Optimization</h1>
-<p>Basic formulation of convex optimization problem:</p>
-<p><span class="math display">\[
-\begin{aligned}
-    \min_{x\in\mathbb{R}^n}&amp;f_0(x)
-\\s.t. &amp;f_i(x)\leq0,\ i=1,...,m
-\\&amp;a_i^Tx=b_i,\ i=1,...,p
-\end{aligned}
-\]</span></p>
-<p>where:</p>
-<ul>
-<li><p><span class="math inline">\(f_0, f_1\dots
-f_m:\mathbb{R}^n\rightarrow\mathbb{R}\)</span> is convex</p></li>
-<li><p><span class="math inline">\(h_i\)</span> is affine</p></li>
-</ul>
-<h2 id="optimality-conditions">Optimality Conditions</h2>
-<p>In convex optimization, a local minimum is also a global minimum. The
-optimal condition is: <span
-class="math display">\[\nabla^Tf(x)(y-x)\geq0,\ \forall y
-\in\text{feasible set}\]</span> Geometrically, it means that <span
-class="math inline">\(-\nabla^Tf(x)\)</span> is a supporting hyperplane
-of the feabile set at <span class="math inline">\(x\)</span>. (if <span
-class="math inline">\(\nabla f(x) \neq 0\)</span>)</p>
-<p><img src="/blog/img/optimal_condition.png" srcset="/blog/img/loading.gif" lazyload /></p>
-<ul>
-<li><p>Unconstrained problem: <span class="math inline">\(\nabla
-f(x)=0\)</span></p></li>
-<li><p>Problem with only equality constraints: <span
-class="math display">\[
-  \begin{aligned}
-    \min_{x}\quad&amp;f(x)
-  \\s.t. \quad &amp;Ax=b
-  \end{aligned}
-  \]</span> <span class="math inline">\(y-x\in \mathcal{N}(A)\)</span>
-since they are both in the feasible set. Thus, <span
-class="math inline">\(\nabla f(x) \perp \mathcal{N}(A)\)</span> &gt; If
-a linear function is non-negative on a subspace, then it must be zero on
-this subspace.</p></li>
-<li><p>Non-negative orthant <span class="math display">\[
-  \begin{aligned}
-    \min_{x}\quad&amp;f(x)
-  \\s.t. \quad &amp;x\succeq 0
-  \end{aligned}
-  \]</span> After deduction, we can get <span
-class="math inline">\(x_i(\nabla f(x))_i= 0\)</span>, which is a
-complementarity condition. This can also be achieved by KKT
-condition.</p></li>
-</ul>
-<h1 id="quasi-convex-optimization">Quasi-convex Optimization</h1>
-<p>Only the cost function is quasi-convex compared to convex
-optimization. For quasi-convex constraints, we can always find a convex
-constraints that is equivalent to the original one(same 0-level
-subset).</p>
-<p><span class="math display">\[\nabla^Tf(x)(y-x)&gt;0\quad \forall y\in
-\mathcal{X}/x \implies x \text{ is global optimal}\]</span></p>
-<ul>
-<li><p>Only sufficient</p></li>
-<li><p>gradient non-zero</p></li>
-</ul>
-<h2
-id="bisection-method-from-quasi-convex-to-convex-optimization">Bisection
-Method: From quasi-convex to convex optimization</h2>
-<p>For a quasi-convex problem, we can use bisection method to find the
-optimal solution. The idea is to use a convex function family <span
-class="math inline">\(\phi_t(x)\)</span> to approximate the original
-function <span class="math inline">\(f(x)\)</span>: <span
-class="math display">\[f(x)\leq t \iff \phi_t(x)\leq 0\]</span> Then try
-to approximate the optimal solution <span
-class="math inline">\(p^*\)</span>: <img
-src="/blog/img/bisection_method.png" srcset="/blog/img/loading.gif" lazyload /></p>
-<h1 id="linear-optimization">Linear Optimization</h1>
-<p>All the constraints and objective are affine.</p>
-<p><span class="math display">\[
-\begin{aligned}
-\min\quad &amp; c^Tx+d\\
-s.t.\quad &amp; Gx\leq h\\
-&amp; Ax=b
-\end{aligned}
-\]</span></p>
-<p>Geometric interpretation of linear optimization: <img
-src="/blog/img/lp_opt.png" srcset="/blog/img/loading.gif" lazyload /></p>
-<h2 id="linear-fractional-programming">Linear-fractional
-Programming</h2>
-<p>The objective is a ratio of affine functions: <span
-class="math display">\[
-f_0(x)=\frac{c^Tx+d}{e^Tx+f}
-\]</span> This is a quasi-convex optimization.</p>
-<h1 id="quadratic-optimization">Quadratic Optimization</h1>
-<p>The objective is a quadratic function and the constraints are affine.
-<span class="math display">\[
-\begin{aligned}
-\min\quad &amp; \frac{1}{2}x^TPx+q^Tx+r\\
-s.t.\quad &amp; Gx\leq h\\
-&amp; Ax=b
-\end{aligned}
-\]</span></p>
-<p>If the inequality constraints are quadratic(convex), the problem is
-called <strong>quadratically constrained quadratic
-programming(QCQP)</strong>. If the constraint can be written as <span
-class="math inline">\(||Ax+b||_2\leq c^Tx+d\)</span>, it is called
-<strong>second-order cone programming(SOCP)</strong>. Their relationship
-can be expressed as following: <img src="\blog\img\qcqp_socp.png" srcset="/blog/img/loading.gif" lazyload /></p>
-<blockquote>
-<p>Example of a robust linear programming problem: <span
-class="math display">\[
-\begin{aligned}
-\min\quad &amp; c^Tx\\
-s.t.\quad &amp; a_i^Tx\leq b_i,\ i=1,...,m
-\end{aligned}
-\]</span> The <span class="math inline">\(a_i\)</span> lie in a
-elipsoid: <span class="math display">\[
-\begin{aligned}
-a_i\in\mathcal{E}_i=\{a_c+P_iu\quad|\quad ||u||_2\leq 1\}
-\end{aligned}
-\]</span> The constraint can be reduced to: <span
-class="math display">\[
-\begin{aligned}
-a_c^Tx+||P_i^Tx||_2\leq b_i
-\end{aligned}
-\]</span> Which is a SOCP. With similar method, we can transfer a random
-linear constrained problem into an SOCP problem: <span
-class="math display">\[\textbf{Prob}(a_i^Tx\leq b_i)\geq
-\Phi\]</span></p>
-</blockquote>
-<h1 id="geometric-programming">Geometric Programming</h1>
-<p>Forms that are not convex originally but can be transferred into a
-convex function by its Monomials and Posynomials formed constraints.</p>
-<p>Monomials: <span class="math inline">\(f(x)=cx_1^{a_1}x_2^{a_2}\dots
-x_i^{a_i}\)</span></p>
-<p>Posynomials: Linear combinations of monomials</p>
-<h1
-id="convex-optimization-in-the-form-of-generalized-inequality">Convex
-Optimization in the form of Generalized Inequality</h1>
-<p>The standard form of convex optimization can also be expressed
-through generalized inequality. In the following chapters, we will see
-this can also be solved as easily as ordinary convex optimization
-problems. <span class="math display">\[
-\begin{array}{ll}
-\operatorname{minimize} &amp; f_0(x) \\
-\text { subject to } &amp; f_i(x) \preceq_{ \text { K }_i} 0, \quad i=1,
-\ldots, m \\
-&amp; A x=b,
-\end{array}
-\]</span></p>
-<h2 id="conic-form-problems">Conic Form Problems</h2>
-<p>The conic form problem is a special case of the generalized
-inequality problem. It has a <strong>linear objective</strong> and one
-affine inequality constraint: <span class="math display">\[
-\begin{array}{ll}
-\operatorname{minimize} &amp; c^Tx \\
-\text { subject to } &amp; Ax+b \preceq_{ \text { K }} 0
-\end{array}
-\]</span> If <span class="math inline">\(K\)</span> is the non-negative
-orthant, the problem is a linear programming problem.</p>
-<h2 id="semi-definite-programming">Semi-definite Programming</h2>
-<p>The semi-definite programming is a special case of the conic form
-problem when <span class="math inline">\(K \in S_+^k\)</span> is the
-cone of positive semi-definite matrices. <span class="math display">\[
-\begin{array}{ll}
-\operatorname{minimize} &amp; c^T x \\
-\text { subject to } &amp; x_1 F_1+\cdots+x_n F_n+G \preceq 0 \\
-&amp; A x=b,
-\end{array}
-\]</span></p>
-<blockquote>
-<p>The inequality constraint is a linear matrix inequality(LMI) if <span
-class="math inline">\(F_i,G\)</span> are diagonal.</p>
-</blockquote>
-<p>Here is an example of converting a non-convex problem into a
-semi-definite programming(thus convex) problem through "lifting". It is
-just a simple example to leave some impression of SDP. We will see more
-examples in the following chapters. The figure comes from <a
-target="_blank" rel="noopener" href="https://simons.berkeley.edu/sites/default/files/docs/6924/parrilo-simonsopenlecture.pdf">here</a>.</p>
-<p><img src="/blog/img/sdp.png" srcset="/blog/img/loading.gif" lazyload /></p>
+                <p>暑研期间帮师兄出了一版无人机的图，在画完基本框架后想通过拓扑优化的方法对机身进行减重。之前进行拓扑优化都是在ansys
+workbench里，在我尝试把模型导入ansys的过程中出现了很多问题，最后我决定还是直接在solidworks里完成拓扑优化，这里记录一下流程。</p>
+<h1 id="概述">1. 概述</h1>
+<p>Solidworks
+Simulation中直接提供了拓扑优化的算例。目前只能针对<strong>单个零部件</strong>进行拓扑优化，无法考虑零部件之间的相对作用（如果有需要可以在ansys里完成）。整体拓扑优化的思路是首先用夹具对零件进行限位，对零件施加载荷，之后定义目标函数，在给定约束的情况下求解优化问题。</p>
+<h1 id="具体流程">2. 具体流程</h1>
+<h2 id="选择实体">2.1 选择实体</h2>
+<p>首先在装配体文件中切换到simulation界面，点击新算例，选择拓扑算例：
+<img src="/blog/img/drone/新建算例.png" srcset="/blog/img/loading.gif" lazyload /></p>
+<p>之后在模型中选取需要进行拓扑优化的零部件： <img
+src="/blog/img/drone/选择实体.png" srcset="/blog/img/loading.gif" lazyload /></p>
+<p>选中创建算例后可以看到如下界面： <img
+src="/blog/img/drone/选择界面.png" srcset="/blog/img/loading.gif" lazyload /></p>
+<h2 id="添加夹具">2.2 添加夹具</h2>
+<p>之后我们在零部件上添加夹具。（连结部分暂时还不清楚作用，但是似乎不影响计算）添加夹具的意义在于对零件进行限位，常见的有固定夹具、弹簧夹具等。固定夹具的效果如下图：
+<img src="/blog/img/drone/Fixed-solid.gif" srcset="/blog/img/loading.gif" lazyload /></p>
+<p>对于无人机碳板，我们固定其最外围一圈进行优化。</p>
+<h2 id="添加外部载荷">2.3 添加外部载荷</h2>
+<p>之后我们需要给零件添加外部载荷。可以选择添加力或者扭矩，修改力的方向。
+<img src="/blog/img/drone/外部载荷.png" srcset="/blog/img/loading.gif" lazyload /></p>
+<p>这里需要注意的是我们可以选择分割操作，这样可以在零件的部分位置添加载荷。用于分割的草图需要我们在<strong>零部件</strong>文件里单独添加（装配体里的草图没有用）。另外可以选择按条目或者按总数进行分配，即选择多个面之后是每个面分配这么多载荷还是总共分配。</p>
+<h2 id="目标和约束">2.4 目标和约束</h2>
+<p>这里我们可以选择优化目标以及约束条件。常用的是最佳强度重量比，即选定需要减轻的重量，算出减轻重量后保留最大强度的方案。
+<img src="/blog/img/drone/目标和约束.png" srcset="/blog/img/loading.gif" lazyload /></p>
+<h2 id="保留区域">2.5 保留区域</h2>
+<p>可以看到无人机碳板上有许多孔洞，如果我们直接进行优化，这些孔洞很有可能会被扩充成更大的区域。为了保留这些孔洞特征，我们需要在制造控制选项中添加他们为保留的区域。
+<img src="/blog/img/drone/保留区域.png" srcset="/blog/img/loading.gif" lazyload /></p>
+<p>此外在制造控制中我们还可以选择对称操作，这样拓扑优化出来的结果会更规则一些。</p>
+<h2 id="网格划分">2.6 网格划分</h2>
+<p>在网格划分中我直接选用了默认自动生成的网格，也可以根据需求在某些部分添加细化的网格。
+<img src="/blog/img/drone/网格划分.png" srcset="/blog/img/loading.gif" lazyload /></p>
+<h1 id="优化结果">3. 优化结果</h1>
+<p>最后优化的结果如图： <img src="/blog/img/drone/优化结果.png" srcset="/blog/img/loading.gif" lazyload /></p>
+<p>我们可以手动在原本零件上按照优化结果所示进行切除操作。</p>
 
                 
               </div>
@@ -510,7 +343,7 @@ target="_blank" rel="noopener" href="https://simons.berkeley.edu/sites/default/f
     
       <span class="category-chain">
         
-  <a href="/blog/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  <a href="/blog/categories/CAD%E5%AD%A6%E4%B9%A0/" class="category-chain-item">CAD学习</a>
   
   
 
@@ -525,7 +358,9 @@ target="_blank" rel="noopener" href="https://simons.berkeley.edu/sites/default/f
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/blog/tags/Math/">#Math</a>
+        <a href="/blog/tags/CAD/">#CAD</a>
+      
+        <a href="/blog/tags/Chinese/">#Chinese</a>
       
     </div>
   
@@ -539,7 +374,7 @@ target="_blank" rel="noopener" href="https://simons.berkeley.edu/sites/default/f
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/blog/2024/04/02/Ubuntu%20Lagging%20Solutions/" title="Ubuntu Lagging Solutions">
+                      <a href="/blog/2023/08/04/Ubuntu%20Lagging%20Solutions/" title="Ubuntu Lagging Solutions">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">Ubuntu Lagging Solutions</span>
                         <span class="visible-mobile">Previous</span>
@@ -549,8 +384,8 @@ target="_blank" rel="noopener" href="https://simons.berkeley.edu/sites/default/f
                   <article class="post-next col-6">
                     
                     
-                      <a href="/blog/2024/04/02/Convex%20Optimization(2)/" title="Convex Optimization Note(2): Convex Function">
-                        <span class="hidden-mobile">Convex Optimization Note(2): Convex Function</span>
+                      <a href="/blog/2022/08/23/Deep%20reinforcement%20learning(2)/" title="Deep reinforcement learning(2): Actor-Critic">
+                        <span class="hidden-mobile">Deep reinforcement learning(2): Actor-Critic</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -645,12 +480,6 @@ target="_blank" rel="noopener" href="https://simons.berkeley.edu/sites/default/f
 
 
   
-
-
-  
-  
-
-
 
 
 
@@ -820,40 +649,6 @@ target="_blank" rel="noopener" href="https://simons.berkeley.edu/sites/default/f
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/blog/js/local-search.js" ></script>
 
