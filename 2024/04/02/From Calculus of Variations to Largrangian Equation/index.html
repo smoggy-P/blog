@@ -16,27 +16,23 @@
   <meta name="author" content="Moji Shi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. Optimization Formulation Eliminating Linear Equality Constraints For a linear equation constraints \(Ax&#x3D;b\), supposing the corresponding feasible set is \(S&#x3D;\{x|Ax&#x3D;b\}\). The constraint can be">
+    <meta name="description" content="最近复习了一下拉格朗日方程，重新思考了一下一些疑惑，这里记录一下从变分法到拉格朗日方程的推导过程以及这些疑惑的可能解答。 1. 变分法 考虑一个泛函： \[ J[y] &#x3D; \int_{x_1}^{x_2} F(x, y, y&#39;) \, dx \] 其中 \(y &#x3D; y(x)\) 是未知函数，\(y&#39; &#x3D; \frac{dy}{dx}\)，\(F\) 是关于 \(x, y">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Convex Optimization Note(3): Convex Optimization">
-<meta property="og:url" content="https://smoggy-p.github.io/blog/2023/11/01/Convex%20Optimization(3)/index.html">
+<meta property="og:title" content="From Calculus of Variations to Largrangian Equation">
+<meta property="og:url" content="https://smoggy-p.github.io/blog/2024/04/02/From%20Calculus%20of%20Variations%20to%20Largrangian%20Equation/index.html">
 <meta property="og:site_name" content="Moji Shi&#39;s Blog">
-<meta property="og:description" content="1. Optimization Formulation Eliminating Linear Equality Constraints For a linear equation constraints \(Ax&#x3D;b\), supposing the corresponding feasible set is \(S&#x3D;\{x|Ax&#x3D;b\}\). The constraint can be">
+<meta property="og:description" content="最近复习了一下拉格朗日方程，重新思考了一下一些疑惑，这里记录一下从变分法到拉格朗日方程的推导过程以及这些疑惑的可能解答。 1. 变分法 考虑一个泛函： \[ J[y] &#x3D; \int_{x_1}^{x_2} F(x, y, y&#39;) \, dx \] 其中 \(y &#x3D; y(x)\) 是未知函数，\(y&#39; &#x3D; \frac{dy}{dx}\)，\(F\) 是关于 \(x, y">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://smoggy-p.github.io/blog/img/optimal_condition.png">
-<meta property="og:image" content="https://smoggy-p.github.io/blog/img/qcqp_socp.png">
-<meta property="og:image" content="https://smoggy-p.github.io/blog/img/sdp.png">
-<meta property="article:published_time" content="2023-11-01T07:00:00.000Z">
-<meta property="article:modified_time" content="2024-04-02T03:09:57.573Z">
+<meta property="article:published_time" content="2024-04-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-04-02T05:41:46.951Z">
 <meta property="article:author" content="Moji Shi">
 <meta property="article:tag" content="Math">
-<meta property="article:tag" content="English">
+<meta property="article:tag" content="Chinese">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://smoggy-p.github.io/blog/img/optimal_condition.png">
   
   
   
-  <title>Convex Optimization Note(3): Convex Optimization - Moji Shi&#39;s Blog</title>
+  <title>From Calculus of Variations to Largrangian Equation - Moji Shi&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -216,7 +212,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Convex Optimization Note(3): Convex Optimization"></span>
+            <span id="subtitle" data-typed-text="From Calculus of Variations to Largrangian Equation"></span>
           
         </div>
 
@@ -227,8 +223,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-11-01 15:00" pubdate>
-          November 1, 2023 pm
+        <time datetime="2024-04-02 00:00" pubdate>
+          April 2, 2024 am
         </time>
       </span>
     
@@ -239,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.9k words
+          2.3k words
         
       </span>
     
@@ -250,7 +246,7 @@
         
         
         
-          41 mins
+          20 mins
         
       </span>
     
@@ -288,211 +284,113 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Convex Optimization Note(3): Convex Optimization</h1>
+            <h1 style="display: none">From Calculus of Variations to Largrangian Equation</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="optimization-formulation">1. Optimization Formulation</h1>
-<h2 id="eliminating-linear-equality-constraints">Eliminating Linear
-Equality Constraints</h2>
-<p>For a linear equation constraints <span
-class="math inline">\(Ax=b\)</span>, supposing the corresponding
-feasible set is <span class="math inline">\(S=\{x|Ax=b\}\)</span>. The
-constraint can be eliminated by substituting <span
-class="math inline">\(x\)</span> with <span
-class="math inline">\(x_0+Fz\)</span> where <span
-class="math inline">\(x_0\)</span> is a particular solution of <span
-class="math inline">\(Ax=b\)</span> and <span
-class="math inline">\(F\)</span> is a basis of the null space of <span
-class="math inline">\(A\)</span>. Thus, we do not need constraints on
-variable <span class="math inline">\(z\)</span>.</p>
-<p>Conditions: <span class="math inline">\(RF=ker\ A\)</span>, <span
-class="math inline">\(x_0\in S\)</span></p>
-<p><span class="math display">\[x\in S \iff x-x_0\in ker\ A \iff
-x-x_0\in RF\iff x-x_0=Fz\]</span></p>
-<blockquote>
-<p>Null space of matrix <span class="math inline">\(A\)</span>: <span
-class="math inline">\(ker\ A=\{x|Ax=0\}\)</span></p>
-</blockquote>
-<blockquote>
-<p>Range of matrix <span class="math inline">\(F\)</span>: <span
-class="math inline">\(RF=\{Fx|x\in\mathbb{R}^n\}\)</span></p>
-</blockquote>
-<h1 id="convex-optimization">2. Convex Optimization</h1>
-<p>Basic formulation of convex optimization problem:</p>
+                <p>最近复习了一下拉格朗日方程，重新思考了一下一些疑惑，这里记录一下从变分法到拉格朗日方程的推导过程以及这些疑惑的可能解答。</p>
+<h1 id="变分法">1. 变分法</h1>
+<p>考虑一个泛函：</p>
 <p><span class="math display">\[
-\begin{aligned}
-    \min_{x\in\mathbb{R}^n}&amp;f_0(x)
-\\s.t. &amp;f_i(x)\leq0,\ i=1,...,m
-\\&amp;a_i^Tx=b_i,\ i=1,...,p
-\end{aligned}
+J[y] = \int_{x_1}^{x_2} F(x, y, y&#39;) \, dx
 \]</span></p>
-<p>where:</p>
-<ul>
-<li><p><span class="math inline">\(f_0, f_1\dots
-f_m:\mathbb{R}^n\rightarrow\mathbb{R}\)</span> is convex</p></li>
-<li><p><span class="math inline">\(h_i\)</span> is affine</p></li>
-</ul>
-<h2 id="optimality-conditions">Optimality Conditions</h2>
-<p>In convex optimization, a local minimum is also a global minimum. The
-optimal condition is: <span
-class="math display">\[\nabla^Tf(x)(y-x)\geq0,\ \forall y
-\in\text{feasible set}\]</span> Geometrically, it means that <span
-class="math inline">\(-\nabla^Tf(x)\)</span> is a supporting hyperplane
-of the feabile set at <span class="math inline">\(x\)</span>. (if <span
-class="math inline">\(\nabla f(x) \neq 0\)</span>)</p>
-<p><img src="/blog/img/optimal_condition.png" srcset="/blog/img/loading.gif" lazyload /></p>
-<ul>
-<li><p>Unconstrained problem: <span class="math inline">\(\nabla
-f(x)=0\)</span></p></li>
-<li><p>Problem with only equality constraints: <span
-class="math display">\[
-  \begin{aligned}
-    \min_{x}\quad&amp;f(x)
-  \\s.t. \quad &amp;Ax=b
-  \end{aligned}
-  \]</span> <span class="math inline">\(y-x\in \mathcal{N}(A)\)</span>
-since they are both in the feasible set. Thus, <span
-class="math inline">\(\nabla f(x) \perp \mathcal{N}(A)\)</span> &gt; If
-a linear function is non-negative on a subspace, then it must be zero on
-this subspace.</p></li>
-<li><p>Non-negative orthant <span class="math display">\[
-  \begin{aligned}
-    \min_{x}\quad&amp;f(x)
-  \\s.t. \quad &amp;x\succeq 0
-  \end{aligned}
-  \]</span> After deduction, we can get <span
-class="math inline">\(x_i(\nabla f(x))_i= 0\)</span>, which is a
-complementarity condition. This can also be achieved by KKT
-condition.</p></li>
-</ul>
-<h1 id="quasi-convex-optimization">Quasi-convex Optimization</h1>
-<p>Only the cost function is quasi-convex compared to convex
-optimization. For quasi-convex constraints, we can always find a convex
-constraints that is equivalent to the original one(same 0-level
-subset).</p>
-<p><span class="math display">\[\nabla^Tf(x)(y-x)&gt;0\quad \forall y\in
-\mathcal{X}/x \implies x \text{ is global optimal}\]</span></p>
-<ul>
-<li><p>Only sufficient</p></li>
-<li><p>gradient non-zero</p></li>
-</ul>
-<h2
-id="bisection-method-from-quasi-convex-to-convex-optimization">Bisection
-Method: From quasi-convex to convex optimization</h2>
-<p>For a quasi-convex problem, we can use bisection method to find the
-optimal solution. The idea is to use a convex function family <span
-class="math inline">\(\phi_t(x)\)</span> to approximate the original
-function <span class="math inline">\(f(x)\)</span>: <span
-class="math display">\[f(x)\leq t \iff \phi_t(x)\leq 0\]</span> Then try
-to approximate the optimal solution <span
-class="math inline">\(p^*\)</span>: <img
-src="/blog/img/bisection_method.png" srcset="/blog/img/loading.gif" lazyload /></p>
-<h1 id="linear-optimization">Linear Optimization</h1>
-<p>All the constraints and objective are affine.</p>
+<p>其中 <span class="math inline">\(y = y(x)\)</span> 是未知函数，<span
+class="math inline">\(y&#39; = \frac{dy}{dx}\)</span>，<span
+class="math inline">\(F\)</span> 是关于 <span class="math inline">\(x,
+y, y&#39;\)</span> 的函数。我们希望找到一个函数 <span
+class="math inline">\(y(x)\)</span> 使得 <span
+class="math inline">\(J[y]\)</span>
+取得极值。这里的问题是如何找到这个函数 <span
+class="math inline">\(y(x)\)</span>。</p>
+<blockquote>
+<p>Q1: 为什么这里的F是关于x, y, y'的函数，而不关于y的导数的高阶导数？
+&gt;
+很多说法表示对于自然系统，二阶导数是最高的导数，因此我们只需要考虑到二阶导数。（比如牛顿运动方程中的加速度）。</p>
+</blockquote>
+<p>解决这个问题的基本思想就是变分。变分可以理解为对函数的微小扰动，即对函数
+<span class="math inline">\(y(x)\)</span> 做一个微小的变化 <span
+class="math inline">\(\delta y(x)\)</span>，此时泛函 <span
+class="math inline">\(J[y]\)</span> 也会有一个微小的变化 <span
+class="math inline">\(\delta
+J[y]\)</span>。与函数极值的概念类似，假如此时的 <span
+class="math inline">\(y(x)\)</span> 是 <span
+class="math inline">\(J[y]\)</span> 的极值点，那么对于任意的微小扰动
+<span class="math inline">\(\delta y(x)\)</span>，<span
+class="math inline">\(\delta J[y]\)</span>
+都应该为0。这样我们就可以得到一个关于 <span
+class="math inline">\(y(x)\)</span> 的微分方程，即欧拉-拉格术方程。</p>
+<p>$$ J[y] = _{x_1}^{x_2} F dx</p>
+<p>=_{x_1}^{x_2} ( y + y' ) , dx = 0 $$</p>
+<blockquote>
+<p>引理：变分的导数等于导数的变分：<span class="math inline">\(\delta
+y&#39; = \frac{d(\delta y)}{dx}\)</span></p>
+</blockquote>
+<p>根据引理我们可以进一步得到：</p>
 <p><span class="math display">\[
-\begin{aligned}
-\min\quad &amp; c^Tx+d\\
-s.t.\quad &amp; Gx\leq h\\
-&amp; Ax=b
-\end{aligned}
+\begin{align*}
+\delta J[y] &amp;=
+\int_{x_1}^{x_2} \left( \frac{\partial F}{\partial y} \delta y +
+\frac{\partial F}{\partial y&#39;} \frac{d(\delta y)}{dx} \right) \, dx
+\\
+&amp;= \int_{x_1}^{x_2} \left( \frac{\partial F}{\partial y} \right)
+\delta y \, dx + \left[ \frac{\partial F}{\partial y&#39;} \delta y
+\right]_{x_1}^{x_2} - \int_{x_1}^{x_2} \frac{d}{dx} \left(
+\frac{\partial F}{\partial y&#39;} \right) \delta y \, dx &amp;&amp;
+\text{分部积分} \\
+&amp;= \int_{x_1}^{x_2} \left( \frac{\partial F}{\partial y} -
+\frac{d}{dx} \left( \frac{\partial F}{\partial y&#39;} \right) \right)
+\delta y \, dx + \left[ \frac{\partial F}{\partial y&#39;} \delta y
+\right]_{x_1}^{x_2}
+\end{align*}
 \]</span></p>
-<p>Geometric interpretation of linear optimization: <img
-src="/blog/img/lp_opt.png" srcset="/blog/img/loading.gif" lazyload /></p>
-<h2 id="linear-fractional-programming">Linear-fractional
-Programming</h2>
-<p>The objective is a ratio of affine functions: <span
-class="math display">\[
-f_0(x)=\frac{c^Tx+d}{e^Tx+f}
-\]</span> This is a quasi-convex optimization.</p>
-<h1 id="quadratic-optimization">Quadratic Optimization</h1>
-<p>The objective is a quadratic function and the constraints are affine.
-<span class="math display">\[
-\begin{aligned}
-\min\quad &amp; \frac{1}{2}x^TPx+q^Tx+r\\
-s.t.\quad &amp; Gx\leq h\\
-&amp; Ax=b
-\end{aligned}
+<p>其中第一项是关于 <span class="math inline">\(\delta y\)</span>
+的积分，第二项是边界项。</p>
+<h1 id="欧拉-拉格朗日方程">2. 欧拉-拉格朗日方程</h1>
+<p>在一些物理问题中，边界条件是被限定为固定的，即 <span
+class="math inline">\(\delta y(x_1) = \delta y(x_2) = 0\)</span>，
+此时边界项为0。为了使得变分恒为0，我们需要使得第一项中的系数恒为0，此时我们可以得到欧拉-拉格朗日方程：</p>
+<p><span class="math display">\[
+\frac{\partial F}{\partial y} - \frac{d}{dx} \left( \frac{\partial
+F}{\partial y&#39;} \right) = 0
 \]</span></p>
-<p>If the inequality constraints are quadratic(convex), the problem is
-called <strong>quadratically constrained quadratic
-programming(QCQP)</strong>. If the constraint can be written as <span
-class="math inline">\(||Ax+b||_2\leq c^Tx+d\)</span>, it is called
-<strong>second-order cone programming(SOCP)</strong>. Their relationship
-can be expressed as following: <img src="\blog\img\qcqp_socp.png" srcset="/blog/img/loading.gif" lazyload /></p>
+<p>通过求解这个方程，我们可以得到函数 <span
+class="math inline">\(y(x)\)</span>，使得泛函 <span
+class="math inline">\(J[y]\)</span> 取得极值。</p>
+<h1 id="拉格朗日力学lagrangian-mechanics">3. 拉格朗日力学(lagrangian
+mechanics)</h1>
+<p>在物理学中，我们可以利用欧拉-拉格朗日方程来求解物体的运动。在拉格朗日力学中，我们定义拉格朗日量
+<span class="math inline">\(L = E - K\)</span>，其中 <span
+class="math inline">\(E\)</span> 是系统的势能，<span
+class="math inline">\(K\)</span> 是系统的动能。</p>
 <blockquote>
-<p>Example of a robust linear programming problem: <span
-class="math display">\[
-\begin{aligned}
-\min\quad &amp; c^Tx\\
-s.t.\quad &amp; a_i^Tx\leq b_i,\ i=1,...,m
-\end{aligned}
-\]</span> The <span class="math inline">\(a_i\)</span> lie in a
-elipsoid: <span class="math display">\[
-\begin{aligned}
-a_i\in\mathcal{E}_i=\{a_c+P_iu\quad|\quad ||u||_2\leq 1\}
-\end{aligned}
-\]</span> The constraint can be reduced to: <span
-class="math display">\[
-\begin{aligned}
-a_c^Tx+||P_i^Tx||_2\leq b_i
-\end{aligned}
-\]</span> Which is a SOCP. With similar method, we can transfer a random
-linear constrained problem into an SOCP problem: <span
-class="math display">\[\textbf{Prob}(a_i^Tx\leq b_i)\geq
-\Phi\]</span></p>
+<p>Q2: 为什么拉格朗日量是势能减去动能？ &gt;
+个人理解这里的拉格朗日量的定义是一种逆向工程。我们首先确定牛顿力学中，系统的运动可以通过求解牛顿第二定律<span
+class="math inline">\(F =
+ma\)</span>来求解。这里我们希望找到一个拉格朗日量<span
+class="math inline">\(L\)</span>，当系统运动满足牛顿第二定律时，拉格朗日量的变分为0。这样求解牛顿第二定律就和求解拉格朗日量的变分等价。而我们进一步发现当拉格朗日量定义为<span
+class="math inline">\(E -
+K\)</span>时，求解拉格朗日方程就等价于求解牛顿第二定律。<a
+target="_blank" rel="noopener" href="https://www.reddit.com/r/AskPhysics/comments/v9yqhs/comment/ibzlqfi/?utm_source=share&amp;utm_medium=web3x&amp;utm_name=web3xcss&amp;utm_term=1&amp;utm_content=share_button"
+title="understanding of lagrangian mechanics">1</a></p>
 </blockquote>
-<h1 id="geometric-programming">Geometric Programming</h1>
-<p>Forms that are not convex originally but can be transferred into a
-convex function by its Monomials and Posynomials formed constraints.</p>
-<p>Monomials: <span class="math inline">\(f(x)=cx_1^{a_1}x_2^{a_2}\dots
-x_i^{a_i}\)</span></p>
-<p>Posynomials: Linear combinations of monomials</p>
-<h1
-id="convex-optimization-in-the-form-of-generalized-inequality">Convex
-Optimization in the form of Generalized Inequality</h1>
-<p>The standard form of convex optimization can also be expressed
-through generalized inequality. In the following chapters, we will see
-this can also be solved as easily as ordinary convex optimization
-problems. <span class="math display">\[
-\begin{array}{ll}
-\operatorname{minimize} &amp; f_0(x) \\
-\text { subject to } &amp; f_i(x) \preceq_{ \text { K }_i} 0, \quad i=1,
-\ldots, m \\
-&amp; A x=b,
-\end{array}
+<p>这里给出一个单摆的例子，单摆的广义坐标为 <span
+class="math inline">\(\theta\)</span>，单摆的拉格朗日量为：</p>
+<p><span class="math display">\[
+L = T - V = \frac{1}{2} m l^2 \dot{\theta}^2 - mgl(1 - \cos \theta)
 \]</span></p>
-<h2 id="conic-form-problems">Conic Form Problems</h2>
-<p>The conic form problem is a special case of the generalized
-inequality problem. It has a <strong>linear objective</strong> and one
-affine inequality constraint: <span class="math display">\[
-\begin{array}{ll}
-\operatorname{minimize} &amp; c^Tx \\
-\text { subject to } &amp; Ax+b \preceq_{ \text { K }} 0
-\end{array}
-\]</span> If <span class="math inline">\(K\)</span> is the non-negative
-orthant, the problem is a linear programming problem.</p>
-<h2 id="semi-definite-programming">Semi-definite Programming</h2>
-<p>The semi-definite programming is a special case of the conic form
-problem when <span class="math inline">\(K \in S_+^k\)</span> is the
-cone of positive semi-definite matrices. <span class="math display">\[
-\begin{array}{ll}
-\operatorname{minimize} &amp; c^T x \\
-\text { subject to } &amp; x_1 F_1+\cdots+x_n F_n+G \preceq 0 \\
-&amp; A x=b,
-\end{array}
+<p>代入欧拉-拉格朗日方程，我们可以得到单摆的运动方程：</p>
+<p><span class="math display">\[
+\frac{d}{dt} \left( \frac{\partial L}{\partial \dot{\theta}} \right) -
+\frac{\partial L}{\partial \theta} = 0
 \]</span></p>
-<blockquote>
-<p>The inequality constraint is a linear matrix inequality(LMI) if <span
-class="math inline">\(F_i,G\)</span> are diagonal.</p>
-</blockquote>
-<p>Here is an example of converting a non-convex problem into a
-semi-definite programming(thus convex) problem through "lifting". It is
-just a simple example to leave some impression of SDP. We will see more
-examples in the following chapters. The figure comes from <a
-target="_blank" rel="noopener" href="https://simons.berkeley.edu/sites/default/files/docs/6924/parrilo-simonsopenlecture.pdf">here</a>.</p>
-<p><img src="/blog/img/sdp.png" srcset="/blog/img/loading.gif" lazyload /></p>
+<p><span class="math display">\[
+\frac{d}{dt} \left( m l^2 \dot{\theta} \right) + mgl \sin \theta = 0
+\]</span></p>
+<p><span class="math display">\[
+m l^2 \ddot{\theta} + mgl \sin \theta = 0
+\]</span></p>
+<p>这就是单摆的运动方程。同样的结果也可以通过牛顿第二定律来求解，使用拉格朗日力学的好处在于我们可以通过定义拉格朗日量来简化问题的求解。</p>
 
                 
               </div>
@@ -501,34 +399,13 @@ target="_blank" rel="noopener" href="https://simons.berkeley.edu/sites/default/f
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/blog/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
         <a href="/blog/tags/Math/">#Math</a>
       
-        <a href="/blog/tags/English/">#English</a>
+        <a href="/blog/tags/Chinese/">#Chinese</a>
       
     </div>
   
@@ -542,18 +419,12 @@ target="_blank" rel="noopener" href="https://simons.berkeley.edu/sites/default/f
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/blog/2024/04/02/From%20Calculus%20of%20Variations%20to%20Largrangian%20Equation/" title="From Calculus of Variations to Largrangian Equation">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">From Calculus of Variations to Largrangian Equation</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/blog/2023/10/30/Convex%20Optimization(2)/" title="Convex Optimization Note(2): Convex Function">
-                        <span class="hidden-mobile">Convex Optimization Note(2): Convex Function</span>
+                      <a href="/blog/2023/11/01/Convex%20Optimization(3)/" title="Convex Optimization Note(3): Convex Optimization">
+                        <span class="hidden-mobile">Convex Optimization Note(3): Convex Optimization</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
