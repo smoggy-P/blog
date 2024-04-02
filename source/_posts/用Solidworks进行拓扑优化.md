@@ -5,6 +5,7 @@ categories: CAD学习
 math: false
 mermaid: false
 index_img: /img/drone/index.png
+date: 2022-08-26 15:00:00
 post:
   meta:
     author:  # 作者，优先根据 front-matter 里 author 字段，其次是 hexo 配置中 author 值

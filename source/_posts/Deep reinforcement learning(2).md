@@ -5,6 +5,7 @@ categories: Deep reinforcement learning
 math: true
 mermaid: false
 index_img: /img/drl_1/drl.png
+date: 2022-08-23
 post:
   meta:
     author:  # 作者，优先根据 front-matter 里 author 字段，其次是 hexo 配置中 author 值
