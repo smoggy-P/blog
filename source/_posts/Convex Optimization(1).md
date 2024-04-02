@@ -1,6 +1,6 @@
 ---
 title: "Convex Optimization Note(1): Affine Set and Convex Set"
-tags: [Math]
+tags: [Math, English]
 categories: Convex Optimization
 math: true
 mermaid: false

@@ -1,6 +1,6 @@
 ---
 title: "Convex Optimization Note(3): Convex Optimization"
-tags: [Math]
+tags: [Math, English]
 categories: Convex Optimization 
 math: true
 index_img: 

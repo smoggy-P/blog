@@ -1,6 +1,6 @@
 ---
 title: "使用Docker配置ROS noetic环境"
-tags: [ROS]
+tags: [ROS, Chinese]
 categories: ROS学习
 math: false
 date: 2022-05-15 23:08:35

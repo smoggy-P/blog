@@ -1,6 +1,6 @@
 ---
 title: "fluent入门学习（1）：三维卡门涡街算例"
-tags: [CFD]
+tags: [CFD, Chinese]
 date: 2020-08-13 12:33:10
 categories: fluent入门学习
 index_img: /img/fluent_1/index.png

@@ -1,6 +1,6 @@
 ---
 title: "Deep reinforcement learning(2): Actor-Critic"
-tags: [RL]
+tags: [RL, Chinese]
 categories: Deep reinforcement learning
 math: true
 mermaid: false

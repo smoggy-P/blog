@@ -1,6 +1,6 @@
 ---
 title: "用Solidworks对无人机进行拓扑优化"
-tags: [CAD]
+tags: [CAD, Chinese]
 categories: CAD学习
 math: false
 mermaid: false

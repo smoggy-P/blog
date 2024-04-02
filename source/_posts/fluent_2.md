@@ -1,6 +1,6 @@
 ---
 title: "fluent入门学习（2）：热电单向耦合分析"
-tags: [CFD]
+tags: [CFD, Chinese]
 categories: fluent入门学习
 date: 2020-09-24 13:35:21
 index_img: /img/fluent_2/index.png

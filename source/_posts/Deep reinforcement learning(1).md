@@ -1,6 +1,6 @@
 ---
 title: "Deep reinforcement learning(1): Policy gradient"
-tags: [RL]
+tags: [RL, Chinese]
 categories: Deep reinforcement learning
 math: true
 mermaid: false

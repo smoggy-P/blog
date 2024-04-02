@@ -1,6 +1,6 @@
 ---
 title: "Ubuntu Lagging Solutions"
-tags: []
+tags: [Ubuntu, Chinese]
 categories: 
 math: false
 mermaid: false
