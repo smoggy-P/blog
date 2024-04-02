@@ -5,6 +5,7 @@ categories:
 math: false
 mermaid: false
 index_img: 
+date:
 post:
   meta:
     author:  # 作者，优先根据 front-matter 里 author 字段，其次是 hexo 配置中 author 值
