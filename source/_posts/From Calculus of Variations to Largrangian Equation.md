@@ -42,11 +42,8 @@ $$
 $$
 \delta J[y] = \int_{x_1}^{x_2} \delta F dx=\int_{x_1}^{x_2} \left( \frac{\partial F}{\partial y} \delta y + \frac{\partial F}{\partial y'} \delta y' \right) \, dx = 0
 $$
-
 > 引理：变分的导数等于导数的变分：$\delta y' = \frac{d(\delta y)}{dx}$
-
 根据引理我们可以进一步得到：
-
 $$
 \begin{align*}
 \delta J[y] &= 
@@ -55,7 +52,6 @@ $$
 &= \int_{x_1}^{x_2} \left( \frac{\partial F}{\partial y} - \frac{d}{dx} \left( \frac{\partial F}{\partial y'} \right) \right) \delta y \, dx + \left[ \frac{\partial F}{\partial y'} \delta y \right]_{x_1}^{x_2}
 \end{align*}
 $$
-
 其中第一项是关于 $\delta y$ 的积分，第二项是边界项。
 
 # 2. 欧拉-拉格朗日方程
@@ -69,7 +65,6 @@ $$
 
 # 3. 拉格朗日力学(lagrangian mechanics) [2]
 在物理学中，我们可以利用欧拉-拉格朗日方程来求解物体的运动。在拉格朗日力学中，我们定义拉格朗日量 $L = E - K$，其中 $E$ 是系统的势能，$K$ 是系统的动能。
-
 > Q2: 为什么拉格朗日量是势能减去动能？
 >> 个人理解这里的拉格朗日量的定义是一种逆向工程。我们首先确定牛顿力学中，系统的运动可以通过求解牛顿第二定律$F = ma$来求解。这里我们希望找到一个拉格朗日量$L$，当系统运动满足牛顿第二定律时，拉格朗日量的变分为0。这样求解牛顿第二定律就和求解拉格朗日量的变分等价。而我们进一步发现当拉格朗日量定义为$E - K$时，求解拉格朗日方程就等价于求解牛顿第二定律。[1]
 
@@ -78,13 +73,10 @@ $$
 $$
 L = T - V = \frac{1}{2} m l^2 \dot{\theta}^2 - mgl(1 - \cos \theta)
 $$
-
 代入欧拉-拉格朗日方程，我们可以得到单摆的运动方程：
-
 $$
 \frac{d}{dt} \left( \frac{\partial L}{\partial \dot{\theta}} \right) - \frac{\partial L}{\partial \theta} = 0
 $$
-
 $$
 \frac{d}{dt} \left( m l^2 \dot{\theta} \right) + mgl \sin \theta = 0
 $$
